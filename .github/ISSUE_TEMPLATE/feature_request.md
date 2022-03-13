@@ -1,17 +1,13 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
 title: ''
 labels: ''
 assignees: ''
 
 ---
 
-** Description
+** 설명
 
-** Progress
-
-## List
+## 구현목록
 - [ ] todo1
 - [ ] todo2
 - [ ] todo3
