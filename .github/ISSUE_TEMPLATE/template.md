@@ -1,6 +1,6 @@
 ---
-name: 
-about: 
+name: template
+about: about this project
 title: ''
 labels: ''
 assignees: ''
