@@ -1,0 +1,1 @@
+npx degit jvidalv/vital my-app
