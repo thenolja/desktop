@@ -1,11 +1,16 @@
 import netlifyIdentity from 'netlify-identity-widget';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import { authLogIn, authLogOut } from 'src/contexts/auth';
+import { authLogIn, authLogOut, selectAuth } from 'src/contexts/auth';
+import { useAppSelector } from 'src/contexts/state.type';
+import StyledHeader from './Header.style';
 
 const Header = () => {
   const dispatch = useDispatch();
+
+  const { currentUser, email } = useAppSelector(selectAuth);
 
   const login = () => {
     netlifyIdentity.open('login');
@@ -15,8 +20,8 @@ const Header = () => {
     netlifyIdentity.logout();
   };
 
-  netlifyIdentity.on('login', user => {
-    dispatch(authLogIn({ currentUser: 'me' }));
+  netlifyIdentity.on('login', ({ email, user_metadata: { full_name: currentUser } }) => {
+    dispatch(authLogIn({ currentUser, email }));
     netlifyIdentity.close();
   });
 
@@ -29,12 +34,21 @@ const Header = () => {
   }, []);
 
   return (
-    <header>
-      <h1>더 놀자</h1>
-      <button onClick={login}>로그인</button>
-      <button onClick={logout}>로그 아웃</button>
-      {/* <button onClick={showMyPage}>마이 페이지</button> */}
-    </header>
+    <StyledHeader>
+      <h1>
+        <img src="/src/img/AnyConv.com__logo.webp" />
+      </h1>
+      {!currentUser && !email ? (
+        <button onClick={login}>로그인</button>
+      ) : (
+        <>
+          <div>
+            <button onClick={logout}>로그 아웃</button>
+            <Link to="/myPage">마이 페이지</Link>
+          </div>
+        </>
+      )}
+    </StyledHeader>
   );
 };
 
