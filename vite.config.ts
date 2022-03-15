@@ -9,9 +9,13 @@ export default defineConfig(configEnv => {
     plugins: [react()],
     resolve: {
       alias: {
+        src: resolve(__dirname, 'src'),
         app: resolve(__dirname, 'src', 'app'),
         components: resolve(__dirname, 'src', 'components'),
       },
+    },
+    build: {
+      sourcemap: true,
     },
     css: {
       modules: {
