@@ -6,4 +6,4 @@ const StyledHeader = styled.header`
   align-items: center;
 `;
 
-export default StyledHeader;
+export { StyledHeader };

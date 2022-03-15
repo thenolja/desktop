@@ -9,6 +9,7 @@ const App = () => {
   const Div = styled.div`
     color: #333;
   `;
+
   return (
     <Div>
       <Header />
