@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import GlobalStyle from './GlobalStyle';
 
 import App from 'app/app';
 import store from './contexts/store';
 
 ReactDOM.render(
   <React.StrictMode>
+    <GlobalStyle />
     <Provider store={store}>
       <HelmetProvider>
         <BrowserRouter>
