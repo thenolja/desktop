@@ -43,8 +43,8 @@ const Header = () => {
       ) : (
         <>
           <div>
-            <button onClick={logout}>로그 아웃</button>
-            <Link to="/myPage">마이 페이지</Link>
+            <button onClick={logout}>로그아웃</button>
+            <Link to="/myPage">마이페이지</Link>
           </div>
         </>
       )}
