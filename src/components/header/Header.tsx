@@ -5,11 +5,10 @@ import { Link } from 'react-router-dom';
 
 import { authLogIn, authLogOut, selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
-import StyledHeader from './Header.style';
+import { StyledHeader } from './Header.style';
 
 const Header = () => {
   const dispatch = useDispatch();
-
   const { currentUser, email } = useAppSelector(selectAuth);
 
   const login = () => {
