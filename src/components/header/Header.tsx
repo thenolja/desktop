@@ -35,7 +35,7 @@ const Header = () => {
   return (
     <StyledHeader>
       <h1>
-        <img src="/src/img/AnyConv.com__logo.webp" />
+        <img src="/src/assets/AnyConv.com__logo.webp" />
       </h1>
       {!currentUser && !email ? (
         <button onClick={login}>로그인</button>
