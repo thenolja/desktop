@@ -1,10 +1,17 @@
 import styled from 'styled-components';
 
-const StyledDiv = styled.div`
+import StyledDivProps from './StyledDiv.type';
+
+const StyledDiv = styled.div<StyledDivProps>`
   display: flex;
-  flex-grow: ${props => +props.flexGrow || 1};
   align-items: center;
+  width: ${props => props.width || 'auto'};
+  flex-grow: ${props => props.flexGrow || 0};
+  flex-shrink: 0;
   padding: 5px;
+  border: 1px solid #727483;
+  border-radius: 15px;
+  margin-right: 10px;
 
   img {
     width: 30px;
