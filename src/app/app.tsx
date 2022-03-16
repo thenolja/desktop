@@ -9,7 +9,6 @@ import Index from 'components/index/Index';
 import Detail from 'src/pages/Detail/detail';
 import Rooms from 'src/pages/Detail/Rooms';
 
-
 const App = () => {
   // const [detailNavigation] = useState([
   //   { id: 'rooms', content: '객실' },

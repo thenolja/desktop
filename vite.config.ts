@@ -23,7 +23,7 @@ export default defineConfig(configEnv => {
       },
     },
     server: {
-      open: '/index.html',
+      open: '/',
     },
   };
 });
