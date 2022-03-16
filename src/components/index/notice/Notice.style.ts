@@ -21,15 +21,6 @@ const StyledDl = styled.dl`
   img {
     width: 20px;
   }
-
-  button,
-  a {
-    font-size: 18px;
-    cursor: pointer;
-    padding: 7px;
-    margin-left: 10px;
-    font-weight: 700;
-  }
 `;
 
 export { StyledDl };
