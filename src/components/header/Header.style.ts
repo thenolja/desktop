@@ -19,4 +19,4 @@ const StyledHeader = styled.header`
   }
 `;
 
-export default StyledHeader;
+export { StyledHeader };
