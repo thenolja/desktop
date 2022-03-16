@@ -37,9 +37,11 @@ const Rooms = ({...restProps}) => {
   return(
     <div {...restProps}>
       <CheckInOut />
-      {rooms.map(room => 
-        <Room room={room} />
-      )}
+      <ul>
+        {rooms.map(room => 
+          <Room room={room} />
+        )}
+      </ul>
       <Buttons>
         <SelectBtn>예약하기</SelectBtn>
       </Buttons>
