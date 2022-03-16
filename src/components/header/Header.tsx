@@ -5,11 +5,10 @@ import { Link } from 'react-router-dom';
 
 import { authLogIn, authLogOut, selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
-import StyledHeader from './Header.style';
+import { StyledHeader } from './Header.style';
 
 const Header = () => {
   const dispatch = useDispatch();
-
   const { currentUser, email } = useAppSelector(selectAuth);
 
   const login = () => {
@@ -36,7 +35,7 @@ const Header = () => {
   return (
     <StyledHeader>
       <h1>
-        <img src="/src/img/AnyConv.com__logo.webp" />
+        <img src="/src/assets/AnyConv.com__logo.webp" />
       </h1>
       {!currentUser && !email ? (
         <button onClick={login}>로그인</button>
