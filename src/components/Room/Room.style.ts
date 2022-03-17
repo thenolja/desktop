@@ -38,6 +38,7 @@ const PriceInfo = styled.div`
   padding-top: 70px;
   float: right;
   text-align: right;
+  line-height: 24px;
 `;
 
 const OriginPrice = styled.p`
@@ -48,15 +49,6 @@ const OriginPrice = styled.p`
 const SaledPrice = styled.p`
   font-size: 24px;
   font-weight: 500;
-  margin-top: 24px;
-  
-  &::before{
-    content: '판매가';
-    position: relative;
-    font-size: 16px;
-    top: -26px;
-    left: 160px;
-  }
 
   span{
     color: #DE2E5F;
