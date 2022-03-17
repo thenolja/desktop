@@ -1,0 +1,8 @@
+{
+  "userId": 1,
+  "email": "soyo_0131@naver.com",
+  "nickName": "떡볶이",
+  "phone": "01012345678",
+  "reservations": [1],
+  "myReviews": [1, 3]
+}
