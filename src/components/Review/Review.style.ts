@@ -2,7 +2,12 @@ import styled from "styled-components";
 
 const FlexBox = styled.div`
   display: flex;
+  justify-content: space-between;
   gap: 20px;
+
+  div{
+    width: 100%;
+  }
 `;
 
 const Imoji = styled.span`
@@ -30,15 +35,30 @@ const Info = styled.div`
   }
 `;
 
-const Text = styled.div`
+const Star = styled.i`
+  color: #fc0;
+`;
+
+const MainWrapper = styled.div`
   margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+`;
+
+const Text = styled.div`
   font-size: 18px;
   line-height: 22px;
   color: #616161;
 `;
 
-const Star = styled.i`
-  color: #fc0;
+const Button = styled.button`
+  width: 70px;
+  height: 30px;
+  background-color: #DE2E5F;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
 `;
 
-export {FlexBox, Imoji, Time, Info, Text, Star};
+export {FlexBox, Imoji, Time, Info, Text, Star, MainWrapper, Button};

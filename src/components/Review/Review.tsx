@@ -1,4 +1,4 @@
-import {FlexBox, Imoji, Time, Info, Text, Star} from './Review.style';
+import {FlexBox, Imoji, Time, Info, Text, Star, Button, MainWrapper} from './Review.style';
 import { faStar, faStarHalf } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReviewProps } from './Review.type';
@@ -21,7 +21,7 @@ const Review = (review: ReviewProps) => {
       <FlexBox>
         <Imoji>imoji</Imoji>
         <div>
-          <div id='test'>
+          <div>
             {/* {StarScore(star)} */}
             {/* <StarScore star={star}/> */}
             <Star><FontAwesomeIcon icon={faStar} /></Star>
@@ -37,9 +37,12 @@ const Review = (review: ReviewProps) => {
         </Info>
         </div>
       </FlexBox>
-      <Text>
-        {reviewText}
-      </Text>
+      <MainWrapper>
+        <Text>
+          {reviewText}
+        </Text>
+        <Button>삭제</Button>
+      </MainWrapper>
     </article>
   )
 }
