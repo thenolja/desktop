@@ -1,5 +1,5 @@
 import {
-  DescWrapper,
+  Description,
   TitleWrapper,
   Title,
   SubTitle,
@@ -12,10 +12,10 @@ import {
   AmenitiesList,
 } from './HotelDescription.style';
 
-const HotelDescription = () => {
+const HotelDescription = ({ ...restProps }) => {
   return (
     <>
-      <DescWrapper>
+      <Description>
         <Title>소노탐 고양(구 엠블호텔 고양)</Title>
         <SubTitle>Sono Calm Goyang (formerly The MVL Goyang)</SubTitle>
         <TitleWrapper>
@@ -45,7 +45,7 @@ const HotelDescription = () => {
           </AmenitiesUL>
           <Allbutton>모두보기</Allbutton>
         </AmenitiesBox>
-      </DescWrapper>
+      </Description>
     </>
   );
 };
