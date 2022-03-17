@@ -1,26 +1,26 @@
-import UserInfoContainer from './UserInfo.style';
+import { UserInfoContainer } from './Profile.style';
 
-const UserInfo = () => (
-  <UserInfoContainer>
-    <h2 className="srOnly">마이페이지</h2>
-    <form>
-      <button>수정</button>
-      <img src="/src/assets/user.svg" alt="프로필사진" />
-      <fieldset>
-        <legend>
-          <strong>더블린아침햇살</strong>님의 프로필
-        </legend>
+const UserInfo = ({ user }) => {
+  return (
+    <UserInfoContainer>
+      <h2>
+        <strong>{user.currentUser}</strong>님의 프로필
+      </h2>
+      <div>
         <div>
           <span>이메일</span>
-          <span>soyo_0131@naver.com</span>
+          <span>{user.email}</span>
+        </div>
+        <div>
+          <span>닉네임</span>
+          <span>{user.currentUser}</span>
         </div>
         <div>
           <span>전화번호</span>
-          <span>010-1234-5678</span>
+          <span>{user.phone ?? '입력된 정보가 없습니다'}</span>
         </div>
-      </fieldset>
-    </form>
-  </UserInfoContainer>
-);
-
+      </div>
+    </UserInfoContainer>
+  );
+};
 export default UserInfo;

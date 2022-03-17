@@ -1,12 +1,14 @@
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import HotelDescription from 'components/detail/HotelDescription';
+
 import DetailNavbar from 'components/DetailNavbar/DetailNavbar';
+import HotelIntro from './HotelIntro';
 
 const Detail = ({ ...restProps }) => {
   return (
     <>
       <div {...restProps}>detail page</div>
-      <HotelDescription></HotelDescription>
+      <HotelIntro></HotelIntro>
       <DetailNavbar />
       <Outlet />
     </>
