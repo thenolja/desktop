@@ -3,16 +3,10 @@ import axios from 'axios';
 const requestAxios = options =>
   axios
     .request(options)
-    .then(
-      ({
-        data: {
-          searchResults: { results },
-        },
-      }) => {
-        console.log(results);
-        return results;
-      },
-    )
+    .then(({ data }) => {
+      console.log(data);
+      return data;
+    })
     .catch(error => {
       console.error(error);
     });
@@ -38,7 +32,22 @@ const getAllHotelList = async (): Promise<[]> => {
     },
   };
 
-  return await requestAxios(options);
+  return await axios
+    .request(options)
+    .then(
+      ({
+        data: {
+          data: {
+            body: {
+              searchResults: { results },
+            },
+          },
+        },
+      }) => results,
+    )
+    .catch(error => {
+      console.error(error);
+    });
 };
 
 const getNearHotelList = ({ latitude, longitude }): Promise<[]> => {
@@ -69,7 +78,6 @@ const getNearHotelList = ({ latitude, longitude }): Promise<[]> => {
       'x-rapidapi-key': '94629a7cb3mshf5f289b5607b657p143b91jsnea007af77478',
     },
   };
-  console.log(options);
 
   return requestAxios(options);
 };

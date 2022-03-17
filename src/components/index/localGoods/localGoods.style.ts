@@ -15,7 +15,7 @@ const StyledH3 = styled.h3`
 const StyledUl = styled.ul`
   display: flex;
   justify-content: flex-start;
-  // transform: translateX(${({ slide }) => slide * 100}}%);
+  transform: translateX(${({ slide }) => slide * 100}%);
   transition: transform 0.5s;
 
   li {
