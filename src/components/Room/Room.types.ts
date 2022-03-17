@@ -1,9 +1,9 @@
 export interface RoomProps {
-  id?: Number;
-  name?: String;
-  standardPeople?: Number;
-  maxPeople?: Number;
-  originPrice?: Number;
-  percent?: Number;
-  saledPrice?: Number;
+  id?: number;
+  name?: string;
+  standardPeople?:number;
+  maxPeople?:number;
+  originPrice?:number;
+  percent?:number;
+  saledPrice?:number;
 };
