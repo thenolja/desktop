@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-export const DescWrapper = styled.div`
-  border-radius: 0px 0px 8px 8px;
-  color: #141d38;
-  margin: 0px 0px 12px;
-  padding: 12px;
+export const Description = styled.div`
+  grid-area: auto span 8 auto auto;
+  line-height: 18px;
+  padding: 0px 12px 0px 0px;
 `;
+
 export const TitleWrapper = styled.div`
   padding: 12px 0px 16px;
 `;
