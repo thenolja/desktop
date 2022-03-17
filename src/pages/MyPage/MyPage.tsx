@@ -1,5 +1,5 @@
 import ReservationList from 'components/Reservation/Reservation';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 import { useAppSelector } from 'src/contexts/state.type';
 import { selectAuth } from 'src/contexts/auth';
 import SignOut from './MyPage.style';
@@ -12,8 +12,10 @@ const MyPage = () => {
 
   // userId로 user 데이터 받아오기
 
+  const handleEditingMode = useCallback(isEditing => setEditingMode(!isEditing), []);
+
   const MemoizedProfile = useMemo(
-    () => <Profile isEditing={isEditing} setEditingMode={setEditingMode} user={{ currentUser, email }} />,
+    () => <Profile isEditing={isEditing} handleEditingMode={handleEditingMode} user={{ currentUser, email }} />,
     [isEditing],
   );
 

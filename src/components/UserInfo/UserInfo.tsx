@@ -1,6 +1,6 @@
 import { UserInfoContainer } from './Profile.style';
 
-const UserInfo = ({ user }) => {
+const UserInfo = ({ user, handleEditingMode }) => {
   return (
     <UserInfoContainer>
       <h2>
@@ -20,6 +20,9 @@ const UserInfo = ({ user }) => {
           <span>{user.phone ?? '입력된 정보가 없습니다'}</span>
         </div>
       </div>
+      <button className="submit" onClick={() => handleEditingMode(false)}>
+        수정
+      </button>
     </UserInfoContainer>
   );
 };
