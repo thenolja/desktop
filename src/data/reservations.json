@@ -1,0 +1,16 @@
+{
+  "reservationId": 1,
+  "hotelId": 1,
+  "isAgrees": [true, true, true],
+  "rootType": "A",
+  "checkInDate": "2022-03-01",
+  "checkOutDate": "2022-03-03",
+  "userId": "1",
+  "hasCar": true,
+  "cost": 22000,
+  "adults": 1,
+  "children": 0,
+  "message": "",
+  "userName": "최한나",
+  "phone": "01012345678"
+}
