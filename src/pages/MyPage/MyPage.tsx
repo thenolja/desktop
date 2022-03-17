@@ -10,7 +10,13 @@ const MyPage = () => {
   const [isEditing, setEditingMode] = useState(false);
   const { currentUser, email } = useAppSelector(selectAuth);
 
-  const MemoizedProfile = useMemo(() => <Profile isEditing={isEditing} setEditingMode={setEditingMode} />, [isEditing]);
+  // userId로 user 데이터 받아오기
+
+  const MemoizedProfile = useMemo(
+    () => <Profile isEditing={isEditing} setEditingMode={setEditingMode} user={{ currentUser, email }} />,
+    [isEditing],
+  );
+
   const MemoizedReservationList = useMemo(() => <ReservationList />, [ReservationList]);
   const MemoizedSignOut = useMemo(() => <SignOut>{isEditing ? <button>회원탈퇴</button> : ''}</SignOut>, [isEditing]);
 
