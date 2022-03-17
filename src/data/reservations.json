@@ -1,16 +1,50 @@
-{
-  "reservationId": 1,
-  "hotelId": 1,
-  "isAgrees": [true, true, true],
-  "rootType": "A",
-  "checkInDate": "2022-03-01",
-  "checkOutDate": "2022-03-03",
-  "userId": "1",
-  "hasCar": true,
-  "cost": 22000,
-  "adults": 1,
-  "children": 0,
-  "message": "",
-  "userName": "최한나",
-  "phone": "01012345678"
-}
+[
+  {
+    "reservationId": 1,
+    "hotelId": 1,
+    "isAgrees": [true, true, true],
+    "rootType": "A",
+    "checkInDate": "2022-03-01",
+    "checkOutDate": "2022-03-03",
+    "userId": "1",
+    "hasCar": true,
+    "cost": 22000,
+    "adults": 1,
+    "children": 0,
+    "message": "",
+    "userName": "최한나",
+    "phone": "01012345678"
+  },
+  {
+    "reservationId": 2,
+    "hotelId": 3,
+    "isAgrees": [true, true, true],
+    "rootType": "A",
+    "checkInDate": "2021-12-31",
+    "checkOutDate": "2022-01-03",
+    "userId": "1",
+    "hasCar": true,
+    "cost": 1000000,
+    "adults": 1,
+    "children": 0,
+    "message": "",
+    "userName": "최한나",
+    "phone": "01012345678"
+  },
+  {
+    "reservationId": 3,
+    "hotelId": 5,
+    "isAgrees": [true, true, false],
+    "rootType": "A",
+    "checkInDate": "2022-02-24",
+    "checkOutDate": "2022-02-26",
+    "userId": "1",
+    "hasCar": true,
+    "cost": 500000,
+    "adults": 1,
+    "children": 0,
+    "message": "",
+    "userName": "최한나",
+    "phone": "01012345678"
+  }
+]
