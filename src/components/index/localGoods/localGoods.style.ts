@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 const StyledDiv = styled.div`
+  width: 100%;
+  position: relative;
   overflow: hidden;
 `;
 
@@ -13,7 +15,8 @@ const StyledH3 = styled.h3`
 const StyledUl = styled.ul`
   display: flex;
   justify-content: flex-start;
-  overflow-x: clip;
+  // transform: translateX(${({ slide }) => slide * 100}}%);
+  transition: transform 0.5s;
 
   li {
     min-width: 200px;

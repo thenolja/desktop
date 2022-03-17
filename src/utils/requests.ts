@@ -8,7 +8,10 @@ const requestAxios = options =>
         data: {
           searchResults: { results },
         },
-      }) => results,
+      }) => {
+        console.log(results);
+        return results;
+      },
     )
     .catch(error => {
       console.error(error);
@@ -66,6 +69,7 @@ const getNearHotelList = ({ latitude, longitude }): Promise<[]> => {
       'x-rapidapi-key': '94629a7cb3mshf5f289b5607b657p143b91jsnea007af77478',
     },
   };
+  console.log(options);
 
   return requestAxios(options);
 };
