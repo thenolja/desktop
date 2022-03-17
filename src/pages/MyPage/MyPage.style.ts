@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 
 const SignOut = styled.section`
-  height: 100px;
+  position: relative;
+  height: 200px;
   button {
-    position: relative;
-    left: calc(100% - 120px);
+    position: absolute;
     width: 120px;
     height: 48px;
+    right: 0;
+    bottom: 10px;
     border-radius: 10px;
     font-weight: 600;
     font-size: 20px;
