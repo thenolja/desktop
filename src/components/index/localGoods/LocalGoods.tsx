@@ -1,32 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { getAllHotelList, getNearHotelList } from 'src/utils/requests';
+import HotelItem from './hotelItem/HotelItem';
 import locationType from './location.type';
 
 const LocalGoods = () => {
   const [agreeInfo, setAgreeInfo] = useState<boolean>(false);
-  const [location, setLocation] = useState<locationType>({ latitude: 0, longitude: 0 });
-  const [hotels, setHotels] = useState([]);
+  const [hotels, setHotels] = useState<[]>([]);
 
-  const success = ({ coords: { latitude, longitude } }) => {
-    setLocation({ latitude, longitude });
+  const success = async ({ coords }) => {
+    setHotels(await getNearHotelList(coords));
     setAgreeInfo(true);
   };
 
   const error = () => {
-    setAgreeInfo(false);
+    setHotels(getAllHotelList());
   };
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success, error);
   }, []);
 
-  useEffect(() => {
-    const res = agreeInfo ? getNearHotelList(location) : getAllHotelList();
-    setHotels(getNearHotelList(location));
-    console.log(hotels);
-  }, [agreeInfo]);
-
-  return <div>현재 지역에서의 추천 상품</div>;
+  return (
+    <div>
+      <h2>{agreeInfo ? '현재 지역에서의 추천 상품' : '전체 지역의 추천 상품'}</h2>
+      <ul>{hotels.length !== 0 && hotels.map(hotel => <HotelItem key={hotel.id} hotel={hotel} />)}</ul>
+    </div>
+  );
 };
 
 export default LocalGoods;

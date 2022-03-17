@@ -1,8 +1,20 @@
 import axios from 'axios';
 
-const destinationId = 759818;
+const requestAxios = options =>
+  axios
+    .request(options)
+    .then(
+      ({
+        data: {
+          searchResults: { results },
+        },
+      }) => results,
+    )
+    .catch(error => {
+      console.error(error);
+    });
 
-const getAllHotelList = () => {
+const getAllHotelList = async (): Promise<[]> => {
   const options = {
     Method: 'GET',
     url: 'https://hotels4.p.rapidapi.com/properties/list',
@@ -15,6 +27,7 @@ const getAllHotelList = () => {
       adults1: '1',
       sortOrder: 'STAR_RATING_HIGHEST_FIRST',
       locale: 'ko_KR',
+      currency: 'USD',
     },
     headers: {
       'x-rapidapi-host': 'hotels4.p.rapidapi.com',
@@ -22,19 +35,10 @@ const getAllHotelList = () => {
     },
   };
 
-  axios
-    .request(options)
-    .then(function (response) {
-      console.log(response.data);
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
+  return await requestAxios(options);
 };
 
-const getNearHotelList = ({ latitude, longitude }) => {
-  console.log(latitude, longitude);
-
+const getNearHotelList = ({ latitude, longitude }): Promise<[]> => {
   const options = {
     Method: 'GET',
     url: 'https://hotels-com-provider.p.rapidapi.com/v1/hotels/nearby',
@@ -63,14 +67,7 @@ const getNearHotelList = ({ latitude, longitude }) => {
     },
   };
 
-  axios
-    .request(options)
-    .then(function (response) {
-      console.log(response.data);
-    })
-    .catch(function (error) {
-      console.error(error);
-    });
+  return requestAxios(options);
 };
 
 export { getAllHotelList, getNearHotelList };
