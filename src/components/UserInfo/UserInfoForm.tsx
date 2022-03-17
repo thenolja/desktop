@@ -1,8 +1,11 @@
+import { useCallback } from 'react';
 import { UserInfoFormContainer } from './Profile.style';
 
-const UserInfoForm = ({ user }) => {
+const UserInfoForm = ({ user, handleEditingMode }) => {
+  const preventDefault = useCallback(e => e.preventDefault(), []);
+
   return (
-    <UserInfoFormContainer>
+    <UserInfoFormContainer onSubmit={preventDefault}>
       <fieldset>
         <legend>
           <strong>{user.currentUser}</strong>님의 프로필
@@ -19,6 +22,9 @@ const UserInfoForm = ({ user }) => {
           <label htmlFor="phone">전화번호</label>
           <input id="phone" type="tel" placeholder={user.phone ?? ''}></input>
         </div>
+        <button className="submit" onClick={() => handleEditingMode(true)}>
+          확인
+        </button>
       </fieldset>
     </UserInfoFormContainer>
   );
