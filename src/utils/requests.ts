@@ -21,7 +21,7 @@ const getAllHotelList = async (): Promise<[]> => {
     params: {
       destinationId: '759818',
       pageNumber: '1',
-      pageSize: '25',
+      pageSize: '20',
       checkIn: '2020-01-08',
       checkOut: '2020-01-15',
       adults1: '1',
