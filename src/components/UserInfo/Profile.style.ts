@@ -1,16 +1,17 @@
 import styled from 'styled-components';
 
-const UserInfoContainer = styled.section`
+const ProfileContainer = styled.section`
   position: relative;
   background-color: #f9f7f7;
   width: 1000px;
   border-radius: 30px;
-  padding: 60px 100px;
+  padding: 60px 80px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 100px;
 
   img {
+    float: left;
     width: 170px;
   }
 
@@ -28,19 +29,50 @@ const UserInfoContainer = styled.section`
     top: 20px;
     right: 20px;
   }
-  form {
-    display: flex;
-    justify-content: space-around;
+  strong {
+    font-weight: 700;
   }
+`;
+
+const UserInfoContainer = styled.section`
+  margin-left: auto;
+  width: 600px;
+  h2 {
+    font-size: 40px;
+    color: black;
+    letter-spacing: -3px;
+  }
+
+  span {
+    font-weight: 700;
+    font-size: 18px;
+
+    &:nth-child(1) {
+      display: inline-block;
+      width: 110px;
+      height: 35px;
+      margin-top: 35px;
+      margin-right: 30px;
+      border-radius: 10px;
+      text-align: center;
+      line-height: 35px;
+      color: #ffffff;
+      background-color: #de2e5f;
+    }
+  }
+`;
+
+const UserInfoFormContainer = styled.form`
+  margin-left: auto;
+  width: 600px;
   fieldset {
     legend {
       font-size: 40px;
       color: black;
       letter-spacing: -3px;
     }
-    strong {
-      font-weight: 700;
-    }
+
+    label,
     div > span {
       font-weight: 700;
       font-size: 18px;
@@ -57,10 +89,16 @@ const UserInfoContainer = styled.section`
         color: #ffffff;
         background-color: #de2e5f;
       }
-      &:nth-child(2) {
-      }
+    }
+
+    #nickname,
+    #phone {
+      background-color: #f0f0f0;
+      border-radius: 10px;
+      padding: 1%;
+      font-size: 18px;
     }
   }
 `;
 
-export default UserInfoContainer;
+export { ProfileContainer, UserInfoContainer, UserInfoFormContainer };

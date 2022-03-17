@@ -1,16 +1,21 @@
 import styled from 'styled-components';
 
-const SignOut = styled.button`
+const SignOut = styled.section`
   position: relative;
-  left: calc(100% - 120px);
-  width: 120px;
-  height: 48px;
-  border-radius: 10px;
-  margin-bottom: 50px;
-  font-weight: 600;
-  font-size: 20px;
-  color: #727483;
-  background-color: #f2f2f2;
+  height: 200px;
+  button {
+    position: absolute;
+    width: 120px;
+    height: 48px;
+    right: 0;
+    bottom: 10px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 20px;
+    color: #727483;
+    background-color: #f2f2f2;
+    cursor: pointer;
+  }
 `;
 
 export default SignOut;
