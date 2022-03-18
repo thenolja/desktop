@@ -1,5 +1,5 @@
 export interface RoomProps {
-  id?: number;
+  id?: string;
   name?: string;
   standardPeople?:number;
   maxPeople?:number;

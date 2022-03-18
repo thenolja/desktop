@@ -2,7 +2,7 @@ import {RoomWrapper, Image, RoomInfo, RoomName, People, PriceInfo, OriginPrice, 
 import {RoomProps} from './Room.types';
 
 const Room = (room: RoomProps) => {
-  const {id, name, standardPeople, maxPeople, originPrice, percent, saledPrice}=room;
+  const {name, standardPeople, maxPeople, originPrice, percent, saledPrice}=room;
   
   return(
     <li>
