@@ -34,12 +34,18 @@ const Header = () => {
 
   return (
     <StyledHeader>
+<<<<<<< HEAD
       <Link to="/">
         <h1>
           <img src="/src/img/AnyConv.com__logo.webp" />
         </h1>
       </Link>
 
+=======
+      <h1>
+        <img src="/src/assets/AnyConv.com__logo.webp" />
+      </h1>
+>>>>>>> 44f36206fa7d91589b3efca5ba8d37a1bc348f2a
       {!currentUser && !email ? (
         <button onClick={login}>로그인</button>
       ) : (
