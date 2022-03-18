@@ -12,24 +12,29 @@ const StyledH3 = styled.h3`
   margin-bottom: 24px;
 `;
 
-const StyledUl = styled.ul`
+const StyledDivInner = styled.div`
+  width: 100%;
   display: flex;
   justify-content: flex-start;
-  transform: translateX(-100%);
-  transition: transform 0.5s;
-
-  li {
-    min-width: 200px;
-    width: 20%;
+  
+  ul{
+    display: flex;
+    width: 100%;
+    flex-grow: 1;
     flex-shrink: 0;
-    padding: 0 25px;
 
-    img {
-      border-radius: 10px;
-      height: auto;
-      margin-bottom: 10px;
-    }
+    li {
+      min-width: 200px;
+      width: 20%;
+      flex-shrink: 0;
+      padding: 0 25px;
+  
+      img {
+        border-radius: 10px;
+        height: auto;
+        margin-bottom: 10px;
+      }
   }
 `;
 
-export { StyledDiv, StyledH3, StyledUl };
+export { StyledDiv, StyledH3, StyledDivInner };

@@ -1,11 +1,9 @@
 import HotelItem from '../HotelItem/HotelItem';
 
 const CarouselItem = ({ hotelArr }) => {
-  console.log(hotelArr);
-
   return (
     <ul>
-      {hotelArr.map(hotel => (
+      {hotelArr.map((hotel, idx) => (
         <HotelItem key={hotel.id + idx} hotel={hotel} />
       ))}
     </ul>

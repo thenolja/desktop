@@ -1,6 +1,4 @@
-const HotelItem = hotel => {
-  console.log(hotel);
-
+const HotelItem = ({ hotel }) => {
   return (
     <li data-id={hotel.id}>
       <img src={hotel.optimizedThumbUrls.srpDesktop} alt="" />
