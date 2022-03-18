@@ -1,8 +1,8 @@
 import { StyledForm } from './SearchForm.style';
-import DateInput from './input/DateInput';
-import PersoInput from './input/PersoInput';
-import QueryInput from './input/QueryInput';
-import Button from './buttoon/Button';
+import DateInput from './Input/DateInput';
+import PersoInput from './Input/PersoInput';
+import QueryInput from './Input/QueryInput';
+import Button from './Buttoon/Button';
 
 const SearchForm = () => {
   return (
