@@ -14,16 +14,33 @@ const LocalGoods = () => {
 
   const listNum = 5;
 
+  const makeArray = arr => {
+    let index = 0;
+    console.log(arr);
+
+    return arr.reduce((acc, cur) => {
+      if (acc[index] === undefined) {
+        acc[index] = [];
+      }
+      if (acc[index].length === listNum) {
+        acc[++index] = [];
+      }
+      acc[index].push(cur);
+      return acc;
+    }, []);
+  };
+
   const success = async ({ coords }) => {
     const res = await getNearHotelList(coords);
-    console.log(res.length);
 
+    console.log(makeArray([...res.slice(res.length - 5, res.length), ...res, ...res.slice(0, 5)]));
     setHotels([...res.slice(res.length - 5, res.length), ...res, ...res.slice(0, 5)]);
+
     setAgreeInfo(true);
   };
 
-  const error = () => {
-    const res = getAllHotelList();
+  const error = async () => {
+    const res = await getAllHotelList();
     setHotels([...res.slice(res.length - 5, res.length), ...res, ...res.slice(0, 5)]);
   };
 
