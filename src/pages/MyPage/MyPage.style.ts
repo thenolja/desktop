@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const SignOut = styled.section`
   position: relative;
   height: 200px;
-  button {
+  .submit {
     position: absolute;
     width: 120px;
     height: 48px;

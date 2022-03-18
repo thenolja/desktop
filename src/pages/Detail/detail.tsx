@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
+
+import DetailNavbar from 'components/DetailNavbar/DetailNavbar';
 import HotelIntro from './HotelIntro';
 
 const Detail = ({ ...restProps }) => {
@@ -7,7 +9,7 @@ const Detail = ({ ...restProps }) => {
     <>
       <div {...restProps}>detail page</div>
       <HotelIntro></HotelIntro>
-      {/* 내비게이션 추가 */}
+      <DetailNavbar />
       <Outlet />
     </>
   );

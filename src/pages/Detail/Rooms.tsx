@@ -12,7 +12,7 @@ const Rooms = ({...restProps}) => {
       maxPeople: 3,
       originPrice: 734800,
       percent: 52,
-      saledPrice: 349800
+      saledPrice: 9800
     },
     {
       id: 2,
@@ -39,7 +39,7 @@ const Rooms = ({...restProps}) => {
       <CheckInOut />
       <ul>
         {rooms.map(room => 
-          <Room room={room} />
+          <Room key={room.id} {...room} />
         )}
       </ul>
       <Buttons>
