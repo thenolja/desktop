@@ -9,6 +9,7 @@ const LocalGoods = () => {
   const [slide, setSlide] = useState<number>(-1);
   const [agreeInfo, setAgreeInfo] = useState<boolean>(false);
   const [hotels, setHotels] = useState<[]>([]);
+  const [isMoving, setIsMoving] = useState<boolean>(false);
   const refUl = useRef();
 
   const success = async ({ coords }) => {
@@ -29,6 +30,8 @@ const LocalGoods = () => {
   }, []);
 
   useEffect(() => {
+    setIsMoving(true);
+
     refUl.current.style.transition = 'transform 0.5s';
     refUl.current.style.transform = `translateX(${slide * 100}%)`;
 
@@ -42,14 +45,17 @@ const LocalGoods = () => {
         refUl.current.style.transform = 'translateX(-100%)';
         setSlide(-1);
       }
+      setIsMoving(false);
     }, 500);
   }, [slide]);
 
   const movePrev = () => {
+    if (isMoving) return;
     setSlide(slide + 1);
   };
 
   const moveNext = () => {
+    if (isMoving) return;
     setSlide(slide - 1);
   };
 
