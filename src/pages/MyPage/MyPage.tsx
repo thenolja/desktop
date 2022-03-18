@@ -8,14 +8,13 @@ import ProtectedRoute from '../ProtectedRouter/ProtectedRouter';
 
 const MyPage = () => {
   const [isEditing, setEditingMode] = useState(false);
-  const { currentUser, email } = useAppSelector(selectAuth);
-
+  const { id, nickname, email } = useAppSelector(selectAuth);
   // userId로 user 데이터 받아오기
 
   const handleEditingMode = useCallback(isEditing => setEditingMode(!isEditing), []);
 
   const MemoizedProfile = useMemo(
-    () => <Profile isEditing={isEditing} handleEditingMode={handleEditingMode} user={{ currentUser, email }} />,
+    () => <Profile isEditing={isEditing} handleEditingMode={handleEditingMode} user={{ id, nickname, email }} />,
     [isEditing],
   );
 
@@ -23,7 +22,7 @@ const MyPage = () => {
   const MemoizedSignOut = useMemo(() => <SignOut>{isEditing ? <button>회원탈퇴</button> : ''}</SignOut>, [isEditing]);
 
   return (
-    <ProtectedRoute isAllow={!!(currentUser && email)}>
+    <ProtectedRoute isAllow={!!(id && nickname && email)}>
       {MemoizedProfile}
       {MemoizedReservationList}
       {MemoizedSignOut}

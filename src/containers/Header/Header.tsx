@@ -9,7 +9,7 @@ import { StyledHeader } from './Header.style';
 
 const Header = () => {
   const dispatch = useDispatch();
-  const { currentUser, email } = useAppSelector(selectAuth);
+  const { id, nickname, email } = useAppSelector(selectAuth);
 
   const login = () => {
     netlifyIdentity.open('login');
@@ -19,8 +19,8 @@ const Header = () => {
     netlifyIdentity.logout();
   };
 
-  netlifyIdentity.on('login', ({ email, user_metadata: { full_name: currentUser } }) => {
-    dispatch(authLogIn({ currentUser, email }));
+  netlifyIdentity.on('login', ({ id, email, user_metadata: { full_name: nickname } }) => {
+    dispatch(authLogIn({ id, nickname, email }));
     netlifyIdentity.close();
   });
 
@@ -40,7 +40,7 @@ const Header = () => {
         </h1>
       </Link>
 
-      {!currentUser && !email ? (
+      {!nickname && !email && !id ? (
         <button onClick={login}>로그인</button>
       ) : (
         <>

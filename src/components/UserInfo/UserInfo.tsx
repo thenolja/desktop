@@ -4,7 +4,7 @@ const UserInfo = ({ user, handleEditingMode }) => {
   return (
     <UserInfoContainer>
       <h2>
-        <strong>{user.currentUser}</strong>님의 프로필
+        <strong>{user.nickname}</strong>님의 프로필
       </h2>
       <div>
         <div>
@@ -13,7 +13,7 @@ const UserInfo = ({ user, handleEditingMode }) => {
         </div>
         <div>
           <span>닉네임</span>
-          <span>{user.currentUser}</span>
+          <span>{user.nickname}</span>
         </div>
         <div>
           <span>전화번호</span>

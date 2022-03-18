@@ -8,7 +8,7 @@ const UserInfoForm = ({ user, handleEditingMode }) => {
     <UserInfoFormContainer onSubmit={preventDefault}>
       <fieldset>
         <legend>
-          <strong>{user.currentUser}</strong>님의 프로필
+          <strong>{user.nickname}</strong>님의 프로필
         </legend>
         <div>
           <span>이메일</span>
@@ -16,7 +16,7 @@ const UserInfoForm = ({ user, handleEditingMode }) => {
         </div>
         <div>
           <label htmlFor="nickname">닉네임</label>
-          <input id="nickname" placeholder={user.currentUser} type="text"></input>
+          <input id="nickname" placeholder={user.nickname} type="text"></input>
         </div>
         <div>
           <label htmlFor="phone">전화번호</label>
