@@ -50,7 +50,7 @@ const getAllHotelList = async (): Promise<[]> => {
     });
 };
 
-const getNearHotelList = ({ latitude, longitude }): Promise<[]> => {
+const getNearHotelList = async ({ latitude, longitude }): Promise<[]> => {
   const options = {
     Method: 'GET',
     url: 'https://hotels-com-provider.p.rapidapi.com/v1/hotels/nearby',
@@ -75,11 +75,22 @@ const getNearHotelList = ({ latitude, longitude }): Promise<[]> => {
     },
     headers: {
       'x-rapidapi-host': 'hotels-com-provider.p.rapidapi.com',
-      'x-rapidapi-key': '94629a7cb3mshf5f289b5607b657p143b91jsnea007af77478',
+      'x-rapidapi-key': '432c69262amsh4275073ced663ebp1d4a90jsn306b566d0acd',
     },
   };
 
-  return requestAxios(options);
+  return await axios
+    .request(options)
+    .then(
+      ({
+        data: {
+          searchResults: { results },
+        },
+      }) => results,
+    )
+    .catch(error => {
+      console.error(error);
+    });
 };
 
 export { getAllHotelList, getNearHotelList };

@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 
 import { getAllHotelList, getNearHotelList } from 'src/utils/requests';
-import Button from './button/Button';
-import HotelItem from './hotelItem/HotelItem';
+import Button from './Button/Button';
+import HotelItem from './HotelItem/HotelItem';
 import { StyledH3, StyledUl, StyledDiv } from './localGoods.style';
 
 const LocalGoods = () => {
@@ -12,9 +12,11 @@ const LocalGoods = () => {
   const [isMoving, setIsMoving] = useState<boolean>(false);
   const refUl = useRef();
 
+  const listNum = 5;
+
   const success = async ({ coords }) => {
-    // const res = await getNearHotelList(coords);
-    const res = await getAllHotelList();
+    const res = await getNearHotelList(coords);
+    console.log(res.length);
 
     setHotels([...res.slice(res.length - 5, res.length), ...res, ...res.slice(0, 5)]);
     setAgreeInfo(true);
