@@ -9,7 +9,7 @@ import {
   ModalCloseBtn,
   ModalMapWrapper,
 } from './map.style';
-import { Allbutton } from '../detail/HotelDescription.style';
+import { Allbutton } from '../Detail/HotelDescription.style';
 import GlobalStyle from 'src/GlobalStyle';
 
 const KakaoMapStart = () => {

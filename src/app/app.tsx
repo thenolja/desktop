@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import Header from 'components/header/Header';
-import Main from 'components/main/Main';
+import Header from 'src/containers/Header/Header';
+import Main from 'src/containers/Main/Main';
 import MyPage from 'src/pages/MyPage/MyPage';
-import Footer from 'components/footer/Footer';
-import Index from 'components/index/Index';
+import Footer from 'src/containers/Footer/Footer';
+import Index from 'components/Index/Index';
 import Detail from 'src/pages/Detail/detail';
 import Rooms from 'src/pages/Detail/Rooms';
 import Reviews from 'src/pages/Detail/Reviews';
@@ -24,7 +24,7 @@ const App = () => {
       <Main>
         <Routes>
           <Route index element={<Index />} />
-          <Route path="/myPage" element={<MyPage />} />
+          <Route path="/mypage" element={<MyPage />} />
           <Route path="/detail" element={<Detail />}>
             <Route index element={<Rooms />} />
             <Route path="reviews" element={<Reviews />} />

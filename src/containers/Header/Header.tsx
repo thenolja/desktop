@@ -52,7 +52,7 @@ const Header = () => {
         <>
           <div>
             <button onClick={logout}>로그아웃</button>
-            <Link to="/myPage">마이페이지</Link>
+            <Link to="/mypage">마이페이지</Link>
           </div>
         </>
       )}
