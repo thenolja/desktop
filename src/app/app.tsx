@@ -6,7 +6,7 @@ import Main from 'src/containers/Main/Main';
 import MyPage from 'src/pages/MyPage/MyPage';
 import Footer from 'src/containers/Footer/Footer';
 import Index from 'components/Index/Index';
-import Detail from 'src/pages/Detail/detail';
+import Detail from 'src/pages/Detail/Detail';
 import Rooms from 'src/pages/Detail/Rooms';
 import Reviews from 'src/pages/Detail/Reviews';
 
