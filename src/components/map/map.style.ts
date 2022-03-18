@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const MapWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-item: flex-start;
+  align-items: flex-start;
   width: 370px;
   height: 310px;
 `;
@@ -45,7 +45,7 @@ export const ModalTitle = styled.h2`
   color: #141d38;
 `;
 export const ModalCloseBtn = styled.button`
-  weight: 48px;
+  width: 48px;
   height: 48px;
   padding: 0px 12px;
 `;

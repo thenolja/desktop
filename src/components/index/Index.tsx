@@ -1,6 +1,6 @@
-import Notice from './notice/Notice';
-import SearchForm from './searchForm/SearchForm';
-import LocalGoods from './localGoods/LocalGoods';
+import Notice from './Notice/Notice';
+import SearchForm from './SearchForm/SearchForm';
+import LocalGoods from './LocalGoods/LocalGoods';
 
 const Index = () => {
   return (

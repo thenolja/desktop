@@ -8,7 +8,7 @@ import {
   ModalTitle,
   ModalCloseBtn,
   ModalMapWrapper,
-} from './map.style';
+} from './Map.style';
 import { Allbutton } from '../Detail/HotelDescription.style';
 import GlobalStyle from 'src/GlobalStyle';
 
