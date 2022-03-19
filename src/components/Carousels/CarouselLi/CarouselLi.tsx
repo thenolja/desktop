@@ -1,4 +1,4 @@
-const HotelItem = ({ hotel }) => {
+const CarouselLi = ({ hotel }) => {
   return (
     <li data-id={hotel.id}>
       <img src={hotel.optimizedThumbUrls.srpDesktop} alt="" />
@@ -18,4 +18,4 @@ const HotelItem = ({ hotel }) => {
   );
 };
 
-export default HotelItem;
+export default CarouselLi;
