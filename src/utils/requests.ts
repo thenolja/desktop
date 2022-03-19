@@ -82,7 +82,7 @@ const getNearHotelList = async ({ latitude, longitude }): Promise<[]> => {
     });
 };
 
-const getLocalHotelList = async ({ destinationId }) => {
+const getLocalHotelList = async (destinationId: number): Promise<[]> => {
   const options = {
     Method: 'GET',
     url: 'https://hotels4.p.rapidapi.com/properties/list',
@@ -108,8 +108,10 @@ const getLocalHotelList = async ({ destinationId }) => {
     .then(
       ({
         data: {
-          body: {
-            searchResults: { results },
+          data: {
+            body: {
+              searchResults: { results },
+            },
           },
         },
       }) => results,

@@ -6,4 +6,15 @@ const StyledH3 = styled.h3`
   margin-bottom: 24px;
 `;
 
-export { StyledH3 };
+const StyledUl = styled.ul`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledLi = styled.li`
+  width: 25%;
+  text-align: center;
+`;
+
+export { StyledH3, StyledUl, StyledLi };
