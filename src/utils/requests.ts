@@ -82,4 +82,41 @@ const getNearHotelList = async ({ latitude, longitude }): Promise<[]> => {
     });
 };
 
-export { getAllHotelList, getNearHotelList };
+const getLocalHotelList = async ({ destinationId }) => {
+  const options = {
+    Method: 'GET',
+    url: 'https://hotels4.p.rapidapi.com/properties/list',
+    params: {
+      destinationId: destinationId,
+      pageNumber: '1',
+      pageSize: '20',
+      checkIn: '2020-01-08',
+      checkOut: '2020-01-15',
+      adults1: '1',
+      sortOrder: 'STAR_RATING_HIGHEST_FIRST',
+      locale: 'ko_KR',
+      currency: 'USD',
+    },
+    headers: {
+      'x-rapidapi-host': 'hotels4.p.rapidapi.com',
+      'x-rapidapi-key': '94629a7cb3mshf5f289b5607b657p143b91jsnea007af77478',
+    },
+  };
+
+  return await axios
+    .request(options)
+    .then(
+      ({
+        data: {
+          body: {
+            searchResults: { results },
+          },
+        },
+      }) => results,
+    )
+    .catch(error => {
+      console.error(error);
+    });
+};
+
+export { getAllHotelList, getNearHotelList, getLocalHotelList };
