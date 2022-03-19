@@ -11,12 +11,11 @@ import Rooms from 'src/pages/Detail/Rooms';
 import Reviews from 'src/pages/Detail/Reviews';
 
 const App = () => {
-  // const [detailNavigation] = useState([
-  //   { id: 'rooms', content: '객실' },
-  //   { id: 'rooms', content: '객실' },
-  //   { id: 'reviews', content: '후기' },
-  //   // 페이지 생성 후, 추가하기
-  // ]);
+  const [detailNavigation] = useState([
+    { id: 'rooms', href: '', content: '객실' },
+    { id: 'test', href: 'test', content: '편의시설' },
+    { id: 'reviews', href: 'reviews', content: '후기' },
+  ]);
 
   return (
     <>
@@ -25,7 +24,7 @@ const App = () => {
         <Routes>
           <Route index element={<Index />} />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="/detail" element={<Detail />}>
+          <Route path="/detail" element={<Detail list={detailNavigation}/>}>
             <Route index element={<Rooms />} />
             <Route path="reviews" element={<Reviews />} />
           </Route>
