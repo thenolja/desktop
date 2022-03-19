@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import { getAllHotelList, getNearHotelList } from 'src/utils/requests';
-import { StyledH3 } from './localGoods.style';
+import { StyledH3 } from './CurrentGoods.style';
 import MoveCarousel from 'components/Carousels/MoveCarousel';
 import NoMoveCarousel from 'components/Carousels/NoMoveCarousel';
 
-const LocalGoods = () => {
+const CurrentGoods = () => {
   const [agreeInfo, setAgreeInfo] = useState<boolean>(false);
   const [resHotels, setResHotels] = useState<[]>([]);
 
@@ -30,4 +30,4 @@ const LocalGoods = () => {
   );
 };
 
-export default LocalGoods;
+export default CurrentGoods;

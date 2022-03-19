@@ -16,7 +16,7 @@ const ReviewCount = styled.span`
   }
 `;
 
-const ReviewList = styled.section`  
+const ReviewList = styled.ul`  
   article{
     padding-top: 2rem;
     margin-top: 2rem;
