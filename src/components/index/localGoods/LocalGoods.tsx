@@ -1,76 +1,31 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 import { getAllHotelList, getNearHotelList } from 'src/utils/requests';
-import Button from './Button/Button';
-import HotelItem from './HotelItem/HotelItem';
-import { StyledH3, StyledUl, StyledDiv } from './localGoods.style';
+import { StyledH3 } from './localGoods.style';
+import MoveCarousel from 'components/Carousels/MoveCarousel';
+import NoMoveCarousel from 'components/Carousels/NoMoveCarousel';
 
 const LocalGoods = () => {
-  const [slide, setSlide] = useState<number>(-1);
   const [agreeInfo, setAgreeInfo] = useState<boolean>(false);
-  const [hotels, setHotels] = useState<[]>([]);
-  const [isMoving, setIsMoving] = useState<boolean>(false);
-  const refUl = useRef();
-
-  const listNum = 5;
+  const [resHotels, setResHotels] = useState<[]>([]);
 
   const success = async ({ coords }) => {
-    const res = await getNearHotelList(coords);
-    console.log(res.length);
-
-    setHotels([...res.slice(res.length - 5, res.length), ...res, ...res.slice(0, 5)]);
+    setResHotels(await getNearHotelList(coords));
     setAgreeInfo(true);
   };
 
-  const error = () => {
-    const res = getAllHotelList();
-    setHotels([...res.slice(res.length - 5, res.length), ...res, ...res.slice(0, 5)]);
+  const error = async () => {
+    setResHotels(await getAllHotelList());
   };
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success, error);
   }, []);
 
-  useEffect(() => {
-    setIsMoving(true);
-
-    refUl.current.style.transition = 'transform 0.5s';
-    refUl.current.style.transform = `translateX(${slide * 100}%)`;
-
-    setTimeout(() => {
-      if (slide === 0) {
-        refUl.current.style.transition = 'none';
-        refUl.current.style.transform = 'translateX(-400%)';
-        setSlide(-4);
-      } else if (slide === -5) {
-        refUl.current.style.transition = 'none';
-        refUl.current.style.transform = 'translateX(-100%)';
-        setSlide(-1);
-      }
-      setIsMoving(false);
-    }, 500);
-  }, [slide]);
-
-  const movePrev = () => {
-    if (isMoving) return;
-    setSlide(slide + 1);
-  };
-
-  const moveNext = () => {
-    if (isMoving) return;
-    setSlide(slide - 1);
-  };
-
   return (
     <div>
       <StyledH3>{agreeInfo ? '현재 지역에서의 추천 상품' : '전체 지역의 추천 상품'}</StyledH3>
-      <StyledDiv>
-        <Button role="prev" onClick={movePrev} />
-        <StyledUl slide={slide} ref={refUl}>
-          {hotels.length !== 0 && hotels.map((hotel, idx) => <HotelItem key={hotel.id + idx} hotel={hotel} />)}
-        </StyledUl>
-        <Button role="next" onClick={moveNext} />
-      </StyledDiv>
+      {resHotels.length > 5 ? <MoveCarousel resHotels={resHotels} /> : <NoMoveCarousel resHotels={resHotels} />}
     </div>
   );
 };

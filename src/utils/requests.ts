@@ -1,16 +1,5 @@
 import axios from 'axios';
 
-const requestAxios = options =>
-  axios
-    .request(options)
-    .then(({ data }) => {
-      console.log(data);
-      return data;
-    })
-    .catch(error => {
-      console.error(error);
-    });
-
 const getAllHotelList = async (): Promise<[]> => {
   const options = {
     Method: 'GET',
