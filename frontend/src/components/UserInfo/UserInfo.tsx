@@ -1,6 +1,7 @@
 import { UserInfoContainer } from './Profile.style';
+import { UserInfoType } from './User';
 
-const UserInfo = ({ user, handleEditingMode }) => {
+const UserInfo = ({ user, handleEditingMode }: UserInfoType) => {
   return (
     <UserInfoContainer>
       <h2>

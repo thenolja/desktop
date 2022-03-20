@@ -1,11 +1,15 @@
 import { Navigate } from 'react-router-dom';
 import LoginUser from './PrtotectedRouter';
 
-const ProtectedRoute = ({ isAllow, children }: LoginUser): any => {
+const ProtectedRoute = ({ isAllow, children }: LoginUser): JSX.Element => {
   if (!isAllow) {
-    return <Navigate to="/" replace />;
+    return (
+      <>
+        <Navigate to="/" replace />;
+      </>
+    );
   }
-  return children;
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;
