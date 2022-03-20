@@ -3,8 +3,8 @@ import CarouselLi from '../CarouselLi/CarouselLi';
 const CarouselUl = ({ hotelArr }) => {
   return (
     <ul>
-      {hotelArr.map((hotel, idx) => (
-        <CarouselLi key={hotel.id + idx} hotel={hotel} />
+      {hotelArr.map(hotel => (
+        <CarouselLi key={hotel.id} hotel={hotel} />
       ))}
     </ul>
   );
