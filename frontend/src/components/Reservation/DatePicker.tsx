@@ -1,20 +1,20 @@
 import DatePicker from 'react-datepicker';
-import { SetStateAction, useState } from 'react';
+import { SetStateAction, useCallback } from 'react';
 import { addDays } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
-import styled from 'styled-components';
 
-const DatePickerComponent = () => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+import DatePickerContainer from './DataPicker.style';
+
+const DatePickerComponent = ({ startDate, setStartDate, endDate, setEndDate }) => {
+  const preventDefault = useCallback(e => e.preventDefault(), []);
 
   return (
-    <section className="DatePickerContainer">
-      <h2 className="srOnly">날짜 선택</h2>
+    <DatePickerContainer>
       <DatePicker
         selectStart
         selected={startDate}
         dateFormat="yyyy-MM-dd"
+        onChangeRaw={preventDefault}
         onChange={(date: SetStateAction<Date>) => setStartDate(date)}
       />
       <span>~</span>
@@ -23,9 +23,10 @@ const DatePickerComponent = () => {
         selected={endDate}
         dateFormat="yyyy-MM-dd"
         minDate={addDays(startDate, 1)}
+        onChangeRaw={preventDefault}
         onChange={(date: SetStateAction<Date>) => setEndDate(date)}
       />
-    </section>
+    </DatePickerContainer>
   );
 };
 
