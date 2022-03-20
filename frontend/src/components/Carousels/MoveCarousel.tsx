@@ -29,6 +29,10 @@ const MoveCarousel = ({ resHotels }) => {
   };
 
   useEffect(() => {
+    refDiv.current.style.transition = 'none';
+  }, []);
+
+  useEffect(() => {
     const resConstructRes = makeArray(resHotels);
     setLimit(resConstructRes.length);
 

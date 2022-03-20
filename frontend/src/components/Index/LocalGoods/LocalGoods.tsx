@@ -4,10 +4,12 @@ import { getLocalHotelList } from 'src/utils/requests';
 import { StyledH3, StyledUl, StyledLi } from './localGoods.style';
 import MoveCarousel from 'components/Carousels/MoveCarousel';
 import NoMoveCarousel from 'components/Carousels/NoMoveCarousel';
+import Spinner from 'components/Spinner/Spinner';
 
 const LocalGoods = () => {
   const [local, setLocal] = useState<number>(758104);
   const [resHotels, setResHotels] = useState<object[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const locals = useMemo(
     () => [
@@ -24,6 +26,7 @@ const LocalGoods = () => {
       dataset: { id },
     },
   }) => {
+    setIsLoading(true);
     setLocal(id);
   };
 
@@ -32,10 +35,12 @@ const LocalGoods = () => {
 
     const requestHotels = async () => {
       nowLocal.datas = await getLocalHotelList(+local);
+      setIsLoading(false);
       setResHotels(nowLocal.datas);
     };
 
     if (nowLocal.datas.length > 0) {
+      setIsLoading(false);
       setResHotels(nowLocal.datas);
     } else {
       requestHotels();
@@ -52,7 +57,13 @@ const LocalGoods = () => {
           </StyledLi>
         ))}
       </StyledUl>
-      {resHotels.length > 5 ? <MoveCarousel resHotels={resHotels} /> : <NoMoveCarousel resHotels={resHotels} />}
+      {isLoading ? (
+        <Spinner />
+      ) : resHotels.length > 5 ? (
+        <MoveCarousel resHotels={resHotels} />
+      ) : (
+        <NoMoveCarousel resHotels={resHotels} />
+      )}
     </div>
   );
 };
