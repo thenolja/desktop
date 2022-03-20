@@ -2,6 +2,7 @@ import {FlexBox, Imoji, Time, Info, Text, Star, Button, MainWrapper} from './Rev
 import { faStar, faStarHalf } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReviewProps } from './Review.type';
+import { memo } from 'react';
 
 const StarScore = (star: number) => {
   const stars = [];
@@ -38,4 +39,4 @@ const Review = (review: ReviewProps) => {
   )
 }
 
-export default Review;
+export default memo(Review);
