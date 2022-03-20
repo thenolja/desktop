@@ -1,14 +1,44 @@
 import styled from 'styled-components';
 
 const ReservationList = styled.section`
+  position: relative;
   h2 {
-    font-size: 40px;
-    font-weight: 700;
-    letter-spacing: -3px;
     padding-bottom: 50px;
     margin-bottom: 50px;
     border-bottom: 1px solid black;
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -3px;
   }
+
+  .DatePickerContainer {
+    position: absolute;
+    display: flex;
+
+    top: 0;
+    right: 0;
+    border: 1px solid gray;
+    border-radius: 30px;
+    width: 700px;
+
+    .react-datepicker-wrapper {
+      width: 50%;
+    }
+    input {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 700;
+      padding: 15px;
+      cursor: pointer;
+    }
+
+    span {
+      margin: 0;
+      text-align: center;
+      align-self: center;
+    }
+  }
+
   ul {
     display: flex;
     justify-content: space-between;

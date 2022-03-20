@@ -1,11 +1,12 @@
+import DatePickerComponent from './DatePicker';
 import ReservationList from './Reservation.style';
 
 const Reservations = () => {
-  // userId를 통해 검색
-  // const reservation = [];
+  const reservationList = [];
   return (
     <ReservationList>
       <h2>예약내역</h2>
+      <DatePickerComponent />
 
       <ul>
         <li>
