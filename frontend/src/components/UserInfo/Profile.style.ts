@@ -95,7 +95,7 @@ const UserInfoFormContainer = styled.form`
     #phone {
       background-color: #f0f0f0;
       border-radius: 10px;
-      padding: 1%;
+      padding: 5px;
       font-size: 18px;
     }
   }
