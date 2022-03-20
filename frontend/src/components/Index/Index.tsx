@@ -1,5 +1,6 @@
 import Notice from './Notice/Notice';
 import SearchForm from './SearchForm/SearchForm';
+import CurrentGoods from './CurrentGoods/CurrentGoods';
 import LocalGoods from './LocalGoods/LocalGoods';
 
 const Index = () => {
@@ -7,6 +8,7 @@ const Index = () => {
     <>
       <Notice />
       <SearchForm />
+      <CurrentGoods />
       <LocalGoods />
     </>
   );
