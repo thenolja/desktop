@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import LoginUser from './ProtectedRouter';
+import LoginUser from './LoginUser';
 
 const ProtectedRoute = ({ isAllow, children }: LoginUser): JSX.Element => {
   if (!isAllow) {
