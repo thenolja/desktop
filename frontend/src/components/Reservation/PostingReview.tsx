@@ -1,0 +1,65 @@
+import PostingReviewContainer from './PostingReview.style';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { createPortal } from 'react-dom';
+import { useCallback } from 'react';
+
+const PostingReview = ({ showDialog, setDialog }) => {
+  return createPortal(
+    <PostingReviewContainer hidden={!showDialog}>
+      <section>
+        <h2>바른후기 남기기</h2>
+        <dl>
+          <dt>방문정보</dt>
+          <dd>더놀자 예약/숙박</dd>
+          <dt>숙소명</dt>
+          <dd>건대호텔스타</dd>
+          <dt>객실정보</dt>
+          <dd>디럭스</dd>
+        </dl>
+        <button className="cancel" onClick={() => setDialog(false)}>
+          닫기
+        </button>
+        <form>
+          <fieldset>
+            <legend>이곳에서의 경험은 어떠셨나요?</legend>
+            <div className="rating-container">
+              <input type="radio" id="5-stars" name="rating" value="5" />
+              <label htmlFor="5-stars">
+                <FontAwesomeIcon icon={faStar} />
+              </label>
+              <input type="radio" id="4-stars" name="rating" value="4" />
+              <label htmlFor="4-stars">
+                <FontAwesomeIcon icon={faStar} />
+              </label>
+              <input type="radio" id="3-stars" name="rating" value="3" />
+              <label htmlFor="3-stars">
+                <FontAwesomeIcon icon={faStar} />
+              </label>
+              <input type="radio" id="2-stars" name="rating" value="2" />
+              <label htmlFor="2-stars">
+                <FontAwesomeIcon icon={faStar} />
+              </label>
+              <input type="radio" id="1-stars" name="rating" value="1" />
+              <label htmlFor="1-stars">
+                <FontAwesomeIcon icon={faStar} />
+              </label>
+            </div>
+
+            <textarea placeholder="이곳에서 머물렀던 기억을 자세히 말해줄 수 있나요? (5자 이상 작성해주세요)"></textarea>
+            <div className="img-container">
+              <input type="file" value="" required />
+              <img src="/src/assets/user.svg" alt="리뷰" />
+            </div>
+          </fieldset>
+          <button className="submit" onClick={() => setDialog(false)}>
+            등록하기
+          </button>
+        </form>
+      </section>
+    </PostingReviewContainer>,
+    document.getElementById('dialog'),
+  );
+};
+
+export default PostingReview;
