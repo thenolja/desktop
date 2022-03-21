@@ -121,4 +121,42 @@ const getLocalHotelList = async (destinationId: number): Promise<[]> => {
     });
 };
 
-export { getAllHotelList, getNearHotelList, getLocalHotelList };
+const getAllRoomList = async (hotelId: string): Promise<[]> => {
+  const options = {
+    method: 'GET',
+    url: 'https://hotels4.p.rapidapi.com/properties/get-details',
+    params: {
+      id: hotelId,
+      checkIn: '2022-03-28',
+      checkOut: '2022-03-29',
+      adults1: '2',
+      currency: 'KRW',
+      locale: 'ko_KR'
+    },
+    headers: {
+      'x-rapidapi-host': 'hotels4.p.rapidapi.com',
+      'x-rapidapi-key': '65c2b8e40fmshf6785c8d21db1cbp1581c4jsnae60b44b1c91'
+    }
+  };
+
+  return await axios
+    .request(options)
+    .then(
+      ({
+        data: {
+          data: {
+            body: { 
+              roomsAndRates:{
+                rooms
+              }
+            },
+          },
+        },
+      }) => rooms,
+    )
+    .catch(error => {
+      console.error(error);
+    });
+};
+
+export { getAllHotelList, getNearHotelList, getLocalHotelList, getAllRoomList };
