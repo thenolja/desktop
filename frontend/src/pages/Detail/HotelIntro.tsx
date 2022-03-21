@@ -1,5 +1,5 @@
-import HotelDescription from 'components/detail/HotelDescription';
-import Map from 'components/map/map';
+import HotelDescription from 'components/Detail/HotelDescription';
+import Map from 'components/Map/Map';
 import { useEffect } from 'react';
 import { IntroDiv } from './HotelIntro.style';
 const HotelIntro = () => {

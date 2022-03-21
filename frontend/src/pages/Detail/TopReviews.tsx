@@ -1,7 +1,7 @@
-import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Review from "components/Review/Review";
-import {ReviewTitle, ReviewCount, ReviewList, Star, Average, ButtonWrapper, Button} from './Reviews.style';
+import ReviewTitle from "components/Review/ReviewTitle";
+import { Link } from "react-router-dom";
+import {ReviewList, ButtonWrapper, Button} from './TopReviews.style';
 
 const reviews = [
   // mockdata
@@ -28,30 +28,24 @@ const reviews = [
 ]
 
 const Reviews = () => {
+
+  const len=reviews.length;
+  const sum=reviews.reduce((sum,{star})=>sum+star,0);
+  
   return(
     <>
-      <ReviewTitle>
-        <article>
-          <ReviewCount>후기<span>({reviews.length}개)</span></ReviewCount>
-        </article>
-        <article>
-          <div>
-            <Star><FontAwesomeIcon icon={faStar} /></Star>
-            <Average>{reviews.reduce((sum,{star})=>sum+star,0)/reviews.length}<span>/5</span></Average>
-          </div>
-          <div>
-            최근 6개월 누적 평점
-          </div>
-        </article>
-      </ReviewTitle>
-      
+    <ReviewTitle len={len} sum={sum} />
+
       <ReviewList>
         {reviews.map(review => 
           <Review key={review.id} {...review} />
         )}
       </ReviewList>
+
       <ButtonWrapper>
-        <Button>더보기</Button>
+        <Button>
+          <Link to="/reviews">더보기</Link>
+        </Button>
       </ButtonWrapper>
     </>
   )

@@ -28,6 +28,7 @@ const StyledDivInner = styled.div`
         height: auto;
         margin-bottom: 10px;
       }
+    }
   }
 `;
 
