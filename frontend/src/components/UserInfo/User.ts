@@ -7,6 +7,6 @@ export interface User {
 
 export interface UserInfoType {
   user: User;
-  handleEditingMode: (value: boolean) => undefined;
+  handleEditingMode: (value: boolean) => void;
   isEditing?: boolean;
 }

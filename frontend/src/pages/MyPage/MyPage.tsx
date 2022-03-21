@@ -7,7 +7,7 @@ import Profile from 'components/UserInfo/Profile';
 import ProtectedRoute from '../ProtectedRouter/ProtectedRouter';
 
 const MyPage = () => {
-  const [isEditing, setEditingMode] = useState(false);
+  const [isEditing, setEditingMode] = useState<boolean>(false);
   const { id, nickname, email } = useAppSelector(selectAuth);
   // userId로 user 데이터 받아오기
 

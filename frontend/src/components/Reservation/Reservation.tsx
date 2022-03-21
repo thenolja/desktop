@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 
 const Reservations = () => {
   let reservationList = [1];
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [endDate, setEndDate] = useState<Date>(new Date());
 
   useEffect(() => {
     // 날짜 바뀌면 list 검색
