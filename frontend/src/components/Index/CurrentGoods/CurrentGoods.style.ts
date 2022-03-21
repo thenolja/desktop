@@ -6,4 +6,8 @@ const StyledH3 = styled.h3`
   margin-bottom: 24px;
 `;
 
-export { StyledH3 };
+const StyledDiv = styled.div`
+  margin-bottom: 72px;
+`;
+
+export { StyledH3, StyledDiv };

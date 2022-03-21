@@ -10,17 +10,17 @@ import Footer from 'src/containers/Footer/Footer';
 import Index from 'components/Index/Index';
 import Detail from 'src/pages/Detail/Detail';
 import Rooms from 'src/pages/Detail/Rooms';
-import Reviews from 'src/pages/Detail/Reviews';
+import TopReviews from 'src/pages/Detail/TopReviews';
+import Reviews from 'src/pages/Reviews/Reviews';
 import ProtectedRoute from 'src/pages/ProtectedRouter/ProtectedRouter';
 
 const App = () => {
   const { id, nickname, email } = useAppSelector(selectAuth);
-  // const [detailNavigation] = useState([
-  //   { id: 'rooms', content: '객실' },
-  //   { id: 'rooms', content: '객실' },
-  //   { id: 'reviews', content: '후기' },
-  //   // 페이지 생성 후, 추가하기
-  // ]);
+  const [detailNavigation] = useState([
+    { id: 'rooms', href: '', content: '객실' },
+    { id: 'test', href: 'test', content: '편의시설' },
+    { id: 'topReviews', href: 'topReviews', content: '후기' },
+  ]);
 
   return (
     <>
@@ -36,10 +36,10 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-
-          <Route path="/detail" element={<Detail />}>
+          <Route path="/reviews" element={<Reviews />} />
+          <Route path="/detail" element={<Detail list={detailNavigation} />}>
             <Route index element={<Rooms />} />
-            <Route path="reviews" element={<Reviews />} />
+            <Route path="topReviews" element={<TopReviews />} />
           </Route>
         </Routes>
       </Main>
