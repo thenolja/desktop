@@ -5,13 +5,9 @@ import { ReviewProps } from './Review.type';
 import { memo } from 'react';
 
 const StarScore = (star:number) => {
-  const $span = document.createElement('span');
-  for(let i=0; i < Math.floor(star); i++){
-    $span.innerHTML += `<Star><FontAwesomeIcon icon={faStar} /></Star>`;
-  }
-  if(star - Math.floor(star) > 0) $span.innerHTML += `<Star><FontAwesomeIcon icon={faStarHalf} /></Star>`;
-  console.log($span, $span.childNodes)
-  return $span.childNodes;
+  const stars = [];
+  for(let i=0; i < star; i++) stars.push(<Star><FontAwesomeIcon icon={faStar} /></Star>);
+  return stars;
 }
 
 const Review = (review: ReviewProps) => {
@@ -23,13 +19,7 @@ const Review = (review: ReviewProps) => {
         <Imoji>imoji</Imoji>
         <div>
           <div>
-            {/* {StarScore(star)} */}
-            {/* <StarScore star={star}/> */}
-            <Star><FontAwesomeIcon icon={faStar} /></Star>
-            <Star><FontAwesomeIcon icon={faStar} /></Star>
-            <Star><FontAwesomeIcon icon={faStar} /></Star>
-            <Star><FontAwesomeIcon icon={faStar} /></Star>
-            <Star><FontAwesomeIcon icon={faStarHalf} /></Star>
+            {StarScore(star)}
             <Time>{writeTime}</Time>
           </div>
         <Info>
