@@ -11,7 +11,6 @@ const EndDatPicker = ({ startDate, endDate, setEndDate }) => {
     <StyledDiv width="174px">
       <img src="/src/assets/calander.png" alt="" />
       <DatePicker
-        selectEnd
         selected={endDate}
         dateFormat="yyyy-MM-dd"
         minDate={addDays(startDate, 1)}

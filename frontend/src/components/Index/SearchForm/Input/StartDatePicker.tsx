@@ -10,7 +10,6 @@ const StartDatePicker = ({ startDate, setStartDate }) => {
     <StyledDiv width="174px">
       <img src="/src/assets/calander.png" alt="" />
       <DatePicker
-        selectStart
         selected={startDate}
         dateFormat="yyyy-MM-dd"
         onChangeRaw={preventDefault}

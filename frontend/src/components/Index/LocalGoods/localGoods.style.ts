@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ulProps } from './LocalGoods.type';
 
 const StyledH3 = styled.h3`
   font-size: 24px;
@@ -6,7 +7,11 @@ const StyledH3 = styled.h3`
   margin-bottom: 24px;
 `;
 
-const StyledUl = styled.ul`
+const StyledDiv = styled.div`
+  margin-bottom: 72px;
+`;
+
+const StyledUl = styled.ul<ulProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,4 +30,4 @@ const StyledLi = styled.li`
   }
 `;
 
-export { StyledH3, StyledUl, StyledLi };
+export { StyledH3, StyledDiv, StyledUl, StyledLi };
