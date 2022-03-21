@@ -40,7 +40,7 @@ export const ModalHeader = styled.div`
 `;
 
 export const ModalTitle = styled.h2`
-  font-weight: 500;
+  font-weight: 700;
   line-height: 20px;
   color: #141d38;
 `;
