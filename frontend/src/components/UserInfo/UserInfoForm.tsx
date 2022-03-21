@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
 import { UserInfoFormContainer } from './Profile.style';
+import { UserInfoType } from './User';
 
-const UserInfoForm = ({ user, handleEditingMode }) => {
+const UserInfoForm = ({ user, handleEditingMode }: UserInfoType) => {
   const preventDefault = useCallback(e => e.preventDefault(), []);
 
   return (
