@@ -1,7 +1,7 @@
-import { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 
 import { getLocalHotelList } from 'src/utils/requests';
-import { StyledH3, StyledUl, StyledLi } from './localGoods.style';
+import { StyledH3, StyledDiv, StyledUl, StyledLi } from './localGoods.style';
 import MoveCarousel from 'components/Carousels/MoveCarousel';
 import NoMoveCarousel from 'components/Carousels/NoMoveCarousel';
 import Spinner from 'components/Spinner/Spinner';
@@ -21,13 +21,11 @@ const LocalGoods = () => {
     [],
   );
 
-  const changeLocal = async ({
-    target: {
-      dataset: { id },
-    },
-  }) => {
+  const changeLocal = async (e: React.MouseEvent<HTMLUListElement>) => {
+    const target = e.target as HTMLLIElement;
+    const id = target.dataset.id;
     setIsLoading(true);
-    setLocal(id);
+    setLocal(+id);
   };
 
   useEffect(() => {
@@ -48,7 +46,7 @@ const LocalGoods = () => {
   }, [local]);
 
   return (
-    <div>
+    <StyledDiv>
       <StyledH3>지역별 추천 상품</StyledH3>
       <StyledUl onClick={changeLocal}>
         {locals.map(({ localName, destiId }) => (
@@ -64,7 +62,7 @@ const LocalGoods = () => {
       ) : (
         <NoMoveCarousel resHotels={resHotels} />
       )}
-    </div>
+    </StyledDiv>
   );
 };
 
