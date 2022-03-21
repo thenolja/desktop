@@ -31,20 +31,22 @@ const PostingReviewContainer = styled.div`
       cursor: pointer;
       color: #fff;
       font-weight: 700;
-      width: 100px;
-      padding: 15px;
-      font-size: 16px;
     }
 
     .submit {
+      width: 100%;
+      font-size: 24px;
       position: absolute;
-      bottom: 20px;
-      left: 50%;
+      transform: translateX(-20px);
+      padding: 20px 0;
     }
     .cancel {
+      font-size: 16px;
       position: absolute;
       top: 20px;
       right: 50px;
+      width: 100px;
+      padding: 15px;
     }
 
     dl {
@@ -72,6 +74,19 @@ const PostingReviewContainer = styled.div`
       input {
         display: none;
       }
+      label {
+        color: #ccc;
+        cursor: pointer;
+      }
+
+      & :checked ~ label {
+        color: #f90;
+      }
+
+      label:hover,
+      label:hover ~ label {
+        color: #fc0;
+      }
     }
     legend {
       font-size: 20px;
@@ -84,9 +99,9 @@ const PostingReviewContainer = styled.div`
     textarea {
       margin: 10px 0;
       width: 100%;
-      height: 200px;
-      font-size: 16px;
-      border: 1px solid gray;
+      height: 150px;
+      font-size: 18px;
+      border: 0;
       padding: 10px;
     }
 
@@ -101,6 +116,18 @@ const PostingReviewContainer = styled.div`
         width: 100%;
         height: 100%;
         object-fit: cover;
+      }
+      input[type='file'] {
+        position: absolute;
+        width: 0;
+        height: 0;
+        padding: 0;
+        overflow: hidden;
+        border: 0;
+      }
+      label {
+        color: #de2e5f;
+        cursor: pointer;
       }
     }
   }

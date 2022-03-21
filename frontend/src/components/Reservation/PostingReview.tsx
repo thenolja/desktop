@@ -1,10 +1,18 @@
 import PostingReviewContainer from './PostingReview.style';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faCamera } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { createPortal } from 'react-dom';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 const PostingReview = ({ showDialog, setDialog }) => {
+  const [imageSrc, setImageSrc] = useState<string>('');
+
+  const previewImage = useCallback((input: EventTarget & HTMLInputElement): void => {
+    if (!input.files[0]) return;
+    const url = URL.createObjectURL(input.files[0]);
+    setImageSrc(url);
+  }, []);
+
   return createPortal(
     <PostingReviewContainer hidden={!showDialog}>
       <section>
@@ -48,8 +56,11 @@ const PostingReview = ({ showDialog, setDialog }) => {
 
             <textarea placeholder="이곳에서 머물렀던 기억을 자세히 말해줄 수 있나요? (5자 이상 작성해주세요)"></textarea>
             <div className="img-container">
-              <input type="file" value="" required />
-              <img src="/src/assets/user.svg" alt="리뷰" />
+              <img src={imageSrc ? imageSrc : '/src/assets/user.svg'} alt="리뷰" />
+              <input id="file" type="file" required onChange={e => previewImage(e.target)} />
+              <label htmlFor="file">
+                <FontAwesomeIcon icon={faCamera} size="3x" />
+              </label>
             </div>
           </fieldset>
           <button className="submit" onClick={() => setDialog(false)}>
