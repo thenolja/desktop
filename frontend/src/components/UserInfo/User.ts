@@ -1,5 +1,3 @@
-import { SetStateAction } from 'react';
-
 export interface User {
   id: string | null;
   nickname: string | null;
@@ -9,6 +7,6 @@ export interface User {
 
 export interface UserInfoType {
   user: User;
-  handleEditingMode: (value: SetStateAction<boolean>) => void;
+  handleEditingMode: (value: boolean) => void;
   isEditing?: boolean;
 }

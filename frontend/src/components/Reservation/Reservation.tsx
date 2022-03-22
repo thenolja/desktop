@@ -1,11 +1,16 @@
 import DatePickerComponent from './DatePicker';
 import ReservationList from './Reservation.style';
 import { useEffect, useState } from 'react';
+import PostingReview from './PostingReview';
+import { useScrollPrevent } from 'src/hooks/useScroll';
 
 const Reservations = () => {
   let reservationList = [1];
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [endDate, setEndDate] = useState<Date>(new Date());
+  const [showDialog, setDialog] = useState<boolean>(false);
+
+  useScrollPrevent(showDialog);
 
   useEffect(() => {
     // 날짜 바뀌면 list 검색
@@ -22,6 +27,7 @@ const Reservations = () => {
       />
       {reservationList.length ? (
         <ul>
+          {showDialog && <PostingReview showDialog={showDialog} setDialog={setDialog} />}
           <li>
             <img src="/src/assets/hotels/photo1.webp" alt="칵슬라우타넨 악틱 리조트" />
             <div>
@@ -29,7 +35,7 @@ const Reservations = () => {
               <span>기준 2명/최대 2명</span>
               <span>이용 날짜</span>
               <span>2022-02-26~ 2022-03-01</span>
-              <button>후기 남기기</button>
+              <button onClick={() => setDialog(true)}>후기 남기기</button>
             </div>
           </li>
           <li>
@@ -39,7 +45,7 @@ const Reservations = () => {
               <span>기준 2명/최대 2명</span>
               <span>이용 날짜</span>
               <span>2022-02-26~ 2022-03-01</span>
-              <button>후기 남기기</button>
+              <button onClick={() => setDialog(true)}>후기 남기기</button>
             </div>
           </li>
           <li>
@@ -49,7 +55,7 @@ const Reservations = () => {
               <span>기준 2명/최대 2명</span>
               <span>이용 날짜</span>
               <span>2022-02-26~ 2022-03-01</span>
-              <button>후기 남기기</button>
+              <button onClick={() => setDialog(true)}>후기 남기기</button>
             </div>
           </li>
           <li>
@@ -59,7 +65,7 @@ const Reservations = () => {
               <span>기준 2명/최대 2명</span>
               <span>이용 날짜</span>
               <span>2022-02-26~ 2022-03-01</span>
-              <button>후기 남기기</button>
+              <button onClick={() => setDialog(true)}>후기 남기기</button>
             </div>
           </li>
         </ul>
