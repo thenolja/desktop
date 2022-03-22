@@ -1,8 +1,31 @@
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect, useState } from 'react';
+import { getReviewTitleData } from 'src/utils/requests';
 import {Title, ReviewCount, Star, Average} from './ReviewTitle.style';
 
-const ReviewTitle=({len, sum})=>{
+const ReviewTitle=()=>{
+
+  const [hotelId, setHotelId] = useState<string>('229056');
+
+  const [total, setTotal]=useState({
+    len: 0,
+    rate: 0
+  })
+
+  const {len, rate}=total;
+
+  useEffect(()=>{
+    const getReivewTitle = async () => {
+      const title = await getReviewTitleData(hotelId);
+
+      setTotal({
+        len: title.total,
+        rate: title.rating
+      })
+    }
+    getReivewTitle();
+  },[]);
 
   return (
     <Title>
@@ -12,7 +35,7 @@ const ReviewTitle=({len, sum})=>{
       <article>
         <div>
           <Star><FontAwesomeIcon icon={faStar} /></Star>
-          <Average>{(sum/len).toFixed(2)}<span>/5</span></Average>
+          <Average>{(rate/2).toFixed(1)}<span>/5</span></Average>
         </div>
         <div>
           최근 6개월 누적 평점
