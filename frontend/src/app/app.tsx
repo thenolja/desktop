@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useAppSelector } from 'src/contexts/state.type';
-import { selectAuth } from 'src/contexts/auth';
 
 import Header from 'src/containers/Header/Header';
 import Main from 'src/containers/Main/Main';
@@ -15,7 +13,6 @@ import Reviews from 'src/pages/Reviews/Reviews';
 import ProtectedRoute from 'src/pages/ProtectedRouter/ProtectedRouter';
 
 const App = () => {
-  const { id, nickname, email } = useAppSelector(selectAuth);
   const [detailNavigation] = useState([
     { id: 'rooms', href: '', content: '객실' },
     { id: 'test', href: 'test', content: '편의시설' },
@@ -31,7 +28,7 @@ const App = () => {
           <Route
             path="/mypage"
             element={
-              <ProtectedRoute isAllow={!!(id && nickname && email)}>
+              <ProtectedRoute>
                 <MyPage />
               </ProtectedRoute>
             }
