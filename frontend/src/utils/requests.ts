@@ -1,5 +1,47 @@
 import axios from 'axios';
 
+const getSearchHotelsByQuery = async ({ destinationId, checkIn, checkOut, person }): Promise<[]> => {
+  const options = {
+    Method: 'GET',
+    url: 'https://hotels-com-provider.p.rapidapi.com/v1/hotels/search',
+    params: {
+      checkin_date: checkIn,
+      checkout_date: checkOut,
+      sort_order: 'STAR_RATING_HIGHEST_FIRST',
+      destination_id: destinationId,
+      adults_number: person,
+      locale: 'ko_KR',
+      currency: 'USD',
+      children_ages: '4,0,15',
+      price_min: '10',
+      star_rating_ids: '3,4,5',
+      accommodation_ids: '20,8,15,5,1',
+      price_max: '500',
+      page_number: '1',
+      theme_ids: '14,27,25',
+      amenity_ids: '527,2063',
+      guest_rating_min: '4',
+    },
+    headers: {
+      'x-rapidapi-host': 'hotels-com-provider.p.rapidapi.com',
+      'x-rapidapi-key': '5eedf12c2fmsh19d688008610b0ap1e2d95jsn145a7e296bea',
+    },
+  };
+
+  return await axios
+    .request(options)
+    .then(
+      ({
+        data: {
+          searchResults: { results },
+        },
+      }) => results,
+    )
+    .catch(error => {
+      console.error(error);
+    });
+};
+
 const getAllHotelList = async (): Promise<[]> => {
   const options = {
     Method: 'GET',
@@ -17,7 +59,7 @@ const getAllHotelList = async (): Promise<[]> => {
     },
     headers: {
       'x-rapidapi-host': 'hotels4.p.rapidapi.com',
-      'x-rapidapi-key': '94629a7cb3mshf5f289b5607b657p143b91jsnea007af77478',
+      'x-rapidapi-key': '5eedf12c2fmsh19d688008610b0ap1e2d95jsn145a7e296bea',
     },
   };
 
@@ -64,7 +106,7 @@ const getNearHotelList = async ({ latitude, longitude }): Promise<[]> => {
     },
     headers: {
       'x-rapidapi-host': 'hotels-com-provider.p.rapidapi.com',
-      'x-rapidapi-key': '432c69262amsh4275073ced663ebp1d4a90jsn306b566d0acd',
+      'x-rapidapi-key': '5eedf12c2fmsh19d688008610b0ap1e2d95jsn145a7e296bea',
     },
   };
 
@@ -99,7 +141,7 @@ const getLocalHotelList = async (destinationId: number): Promise<[]> => {
     },
     headers: {
       'x-rapidapi-host': 'hotels4.p.rapidapi.com',
-      'x-rapidapi-key': '94629a7cb3mshf5f289b5607b657p143b91jsnea007af77478',
+      'x-rapidapi-key': '5eedf12c2fmsh19d688008610b0ap1e2d95jsn145a7e296bea',
     },
   };
 
@@ -121,4 +163,4 @@ const getLocalHotelList = async (destinationId: number): Promise<[]> => {
     });
 };
 
-export { getAllHotelList, getNearHotelList, getLocalHotelList };
+export { getSearchHotelsByQuery, getAllHotelList, getNearHotelList, getLocalHotelList };
