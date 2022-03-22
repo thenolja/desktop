@@ -7,7 +7,7 @@ import { Nav, NavUl, NavList, ActiveNavList } from './Detail.style';
 import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-const Detail = ({ list, ...restProps }) => {
+const Detail = ({ list }) => {
   const { pathname } = useLocation();
 
   const [users, setUsers]=useState([]);
@@ -20,17 +20,6 @@ const Detail = ({ list, ...restProps }) => {
 
   return (
     <>
-      <div {...restProps}>
-      {users.map((user)=>(
-        <div key={user.id}>
-          <div>{user.userId}</div>
-          <div>{user.email}</div>
-          <div>{user.nickName}</div>
-          <div>{user.phone}</div>
-        </div>
-      )
-      )}
-      </div>
       <HotelIntro></HotelIntro>
       <Nav>
         <NavUl>

@@ -3,7 +3,7 @@ import { UserInfoFormContainer } from './Profile.style';
 import { UserInfoType } from './User';
 
 const UserInfoForm = ({ user, handleEditingMode }: UserInfoType) => {
-  const preventDefault = useCallback(e => e.preventDefault(), []);
+  const preventDefault = useCallback((e: React.FormEvent<HTMLFormElement>) => e.preventDefault(), []);
 
   return (
     <UserInfoFormContainer onSubmit={preventDefault}>
