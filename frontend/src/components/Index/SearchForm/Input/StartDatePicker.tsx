@@ -1,5 +1,5 @@
 import DatePicker from 'react-datepicker';
-import { useCallback, SetStateAction } from 'react';
+import { useCallback } from 'react';
 
 import { StyledDiv } from './InputDiv.style';
 
@@ -10,10 +10,12 @@ const StartDatePicker = ({ startDate, setStartDate }) => {
     <StyledDiv width="174px">
       <img src="/src/assets/calander.png" alt="" />
       <DatePicker
+        selectsStart
         selected={startDate}
+        minDate={startDate}
         dateFormat="yyyy-MM-dd"
         onChangeRaw={preventDefault}
-        onChange={(date: SetStateAction<Date>) => setStartDate(date)}
+        onChange={date => setStartDate(date)}
       />
     </StyledDiv>
   );

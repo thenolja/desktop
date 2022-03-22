@@ -59,6 +59,7 @@ const Button = styled.button`
   color: #fff;
   font-size: 14px;
   font-weight: 700;
+  cursor: pointer;
 `;
 
 export {FlexBox, Imoji, Time, Info, Text, Star, MainWrapper, Button};
