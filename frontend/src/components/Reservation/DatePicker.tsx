@@ -1,12 +1,13 @@
 import DatePicker from 'react-datepicker';
-import { SetStateAction, useCallback } from 'react';
+import { useCallback } from 'react';
 import { addDays } from 'date-fns';
-import 'react-datepicker/dist/react-datepicker.css';
+import { DateType } from './Date';
 
+import 'react-datepicker/dist/react-datepicker.css';
 import DatePickerContainer from './DataPicker.style';
 
-const DatePickerComponent = ({ startDate, setStartDate, endDate, setEndDate }) => {
-  const preventDefault = useCallback(e => e.preventDefault(), []);
+const DatePickerComponent = ({ startDate, setStartDate, endDate, setEndDate }: DateType) => {
+  const preventDefault = useCallback((e: React.ChangeEvent<HTMLInputElement>) => e.preventDefault(), []);
 
   return (
     <DatePickerContainer>
@@ -15,7 +16,7 @@ const DatePickerComponent = ({ startDate, setStartDate, endDate, setEndDate }) =
         selected={startDate}
         dateFormat="yyyy-MM-dd"
         onChangeRaw={preventDefault}
-        onChange={(date: SetStateAction<Date>) => setStartDate(date)}
+        onChange={(date: Date) => setStartDate(date)}
       />
       <span>~</span>
       <DatePicker
@@ -24,7 +25,7 @@ const DatePickerComponent = ({ startDate, setStartDate, endDate, setEndDate }) =
         dateFormat="yyyy-MM-dd"
         minDate={addDays(startDate, 1)}
         onChangeRaw={preventDefault}
-        onChange={(date: SetStateAction<Date>) => setEndDate(date)}
+        onChange={(date: Date) => setEndDate(date)}
       />
     </DatePickerContainer>
   );

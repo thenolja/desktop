@@ -1,4 +1,4 @@
 export default interface LoginUser {
   isAllow: Boolean;
-  children: JSX.Element[];
+  children: JSX.Element;
 }
