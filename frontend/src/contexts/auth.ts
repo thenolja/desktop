@@ -28,6 +28,9 @@ export const auth = createSlice({
     authLogOut() {
       return auth.getInitialState();
     },
+    authUpdate(state, { payload }) {
+      return { ...state, ...payload };
+    },
   },
 });
 
@@ -35,7 +38,7 @@ interface RootState {
   auth: AuthType;
 }
 
-export const { authLogIn, authLogOut } = auth.actions;
+export const { authLogIn, authLogOut, authUpdate } = auth.actions;
 export const selectAuth = (state: RootState) => state.auth;
 
 export default auth.reducer;

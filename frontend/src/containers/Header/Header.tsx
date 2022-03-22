@@ -23,16 +23,15 @@ const Header = () => {
   netlifyIdentity.on('login', async ({ id, email, user_metadata: { full_name: nickname } }) => {
     const user = await getUserById(id);
     let authorizedUser = {};
-
     const iscreatedUser = user?.length;
 
     authorizedUser = {
-      id: iscreatedUser ? user.id : id,
-      nickname: iscreatedUser ? user.nickname : nickname,
-      email: iscreatedUser ? user.email : email,
-      phone: iscreatedUser ? user.phone : '',
-      reservations: iscreatedUser ? user.reservations : [],
-      myReviews: iscreatedUser ? user.myReviews : [],
+      id: iscreatedUser ? id : user.id,
+      nickname: iscreatedUser ? nickname : user.nickname,
+      email: iscreatedUser ? email : user.email,
+      phone: iscreatedUser ? '' : user.phone,
+      reservations: iscreatedUser ? [] : user.reservations,
+      myReviews: iscreatedUser ? [] : user.myReviews,
     };
 
     dispatch(authLogIn({ ...authorizedUser }));
