@@ -1,10 +1,14 @@
 import { Navigate } from 'react-router-dom';
-import LoginUser from './LoginUser';
 
-const ProtectedRoute = ({ isAllow, children }: LoginUser): JSX.Element => {
-  // if (!isAllow) {
-  //   return <Navigate to="/" replace />;
-  // }
+interface userInfo {
+  isAllow: boolean;
+  children: JSX.Element;
+}
+
+const ProtectedRoute = ({ isAllow, children }: userInfo): JSX.Element => {
+  if (!isAllow) {
+    return <Navigate to="/" replace />;
+  }
   return children;
 };
 

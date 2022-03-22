@@ -12,7 +12,7 @@ const DatePickerComponent = ({ startDate, setStartDate, endDate, setEndDate }: D
   return (
     <DatePickerContainer>
       <DatePicker
-        selectStart
+        selectsStart
         selected={startDate}
         dateFormat="yyyy-MM-dd"
         onChangeRaw={preventDefault}
@@ -20,7 +20,7 @@ const DatePickerComponent = ({ startDate, setStartDate, endDate, setEndDate }: D
       />
       <span>~</span>
       <DatePicker
-        selectEnd
+        selectsEnd
         selected={endDate}
         dateFormat="yyyy-MM-dd"
         minDate={addDays(startDate, 1)}

@@ -17,7 +17,9 @@ const CarouselLi = ({ hotel }) => {
       <p className="price-wrapper">
         <span>1박 기준</span>
         <br />
-        {hotel.ratePlan ? +hotel.ratePlan.price.exactCurrent * 1000 + '원' : '가격 정보 없음'}
+        {hotel.ratePlan
+          ? Math.floor(hotel.ratePlan.price.exactCurrent * 1000).toLocaleString() + '원'
+          : '가격 정보 없음'}
       </p>
     </StyledLi>
   );
