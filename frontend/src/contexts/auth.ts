@@ -5,6 +5,8 @@ export interface AuthType {
   nickname: string | null;
   email: string | null;
   phone: string | null;
+  reservations: number[] | null;
+  myReviews: number[] | null;
 }
 
 const initialState: AuthType = {
@@ -12,6 +14,8 @@ const initialState: AuthType = {
   nickname: null,
   email: null,
   phone: null,
+  reservations: null,
+  myReviews: null,
 };
 
 export const auth = createSlice({
