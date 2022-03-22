@@ -6,13 +6,14 @@ import QueryInput from './Input/QueryInput';
 import EndDatPicker from './Input/EndDatPicker';
 import StartDatePicker from './Input/StartDatePicker';
 import Button from './Button/Button';
-import { getSearchHotelsByQuery } from 'src/utils/requests';
+import { useNavigate } from 'react-router-dom';
 
 const SearchForm = () => {
+  const navigate = useNavigate();
   const [destinationId, setDestinationId] = useState<number>(759818);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [person, setPerson] = useState(1);
+  const [person, setPerson] = useState<number>(1);
 
   const changeDateFormat = (date: Date) => new Date(date).toISOString().split('T')[0];
 
@@ -21,7 +22,7 @@ const SearchForm = () => {
 
     const checkIn = changeDateFormat(startDate);
     const checkOut = changeDateFormat(endDate);
-    console.log(await getSearchHotelsByQuery({ destinationId, checkIn, checkOut, person }));
+    navigate(`/search/?destinationId=${destinationId}&checkIn=${checkIn}&checkOut=${checkOut}&person=${person}`);
   };
 
   return (
