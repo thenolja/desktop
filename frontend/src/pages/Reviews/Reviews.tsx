@@ -8,38 +8,60 @@ import {ReviewList} from '../Detail/TopReviews.style';
 
 const Reviews = ():JSX.Element =>{
   const [hotelId, setHotelId]=useState<string>('229056');
+  
+  const [target, setTarget]=useState(null);
+  const [isLoaded, setIsLoaded]=useState(false);
   const [reviews, setReivews]=useState<object[]>([]);
   
-  const PageURL = (page) => {
-    return 
-  }
+  let nextUrl = '';
+  let currentPage = 1;
+  let totalPage;
+
+  const getMoreItem = async () => {
+    setIsLoaded(true);
+    const presentReivew = await getReviews(hotelId, nextUrl);
+
+    currentPage = presentReivew.pagination.currentPage;
+    totalPage = presentReivew.pagination.totalPages;
+    nextUrl = presentReivew.pagination.nextURL;
+    setReivews(currentReviews=>[...currentReviews, ...presentReivew.reviews.hermes.groups[presentReivew.reviews.hermes.groups.length-1].items]);
+    setIsLoaded(false);
+  };
+
+  const onIntersect = async ([entry], observer) => {
+    if (entry.isIntersecting && !isLoaded && currentPage!==totalPage) {
+      observer.unobserve(entry.target);
+      await getMoreItem();
+      observer.observe(entry.target);
+    } else return;
+  };
 
   useEffect(() => {
-    const getReviewList = async() => {
-      const presentReivew=await getReviews(hotelId);
-
-      setReivews(presentReivew.reviews.hermes.groups[presentReivew.reviews.hermes.groups.length-1].items);
-      const currentPage=presentReivew.pagination.currentPage;
-      const totalPages=presentReivew.pagination.totalPages;
-
-      const urlLst=presentReivew.pagination.nextURL.split('/?');
-      console.log(presentReivew.reviews.hermes.groups[presentReivew.reviews.hermes.groups.length-1].items, urlLst);
+    let observer;
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 0.5,
+      });
+      observer.observe(target);
     }
-    getReviewList();
-  }, []);
-  
+    return () => observer && observer.disconnect();
+  }, [target]);  
+
   return(
     <>
       <ReviewTitle />
 
-      <ReviewList>
+      {/* <ReviewList>
         {reviews.map((review)=>{
           return (
               <Review key={review.itineraryId} review={review} />
             )
           }
-        )}  
+        )}
       </ReviewList>
+      <div ref={setTarget}>
+        {isLoaded && <Loader />}
+      </div> */}
     </>
   )
 }
