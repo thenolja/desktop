@@ -264,4 +264,12 @@ const getHotelInfo = async (hotelId: number): Promise<[]> => {
     });
 };
 
-export { getAllHotelList, getNearHotelList, getLocalHotelList, getAllRoomList, getReviewTitleData, getHotelInfo };
+export {
+  getSearchHotelsByQuery,
+  getAllHotelList,
+  getNearHotelList,
+  getLocalHotelList,
+  getAllRoomList,
+  getReviewTitleData,
+  getHotelInfo,
+};

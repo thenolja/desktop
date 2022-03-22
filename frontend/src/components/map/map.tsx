@@ -10,28 +10,29 @@ import {
   ModalMapWrapper,
 } from './Map.style';
 import { Allbutton } from '../Detail/HotelDescription.style';
-import GlobalStyle from 'src/GlobalStyle';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 
-const KakaoMapStart = () => {
+const KakaoMapStart = (latitude: number, longitude: number) => {
   const kakao = (window as any).kakao;
   let container = document.getElementById('map');
   let options = {
-    center: new kakao.maps.LatLng(37.365264512305174, 127.10676860117488),
+    center: new kakao.maps.LatLng(latitude, longitude),
     level: 3,
   };
   let map = new kakao.maps.Map(container, options);
-  let markerPosition = new kakao.maps.LatLng(37.365264512305174, 127.10676860117488);
+  let markerPosition = new kakao.maps.LatLng(latitude, longitude);
   let marker = new kakao.maps.Marker({
     position: markerPosition,
   });
   marker.setMap(map);
 };
 
-const Map = ({ ...restProp }) => {
+const Map = ({ coordinates }) => {
   const [modalFlag, setModalFlag] = useState(false);
 
   useEffect(() => {
-    KakaoMapStart();
+    KakaoMapStart(coordinates.latitude, coordinates.longitude);
   }, [modalFlag]);
 
   const MapDiv = (() => {
@@ -48,7 +49,7 @@ const Map = ({ ...restProp }) => {
   })();
 
   const fullscreenMap = () => {
-    KakaoMapStart();
+    KakaoMapStart(coordinates.latitude, coordinates.longitude);
     return (
       <>
         <MapModal>
@@ -58,9 +59,10 @@ const Map = ({ ...restProp }) => {
                 setModalFlag(false);
               }}
             >
-              X
+              <FontAwesomeIcon icon={faX} />
             </ModalCloseBtn>
             <ModalTitle />
+            {coordinates.name}
           </ModalHeader>
           {MapDiv}
         </MapModal>
@@ -73,7 +75,7 @@ const Map = ({ ...restProp }) => {
       <MapWrapper>
         {modalFlag ? fullscreenMap() : ''}
         {MapDiv}
-        <MapAddress>일산동구 태극로 20, 고양시, 경기도</MapAddress>
+        <MapAddress>{coordinates.fullAddress}</MapAddress>
         <Allbutton
           onClick={() => {
             setModalFlag(true);

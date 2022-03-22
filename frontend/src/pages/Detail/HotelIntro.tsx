@@ -36,18 +36,33 @@ const findHotelIntro = (body: Object[]) => {
   return hotelIntro;
 };
 
+const findHotelMap = (body: Object[]) => {
+  interface MapInfo {
+    name: string;
+    fullAddress?: string;
+    latitude?: number;
+    longitude?: number;
+  }
+
+  const hotelMapinfo: MapInfo = {
+    name: body.propertyDescription.name,
+    fullAddress: body.propertyDescription.localisedAddress.fullAddress,
+    latitude: body.pdpHeader.hotelLocation.coordinates.latitude,
+    longitude: body.pdpHeader.hotelLocation.coordinates.longitude,
+  };
+  return hotelMapinfo;
+};
+
 const HotelIntro = () => {
   const [hotelId, setHotelId] = useState<number>(171138);
   const [hotelInfo, setHotelInfo] = useState<object>({});
   const [coordinates, setCoordinates] = useState<object>({}); // 위도, 경도
-  const [address, setAddress] = useState<string>(''); //주소
 
   useEffect(() => {
     const requestbody = async () => {
       const overviewSections = await getHotelInfo(hotelId);
       setHotelInfo(findHotelIntro(overviewSections));
-      setAddress(overviewSections.propertyDescription.localisedAddress.fullAddress);
-      setCoordinates(overviewSections.pdpHeader.hotelLocation.coordinates);
+      setCoordinates(findHotelMap(overviewSections));
       console.log(coordinates);
       // console.log(overviewSections.pdpHeader.hotelLocation.coordinates);
     };
@@ -58,7 +73,7 @@ const HotelIntro = () => {
     <>
       <IntroDiv>
         <HotelDescription hotelInfo={hotelInfo} />
-        <Map coordinates={coordinates} address={address} />
+        <Map coordinates={coordinates} />
       </IntroDiv>
       <Amenity></Amenity>
     </>
