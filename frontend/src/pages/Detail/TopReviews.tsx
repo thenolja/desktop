@@ -34,12 +34,12 @@ const Reviews = () => {
   
   return(
     <>
-    <ReviewTitle len={len} sum={sum} />
+    <ReviewTitle />
 
       <ReviewList>
-        {reviews.map(review => 
-          <Review key={review.id} {...review} />
-        )}
+        {/* {reviews.map(review => 
+          <Review key={review.id} review={review} />
+        )} */}
       </ReviewList>
 
       <ButtonWrapper>
