@@ -15,6 +15,7 @@ const CheckInOutWrapper = styled.section`
 `;
 
 const Check = styled.div`
+  position: relative;
   text-align: center;
   width: 45%;
   cursor: pointer;
@@ -23,7 +24,7 @@ const Check = styled.div`
   color: #919191;
 `;
 
-const Date = styled.p`
+const DatePick = styled.p`
   font-size: 24px;
   line-height: 32px;
   color: #0152cc;
@@ -46,4 +47,4 @@ const Contour = styled.div`
   background: #ccc;
 `;
 
-export {CheckInOutWrapper, Check, Date, SVG, Contour};
+export {CheckInOutWrapper, Check, DatePick, SVG, Contour};
