@@ -1,24 +1,27 @@
+import { selectAuth } from 'src/contexts/auth';
+import { useAppSelector } from 'src/contexts/state.type';
 import { UserInfoContainer } from './Profile.style';
-import { UserInfoType } from './User';
 
-const UserInfo = ({ user, handleEditingMode }: UserInfoType) => {
+const UserInfo = ({ handleEditingMode }) => {
+  const { id, nickname, email, phone } = useAppSelector(selectAuth);
+
   return (
     <UserInfoContainer>
       <h2>
-        <strong>{user.nickname}</strong>님의 프로필
+        <strong>{nickname}</strong>님의 프로필
       </h2>
       <div>
         <div>
           <span>이메일</span>
-          <span>{user.email}</span>
+          <span>{email}</span>
         </div>
         <div>
           <span>닉네임</span>
-          <span>{user.nickname}</span>
+          <span>{nickname}</span>
         </div>
         <div>
           <span>전화번호</span>
-          <span>{user.phone ?? '입력된 정보가 없습니다'}</span>
+          <span>{phone ?? '입력된 정보가 없습니다'}</span>
         </div>
       </div>
       <button className="submit" onClick={() => handleEditingMode(false)}>

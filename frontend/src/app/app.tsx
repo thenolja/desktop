@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
 import { useAppSelector } from 'src/contexts/state.type';
 import { selectAuth } from 'src/contexts/auth';
+import { Route, Routes } from 'react-router-dom';
 
 import Header from 'src/containers/Header/Header';
 import Main from 'src/containers/Main/Main';
@@ -16,6 +16,7 @@ import ProtectedRoute from 'src/pages/ProtectedRouter/ProtectedRouter';
 
 const App = () => {
   const { id, nickname, email } = useAppSelector(selectAuth);
+
   const [detailNavigation] = useState([
     { id: 'rooms', href: '', content: '객실' },
     { id: 'test', href: 'test', content: '편의시설' },
