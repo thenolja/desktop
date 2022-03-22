@@ -1,6 +1,6 @@
 import CheckInOut from "components/CheckInOut/CheckInOut";
 import Room from "components/Room/Room";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { getAllRoomList } from "src/utils/requests";
 import {Buttons, SelectBtn} from "./Rooms.style";
 
@@ -19,11 +19,11 @@ const Rooms = () => {
 
   return(
     <div>
-      <CheckInOut />
+      <CheckInOut checkIn={new Date()} checkOut={new Date()} />
       <ul>
-        {rooms.map((room, index) => 
+        {/* {rooms.map((room, index) => 
           <Room key={index} room={room} />
-        )}
+        )} */}
       </ul>
       <Buttons>
         <SelectBtn>예약하기</SelectBtn>
