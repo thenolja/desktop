@@ -1,8 +1,7 @@
 import { memo } from "react";
-import {RoomWrapper, Image, RoomInfo, RoomName, People, PriceInfo, OriginPrice, SaledPrice} from "./Room.style";
+import {RoomWrapper, Image, RoomInfo, RoomName, People, PriceInfo, DailyPrice, TotalPrice} from "./Room.style";
 
 const Room = ({room}) => {
-
   return(
     <li>
       <RoomWrapper>
@@ -18,9 +17,20 @@ const Room = ({room}) => {
           <RoomName>{room.name}</RoomName>
           {room.maxOccupancy && <People>기준 {room.maxOccupancy.children}명 / 최대 {room.maxOccupancy.total}명</People>}
           <PriceInfo>
-            <OriginPrice>{room.ratePlans[0].price.unformattedCurrent.toLocaleString()}원</OriginPrice>
-            <span>판매가</span>
-            <SaledPrice><span>0%</span>{room.ratePlans[0].price.unformattedCurrent.toLocaleString()}원</SaledPrice>
+            {
+              room.ratePlans[0].price.nightlyPriceBreakdown?
+              <>
+                <span>{room.ratePlans[0].price.nightlyPriceBreakdown.additionalColumns[1].heading}</span>
+                <TotalPrice>{room.ratePlans[0].price.nightlyPriceBreakdown.additionalColumns[1].value}원</TotalPrice>
+              </>
+              :
+              <>
+                <span>총 1박</span>
+                <TotalPrice>{room.ratePlans[0].price.current}원</TotalPrice>
+              </>
+            }
+            <span>1박당 요금</span>
+            <DailyPrice>{room.ratePlans[0].price.current}원</DailyPrice>
           </PriceInfo>
         </RoomInfo>
       </RoomWrapper>
