@@ -4,7 +4,7 @@
     "email": "soyo_0131@naver.com",
     "nickname": "떡볶이",
     "phone": "01012345678",
-    "reservations": [1],
-    "myReviews": [1, 3]
+    "reservations": [1, 2, 3, 4, 5],
+    "myReviews": [1]
   }
 ]
