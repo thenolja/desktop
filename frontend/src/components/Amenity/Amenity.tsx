@@ -14,7 +14,7 @@ import {
 
 import { FeaturesWrapper, FeaturesTitle, FeaturesBox, FeaturesBoxTitle, FeatureList } from './AmenityFeatures.style';
 
-const Amenity = () => {
+const Amenity = ({ overviews }) => {
   const mockReviewList = [
     { id: '1', content: '편리함', count: 10 },
     { id: '2', content: '쇼핑', count: 11 },
@@ -90,7 +90,7 @@ const Amenity = () => {
       <FeaturesWrapper>
         <FeaturesTitle>숙박 시설 특징</FeaturesTitle>
         <FeaturesBox>
-          {overReiwMock.map(({ id, title, type, content }) => (
+          {overviews.map(({ id, title, type, content }) => (
             <ul>
               <FeaturesTitle key={type}>{title}</FeaturesTitle>
               {content.map(list => (

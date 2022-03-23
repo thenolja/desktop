@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Description = styled.div`
   height: 100%;
-  width: 62%;
+  width: 70%;
   line-height: 18px;
   padding: 0px 12px 0px 0px;
 `;

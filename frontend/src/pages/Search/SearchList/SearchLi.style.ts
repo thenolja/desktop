@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-const StyledLi = styled.li`
+const StyledLink = styled(Link)`
   display: flex;
   justify-content: center;
   margin-bottom: 50px;
@@ -55,15 +56,17 @@ const StyledLi = styled.li`
   }
 
   .price {
+    margin-bottom: 5px;
     text-align: right;
     font-weight: 700;
     font-size: 20px;
   }
 
   .price-policy {
+    margin-bottom: 40px;
     font-size: 12px;
     color: #333;
-    margin-bottom: 40px;
+    text-align: right;
   }
 
   button {
@@ -83,4 +86,4 @@ const StyledLi = styled.li`
   }
 `;
 
-export { StyledLi };
+export { StyledLink };

@@ -1,145 +1,87 @@
 import axios from "axios";
+import { throttle } from 'lodash';
 import Loader from "components/Review/Loader";
 import { memo, useEffect, useRef, useState } from "react";
+import { getReviews } from "src/utils/requests";
 import Review from "../../components/Review/Review";
 import ReviewTitle from "../../components/Review/ReviewTitle";
-import {ReviewList} from '../Detail/TopReviews.style';
-
-const reviews = [
-  // mockdata
-  {
-    id: 1,
-    star: 4,
-    writeTime: '2022-03-17',
-    nickname: '부드러운춤신춤왕0002',
-    spec: '[조식 2인+라운지38 칵테일 2잔+ 2박 시 더블세트]야놀자라이브★65m² 트윈룸 오션뷰 - 연박',
-    reviewText: `뷰도 좋고 컨디션도 너무좋고 만족했습니다<br/>
-    1층 로비 카페 케잌 커피 모두 훌륭했어요<br/>
-    호텔커피 비싸기만하고 원두도 맛없는 특급호텔들 많은데 커피광으로써 매우만족 했습니다`
-  },
-  {
-    id: 2,
-    star: 4.5,
-    writeTime: '2022-03-17',
-    nickname: '부드러운춤신춤왕0002',
-    spec: '[조식 2인+라운지38 칵테일 2잔+ 2박 시 더블세트]야놀자라이브★65m² 트윈룸 오션뷰 - 연박',
-    reviewText: `뷰도 좋고 컨디션도 너무좋고 만족했습니다<br/>
-    1층 로비 카페 케잌 커피 모두 훌륭했어요<br/>
-    호텔커피 비싸기만하고 원두도 맛없는 특급호텔들 많은데 커피광으로써 매우만족 했습니다`
-  },
-  {
-    id: 3,
-    star: 4.5,
-    writeTime: '2022-03-17',
-    nickname: '부드러운춤신춤왕0002',
-    spec: '[조식 2인+라운지38 칵테일 2잔+ 2박 시 더블세트]야놀자라이브★65m² 트윈룸 오션뷰 - 연박',
-    reviewText: `뷰도 좋고 컨디션도 너무좋고 만족했습니다<br/>
-    1층 로비 카페 케잌 커피 모두 훌륭했어요<br/>
-    호텔커피 비싸기만하고 원두도 맛없는 특급호텔들 많은데 커피광으로써 매우만족 했습니다`
-  },
-  {
-    id: 4,
-    star: 4.5,
-    writeTime: '2022-03-17',
-    nickname: '부드러운춤신춤왕0002',
-    spec: '[조식 2인+라운지38 칵테일 2잔+ 2박 시 더블세트]야놀자라이브★65m² 트윈룸 오션뷰 - 연박',
-    reviewText: `뷰도 좋고 컨디션도 너무좋고 만족했습니다<br/>
-    1층 로비 카페 케잌 커피 모두 훌륭했어요<br/>
-    호텔커피 비싸기만하고 원두도 맛없는 특급호텔들 많은데 커피광으로써 매우만족 했습니다`
-  },
-  {
-    id: 5,
-    star: 4.5,
-    writeTime: '2022-03-17',
-    nickname: '부드러운춤신춤왕0002',
-    spec: '[조식 2인+라운지38 칵테일 2잔+ 2박 시 더블세트]야놀자라이브★65m² 트윈룸 오션뷰 - 연박',
-    reviewText: `뷰도 좋고 컨디션도 너무좋고 만족했습니다<br/>
-    1층 로비 카페 케잌 커피 모두 훌륭했어요<br/>
-    호텔커피 비싸기만하고 원두도 맛없는 특급호텔들 많은데 커피광으로써 매우만족 했습니다`
-  },
-  {
-    id: 6,
-    star: 4.0,
-    writeTime: '2022-03-17',
-    nickname: '부드러운춤신춤왕0002',
-    spec: '[조식 2인+라운지38 칵테일 2잔+ 2박 시 더블세트]야놀자라이브★65m² 트윈룸 오션뷰 - 연박',
-    reviewText: `뷰도 좋고 컨디션도 너무좋고 만족했습니다<br/>
-    1층 로비 카페 케잌 커피 모두 훌륭했어요<br/>
-    호텔커피 비싸기만하고 원두도 맛없는 특급호텔들 많은데 커피광으로써 매우만족 했습니다`
-  },
-]
-
-
-// 전체 개수와 별점은 따로 저장해둬야함
-// 서버에서 n개씩만 보내주기
-
-
+import {ReviewList, TopButton} from '../Detail/TopReviews.style';
 
 const Reviews = ():JSX.Element =>{
-  const len=reviews.length;
-  const sum=reviews.reduce((sum,{star})=>sum+star,0);
-
+  const [hotelId, setHotelId]=useState<string>('229056');
+  
   const [target, setTarget]=useState(null);
   const [isLoaded, setIsLoaded]=useState(false);
-  const [nowReviews, setNowReviews]=useState([]);
-
-  const getInfo = async () =>{
-    // const res = await axios.get('api/review');
-    const res=reviews;
-    // setNowReviews(currentReviews=>[...currentReviews, ...res.data]);
-    setNowReviews(currentReviews=>[...currentReviews, ...res]);
-
-    console.log('info data add...');
-  }
-
-  useEffect(() => {
-    // getInfo();
-  }, []);
+  const [reviews, setReivews]=useState<object[]>([]);
+  
+  let nextUrl = '';
+  let currentPage = 1;
+  let totalPage;
 
   const getMoreItem = async () => {
     setIsLoaded(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    
-    const res=reviews.splice(0,3);
-    
-    setNowReviews(currentReviews=>[...currentReviews, ...res]);
+    const presentReivew = await getReviews(hotelId, nextUrl);
+
+    currentPage = presentReivew.pagination.currentPage;
+    totalPage = presentReivew.pagination.totalPages;
+    nextUrl = presentReivew.pagination.nextURL;
+    setReivews(currentReviews=>[...currentReviews, ...presentReivew.reviews.hermes.groups[presentReivew.reviews.hermes.groups.length-1].items]);
     setIsLoaded(false);
   };
 
   const onIntersect = async ([entry], observer) => {
-    if (entry.isIntersecting && !isLoaded) {
+    if (entry.isIntersecting && !isLoaded && currentPage!==totalPage) {
       observer.unobserve(entry.target);
       await getMoreItem();
       observer.observe(entry.target);
-    }
+    } else return;
   };
 
   useEffect(() => {
     let observer;
     if (target) {
       observer = new IntersectionObserver(onIntersect, {
-        threshold: 0.4,
+        threshold: 0.5,
       });
       observer.observe(target);
     }
     return () => observer && observer.disconnect();
-  }, [target]);
-  
+  }, [target]);  
+
+  const [offset, setOffset]=useState<number>(0);
+
+  useEffect(()=>{
+    const $scrollIcon = document.querySelector('#top');
+    const TOP_POSITION_SHOW_BUTTON = 500;
+    $scrollIcon.style.display = window.pageYOffset > TOP_POSITION_SHOW_BUTTON ? 'block' : 'none';
+
+    window.onscroll = throttle(() => {
+      $scrollIcon.style.display = window.pageYOffset > TOP_POSITION_SHOW_BUTTON ? 'block' : 'none';
+    }, 300);
+
+    $scrollIcon.onclick = () => window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }, [window]);
+
   return(
     <>
-      <ReviewTitle len={len} sum={sum} />
+      <ReviewTitle />
 
       <ReviewList>
-        {nowReviews.map((review)=>{
+        {reviews.map((review)=>{
           return (
-              <Review key={review.id} {...review} />
+              <Review key={review.itineraryId} review={review} />
             )
           }
-        )}  
-        <div ref={setTarget}>
-          {isLoaded && <Loader />}
-        </div>
+        )}
       </ReviewList>
+      <TopButton id="top">TOP</TopButton>
+      <div ref={setTarget}>
+        {isLoaded && <Loader />}
+      </div>
     </>
   )
 }

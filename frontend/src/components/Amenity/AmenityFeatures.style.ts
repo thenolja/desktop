@@ -22,10 +22,17 @@ export const FeaturesBox = styled.div`
   line-height: 18px;
   padding: 0px 12px;
 
-  ul:not(:last-of-type){
+  ul:not(:last-of-type) {
     li:before {
       content: '✔';
       margin: 0 10px;
+    }
+  }
+  ul:last-of-type {
+    li:before {
+      content: '⦁';
+      margin: 0 10px;
+    }
   }
 `;
 
