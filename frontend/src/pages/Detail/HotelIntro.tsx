@@ -53,18 +53,39 @@ const findHotelMap = (body: Object[]) => {
   return hotelMapinfo;
 };
 
+const settingHotelOverview = (body: object[]) => {
+  interface Overview {
+    title?: string;
+    type?: string;
+    content: string[];
+  }
+  let sectionSetting: Overview = {
+    title: body.amenities[0].heading,
+    type: body.amenities[0].listItems[0].heading,
+    content: body.amenities[0].listItems[0].listItems,
+  };
+
+  const hotelOverview: object[] = [
+    body.overview.overviewSections[0],
+    sectionSetting,
+    body.overview.overviewSections[1],
+  ];
+
+  return hotelOverview;
+};
+
 const HotelIntro = () => {
   const [hotelId, setHotelId] = useState<number>(171138);
   const [hotelInfo, setHotelInfo] = useState<object>({});
-  const [coordinates, setCoordinates] = useState<object>({}); // 위도, 경도
+  const [coordinates, setCoordinates] = useState<object>({});
+  const [overviews, setOverviews] = useState<object[]>([]);
 
   useEffect(() => {
     const requestbody = async () => {
-      const overviewSections = await getHotelInfo(hotelId);
-      setHotelInfo(findHotelIntro(overviewSections));
-      setCoordinates(findHotelMap(overviewSections));
-      console.log(coordinates);
-      // console.log(overviewSections.pdpHeader.hotelLocation.coordinates);
+      const resoponse = await getHotelInfo(hotelId);
+      setHotelInfo(findHotelIntro(resoponse));
+      setCoordinates(findHotelMap(resoponse));
+      setOverviews(settingHotelOverview(resoponse));
     };
     requestbody();
   }, []);
@@ -75,7 +96,7 @@ const HotelIntro = () => {
         <HotelDescription hotelInfo={hotelInfo} />
         <Map coordinates={coordinates} />
       </IntroDiv>
-      <Amenity></Amenity>
+      <Amenity overviews={overviews}></Amenity>
     </>
   );
 };
