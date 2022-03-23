@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "reservationId": 1,
     "star": 4,
     "writeTime": "2022-03-17",
     "nickname": "부드러운춤신춤왕0002",
@@ -9,6 +10,7 @@
   },
   {
     "id": 2,
+    "reservationId": 2,
     "star": 4.5,
     "writeTime": "2022-03-17",
     "nickname": "부드러운춤신춤왕0002",
@@ -17,6 +19,7 @@
   },
   {
     "id": 3,
+    "reservationId": 3,
     "star": 4.5,
     "writeTime": "2022-03-17",
     "nickname": "부드러운춤신춤왕0002",
@@ -25,6 +28,7 @@
   },
   {
     "id": 4,
+    "reservationId": 4,
     "star": 4.5,
     "writeTime": "2022-03-17",
     "nickname": "부드러운춤신춤왕0002",
@@ -33,6 +37,7 @@
   },
   {
     "id": 5,
+    "reservationId": 5,
     "star": 4.5,
     "writeTime": "2022-03-17",
     "nickname": "부드러운춤신춤왕0002",
@@ -41,6 +46,7 @@
   },
   {
     "id": 6,
+    "reservationId": 6,
     "star": 4.0,
     "writeTime": "2022-03-17",
     "nickname": "부드러운춤신춤왕0002",
