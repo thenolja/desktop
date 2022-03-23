@@ -18,6 +18,8 @@ const Search = () => {
   useEffect(() => {
     const requestSearch = async () => {
       const res = await getSearchHotelsByQuery(queryData);
+      console.log(res);
+
       setIsLoading(false);
       setSearchedHotels(res ?? []);
     };
