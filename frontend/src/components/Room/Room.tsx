@@ -1,10 +1,11 @@
 import { memo } from "react";
-import {RoomWrapper, Image, RoomInfo, RoomName, People, PriceInfo, DailyPrice, TotalPrice} from "./Room.style";
+import {Selector, RoomWrapper, Image, RoomInfo, RoomName, People, PriceInfo, DailyPrice, TotalPrice} from "./Room.style";
 
-const Room = ({room}) => {
+const Room = ({room, setSelectedRoom}) => {
   return(
     <li>
-      <RoomWrapper>
+      <RoomWrapper onClick={()=>setSelectedRoom(room)} >
+        <Selector />
         <Image>
           {
           room.images[0]?

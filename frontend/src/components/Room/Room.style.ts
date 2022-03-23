@@ -1,13 +1,33 @@
 import styled from "styled-components";
 
+const Selector = styled.div`
+  width: 100%;
+  height: 94%;
+  position: absolute;
+  cursor: pointer;
+  top:3%;
+  left:0;
+  background-color: transparent;
+
+  &:hover{
+    border: 2px solid #DE2E5F;
+    border-radius: 5px;
+  }
+
+  &:active {
+    border: 4px solid #DE2E5F;
+    border-radius: 5px;
+  }
+`;
+
 const RoomWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   padding: 20px 3%;
   border-bottom: 1px solid #f2f2f2;
   min-height: 250px;
-  cursor: pointer;
 `;
 
 const Image = styled.div`
@@ -52,4 +72,4 @@ const DailyPrice = styled.p`
   color: #DE2E5F;
 `;
 
-export {RoomWrapper, Image, RoomInfo, RoomName, People, PriceInfo, DailyPrice, TotalPrice};
+export {Selector, RoomWrapper, Image, RoomInfo, RoomName, People, PriceInfo, DailyPrice, TotalPrice};
