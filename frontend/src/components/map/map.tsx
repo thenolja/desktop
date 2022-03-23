@@ -9,7 +9,7 @@ import {
   ModalCloseBtn,
   ModalMapWrapper,
 } from './Map.style';
-import { Allbutton } from '../Detail/HotelDescription.style';
+import { Allbutton } from '../detail/HotelDescription.style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
@@ -59,7 +59,7 @@ const Map = ({ coordinates }) => {
                 setModalFlag(false);
               }}
             >
-              <FontAwesomeIcon icon={faX} />
+              {/* <FontAwesomeIcon icon={faX} /> */}
             </ModalCloseBtn>
             <ModalTitle />
             {coordinates.name}
