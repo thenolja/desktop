@@ -6,10 +6,17 @@ const Room = ({room}) => {
   return(
     <li>
       <RoomWrapper>
-        <Image><img src={room.images[0].fullSizeUrl}></img></Image>
+        <Image>
+          {
+          room.images[0]?
+            <img src={room.images[0].fullSizeUrl}></img>
+          :
+            <img src={'https://img.icons8.com/ios/344/no-image.png'} style={{width:"30px", height: "30px"}}></img>
+          }
+        </Image>
         <RoomInfo>
           <RoomName>{room.name}</RoomName>
-          <People>기준 {room.maxOccupancy.children}명 / 최대 {room.maxOccupancy.total}명</People>
+          {room.maxOccupancy && <People>기준 {room.maxOccupancy.children}명 / 최대 {room.maxOccupancy.total}명</People>}
           <PriceInfo>
             <OriginPrice>{room.ratePlans[0].price.unformattedCurrent.toLocaleString()}원</OriginPrice>
             <span>판매가</span>
