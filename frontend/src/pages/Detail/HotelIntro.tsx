@@ -1,6 +1,7 @@
 import HotelDescription from 'components/detail/HotelDescription';
 import Map from 'components/Map/map';
 import Amenity from 'components/Amenity/Amenity';
+import HotelImage from 'components/HotelImage/HotelImage';
 import { useEffect, useState } from 'react';
 import { IntroDiv } from './HotelIntro.style';
 import { getHotelInfo } from 'src/utils/requests';
@@ -92,6 +93,7 @@ const HotelIntro = () => {
 
   return (
     <>
+      <HotelImage />
       <IntroDiv>
         <HotelDescription hotelInfo={hotelInfo} />
         <Map coordinates={coordinates} />
