@@ -27,4 +27,22 @@ const Button = styled.button`
   }
 `;
 
-export {ReviewList, ButtonWrapper, Button};
+const TopButton = styled.div`
+  width: 50px;
+  height: 50px;
+  border: 2px solid #fE8EBF;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 100px;
+  right: 25px;
+  background-color: #DE2E5F;
+  color: white;
+  text-align: center;
+  line-height: 45px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  /* display: none; */
+`;
+
+export {ReviewList, ButtonWrapper, Button, TopButton};

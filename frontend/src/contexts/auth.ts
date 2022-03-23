@@ -5,6 +5,8 @@ export interface AuthType {
   nickname: string | null;
   email: string | null;
   phone: string | null;
+  reservations: number[] | null;
+  myReviews: number[] | null;
 }
 
 const initialState: AuthType = {
@@ -12,6 +14,8 @@ const initialState: AuthType = {
   nickname: null,
   email: null,
   phone: null,
+  reservations: null,
+  myReviews: null,
 };
 
 export const auth = createSlice({
@@ -24,6 +28,9 @@ export const auth = createSlice({
     authLogOut() {
       return auth.getInitialState();
     },
+    authUpdate(state, { payload }) {
+      return { ...state, ...payload };
+    },
   },
 });
 
@@ -31,7 +38,7 @@ interface RootState {
   auth: AuthType;
 }
 
-export const { authLogIn, authLogOut } = auth.actions;
+export const { authLogIn, authLogOut, authUpdate } = auth.actions;
 export const selectAuth = (state: RootState) => state.auth;
 
 export default auth.reducer;

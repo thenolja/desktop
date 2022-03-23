@@ -3,7 +3,7 @@ import styled from "styled-components";
 const FlexBox = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 30px;
 
   div{
     width: 100%;
@@ -29,9 +29,11 @@ const Info = styled.div`
   word-break: break-all;
   color: #919191;
   margin-top: 0.4rem;
-
-  span{
+  
+  span:first-child{
+    padding-right: 10px;
     margin-right: 10px;
+    border-right: 1px solid #919191;
   }
 `;
 
@@ -42,11 +44,13 @@ const Star = styled.i`
 const MainWrapper = styled.div`
   margin-top: 20px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 20px;
 `;
 
 const Text = styled.div`
+  width: 92%;
   font-size: 18px;
   line-height: 22px;
   color: #616161;
