@@ -165,7 +165,7 @@ const getLocalHotelList = async (destinationId: number): Promise<[]> => {
 
 const getAllRoomList = async (hotelId: string): Promise<[]> => {
   const options = {
-    Method: 'GET',
+    method: 'GET',
     url: 'https://hotels4.p.rapidapi.com/properties/get-details',
     params: {
       id: hotelId,
@@ -177,7 +177,7 @@ const getAllRoomList = async (hotelId: string): Promise<[]> => {
     },
     headers: {
       'x-rapidapi-host': 'hotels4.p.rapidapi.com',
-      // 'x-rapidapi-key': '65c2b8e40fmshf6785c8d21db1cbp1581c4jsnae60b44b1c91'
+      'x-rapidapi-key': '65c2b8e40fmshf6785c8d21db1cbp1581c4jsnae60b44b1c91'
     },
   };
 
@@ -201,7 +201,7 @@ const getAllRoomList = async (hotelId: string): Promise<[]> => {
 
 const getReviewTitleData = async (hotelId: string): Promise<[]> => {
   const options = {
-    Method: 'GET',
+    method: 'GET',
     url: 'https://hotels4.p.rapidapi.com/properties/get-details',
     params: {
       id: hotelId,
@@ -210,7 +210,7 @@ const getReviewTitleData = async (hotelId: string): Promise<[]> => {
     },
     headers: {
       'x-rapidapi-host': 'hotels4.p.rapidapi.com',
-      // 'x-rapidapi-key': '65c2b8e40fmshf6785c8d21db1cbp1581c4jsnae60b44b1c91'
+      'x-rapidapi-key': '65c2b8e40fmshf6785c8d21db1cbp1581c4jsnae60b44b1c91'
     },
   };
 
@@ -297,6 +297,7 @@ const getHotelInfo = async (hotelId: number): Promise<[]> => {
       console.error(error);
     });
 };
+
 
 export {
   getSearchHotelsByQuery,
