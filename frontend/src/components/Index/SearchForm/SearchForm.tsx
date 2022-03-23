@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { StyledForm } from './SearchForm.style';
 import PersoInput from './Input/PersoInput';
@@ -8,11 +8,11 @@ import StartDatePicker from './Input/StartDatePicker';
 import Button from './Button/Button';
 import { useNavigate } from 'react-router-dom';
 
-const SearchForm = () => {
+const SearchForm = ({ propStartDate, propEndDate }) => {
   const navigate = useNavigate();
   const [destinationId, setDestinationId] = useState<number>(759818);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(propStartDate ?? new Date());
+  const [endDate, setEndDate] = useState(propEndDate ?? new Date());
   const [person, setPerson] = useState<number>(1);
 
   const changeDateFormat = (date: Date) => new Date(date).toISOString().split('T')[0];
