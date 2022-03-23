@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { getSearchHotelsByQuery } from 'src/utils/requests';
 import SearchForm from 'components/Index/SearchForm/SearchForm';
 import { StyledDiv, StyledUl } from './Search.style';
-import SearchLi from './SearchLi';
+import SearchLi from './SearchList/SearchLi';
 import { hotelTypes } from './Search.type';
 import Spinner from 'components/Spinner/Spinner';
 
@@ -27,7 +27,7 @@ const Search = () => {
 
   return (
     <div>
-      <SearchForm />
+      <SearchForm propStartDate={new Date(queryData.checkIn)} propEndDate={new Date(queryData.checkOut)} />
       {isLoading ? (
         <Spinner />
       ) : searchedHotels.length === 0 ? (

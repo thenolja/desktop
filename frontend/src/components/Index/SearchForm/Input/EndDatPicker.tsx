@@ -1,11 +1,19 @@
 import DatePicker from 'react-datepicker';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { addDays } from 'date-fns';
 
 import { StyledDiv } from './InputDiv.style';
 
 const EndDatPicker = ({ startDate, endDate, setEndDate }) => {
   const preventDefault = useCallback(e => e.preventDefault(), []);
+  const getTimeofDate = (date: Date) => new Date(date).getTime();
+
+  useEffect(() => {
+    const startTime = getTimeofDate(startDate);
+    const endTime = getTimeofDate(endDate);
+
+    if (endTime - startTime < 1) setEndDate(startDate);
+  }, [startDate]);
 
   return (
     <StyledDiv width="174px">

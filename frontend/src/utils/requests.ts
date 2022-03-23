@@ -306,4 +306,5 @@ export {
   getAllRoomList,
   getReviewTitleData,
   getReviews,
+  getHotelInfo,
 };
