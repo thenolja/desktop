@@ -19,7 +19,7 @@ const Search = () => {
     const requestSearch = async () => {
       const res = await getSearchHotelsByQuery(queryData);
       setIsLoading(false);
-      setSearchedHotels(res);
+      setSearchedHotels(res ?? []);
     };
     setIsLoading(true);
     requestSearch();
@@ -27,7 +27,11 @@ const Search = () => {
 
   return (
     <div>
-      <SearchForm propStartDate={new Date(queryData.checkIn)} propEndDate={new Date(queryData.checkOut)} />
+      <SearchForm
+        propQuery={queryData.query}
+        propStartDate={new Date(queryData.checkIn)}
+        propEndDate={new Date(queryData.checkOut)}
+      />
       {isLoading ? (
         <Spinner />
       ) : searchedHotels.length === 0 ? (

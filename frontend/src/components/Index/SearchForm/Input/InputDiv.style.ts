@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import StyledDivProps from './StyledDiv.type';
 
 const StyledDiv = styled.div<StyledDivProps>`
+  position: relative;
   display: flex;
   align-items: center;
   width: ${props => props.width || 'auto'};

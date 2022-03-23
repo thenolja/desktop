@@ -1,5 +1,24 @@
 import axios from 'axios';
 
+const getDestinationIdsByQuery = async query => {
+  var options = {
+    method: 'GET',
+    url: 'https://hotels-com-provider.p.rapidapi.com/v1/destinations/search',
+    params: { query: query, currency: 'USD', locale: 'ko_KR' },
+    headers: {
+      'X-RapidAPI-Host': 'hotels-com-provider.p.rapidapi.com',
+      'X-RapidAPI-Key': '5eedf12c2fmsh19d688008610b0ap1e2d95jsn145a7e296bea',
+    },
+  };
+
+  return axios
+    .request(options)
+    .then(response => response.data)
+    .catch(error => {
+      console.error(error);
+    });
+};
+
 const getSearchHotelsByQuery = async ({ destinationId, checkIn, checkOut, person }): Promise<[]> => {
   const options = {
     Method: 'GET',
@@ -299,6 +318,7 @@ const getHotelInfo = async (hotelId: number): Promise<[]> => {
 };
 
 export {
+  getDestinationIdsByQuery,
   getSearchHotelsByQuery,
   getAllHotelList,
   getNearHotelList,

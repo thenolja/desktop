@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { StyledForm } from './SearchForm.style';
 import PersoInput from './Input/PersoInput';
@@ -8,8 +8,9 @@ import StartDatePicker from './Input/StartDatePicker';
 import Button from './Button/Button';
 import { useNavigate } from 'react-router-dom';
 
-const SearchForm = ({ propStartDate, propEndDate }) => {
+const SearchForm = ({ propQuery, propStartDate, propEndDate }) => {
   const navigate = useNavigate();
+  const [query, setQuery] = useState<string>(propQuery ?? '');
   const [destinationId, setDestinationId] = useState<number>(759818);
   const [startDate, setStartDate] = useState(propStartDate ?? new Date());
   const [endDate, setEndDate] = useState(propEndDate ?? new Date());
@@ -22,12 +23,15 @@ const SearchForm = ({ propStartDate, propEndDate }) => {
 
     const checkIn = changeDateFormat(startDate);
     const checkOut = changeDateFormat(endDate);
-    navigate(`/search/?destinationId=${destinationId}&checkIn=${checkIn}&checkOut=${checkOut}&person=${person}`);
+
+    navigate(
+      `/search/?query=${query}&destinationId=${destinationId}&checkIn=${checkIn}&checkOut=${checkOut}&person=${person}`,
+    );
   };
 
   return (
     <StyledForm onSubmit={handleSubmit}>
-      <QueryInput setDestinationId={setDestinationId} />
+      <QueryInput query={query} setQuery={setQuery} setDestinationId={setDestinationId} />
       <StartDatePicker startDate={startDate} setStartDate={setStartDate} />
       <EndDatPicker startDate={startDate} endDate={endDate} setEndDate={setEndDate} />
       <PersoInput setPerson={setPerson} />
