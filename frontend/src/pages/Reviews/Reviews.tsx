@@ -1,10 +1,11 @@
 import axios from "axios";
+import { throttle } from 'lodash';
 import Loader from "components/Review/Loader";
 import { memo, useEffect, useRef, useState } from "react";
 import { getReviews } from "src/utils/requests";
 import Review from "../../components/Review/Review";
 import ReviewTitle from "../../components/Review/ReviewTitle";
-import {ReviewList} from '../Detail/TopReviews.style';
+import {ReviewList, TopButton} from '../Detail/TopReviews.style';
 
 const Reviews = ():JSX.Element =>{
   const [hotelId, setHotelId]=useState<string>('229056');
@@ -47,11 +48,29 @@ const Reviews = ():JSX.Element =>{
     return () => observer && observer.disconnect();
   }, [target]);  
 
+  const [offset, setOffset]=useState<number>(0);
+
+  useEffect(()=>{
+    const $scrollIcon = document.querySelector('#top');
+    const TOP_POSITION_SHOW_BUTTON = 500;
+    $scrollIcon.style.display = window.pageYOffset > TOP_POSITION_SHOW_BUTTON ? 'block' : 'none';
+
+    window.onscroll = throttle(() => {
+      $scrollIcon.style.display = window.pageYOffset > TOP_POSITION_SHOW_BUTTON ? 'block' : 'none';
+    }, 300);
+
+    $scrollIcon.onclick = () => window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }, [window]);
+
   return(
     <>
       <ReviewTitle />
 
-      {/* <ReviewList>
+      <ReviewList>
         {reviews.map((review)=>{
           return (
               <Review key={review.itineraryId} review={review} />
@@ -59,9 +78,10 @@ const Reviews = ():JSX.Element =>{
           }
         )}
       </ReviewList>
+      <TopButton id="top">TOP</TopButton>
       <div ref={setTarget}>
         {isLoaded && <Loader />}
-      </div> */}
+      </div>
     </>
   )
 }
