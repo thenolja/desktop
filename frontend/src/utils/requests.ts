@@ -196,7 +196,7 @@ const getAllRoomList = async (hotelId: string): Promise<[]> => {
     },
     headers: {
       'x-rapidapi-host': 'hotels4.p.rapidapi.com',
-      'x-rapidapi-key': '65c2b8e40fmshf6785c8d21db1cbp1581c4jsnae60b44b1c91'
+      'x-rapidapi-key': '65c2b8e40fmshf6785c8d21db1cbp1581c4jsnae60b44b1c91',
     },
   };
 
@@ -229,7 +229,7 @@ const getReviewTitleData = async (hotelId: string): Promise<[]> => {
     },
     headers: {
       'x-rapidapi-host': 'hotels4.p.rapidapi.com',
-      'x-rapidapi-key': '65c2b8e40fmshf6785c8d21db1cbp1581c4jsnae60b44b1c91'
+      'x-rapidapi-key': '65c2b8e40fmshf6785c8d21db1cbp1581c4jsnae60b44b1c91',
     },
   };
 
@@ -317,6 +317,24 @@ const getHotelInfo = async (hotelId: number): Promise<[]> => {
     });
 };
 
+const getHotelPhotos = async (hotelId: number): Promise<[]> => {
+  let options = {
+    method: 'GET',
+    url: 'https://hotels4.p.rapidapi.com/properties/get-hotel-photos',
+    params: { id: hotelId },
+    headers: {
+      'x-rapidapi-host': 'hotels4.p.rapidapi.com',
+      'x-rapidapi-key': '7ae7f445demsh43b864a8fa809c0p1d3ed5jsnae5decba40a1',
+    },
+  };
+
+  return axios
+    .request(options)
+    .then(response => response.data.hotelImages)
+    .catch(error => {
+      console.error(error);
+    });
+};
 
 export {
   getDestinationIdsByQuery,
@@ -328,4 +346,5 @@ export {
   getReviewTitleData,
   getReviews,
   getHotelInfo,
+  getHotelPhotos,
 };
