@@ -21,6 +21,15 @@ const StyledUl = styled.ul`
     cursor: pointer;
     margin-bottom: 15px;
 
+    &.selected-li {
+      background-color: #f2f2f2;
+      border-radius: 5px;
+
+      .highlighted {
+        color: #000;
+      }
+    }
+
     &:last-child {
       margin-bottom: 0;
     }
