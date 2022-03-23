@@ -24,7 +24,7 @@ const Check = styled.div`
   color: #919191;
 `;
 
-const DatePick = styled.p`
+const DatePick = styled.div`
   font-size: 24px;
   line-height: 32px;
   color: #0152cc;
