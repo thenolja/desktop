@@ -10,7 +10,7 @@ const PersoInput = ({ setPerson }) => {
   return (
     <StyledDiv width="267px">
       <img src="/src/assets/person.png" alt="" />
-      <input id="person" placeholder="인원 수" type="number" max={10} onChange={handleChange} />
+      <input id="person" placeholder="1명" type="number" max={10} defaultValue={1} onChange={handleChange} />
     </StyledDiv>
   );
 };
