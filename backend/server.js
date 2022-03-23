@@ -22,6 +22,15 @@ app.post('/users', (req, res) => {
   res.send(users);
 });
 
+app.patch('/users/:searchId', (req, res) => {
+  console.log('update user!');
+  const { searchId } = req.params;
+  const data = users
+    .filter(({ id }) => id === searchId)
+    .map((state) => ({ ...state, ...req.body }));
+  res.send(data);
+});
+
 app.get('/detail', (req, res) => {
   res.send(users);
 });
