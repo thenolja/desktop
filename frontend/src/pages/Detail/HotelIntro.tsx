@@ -1,6 +1,7 @@
 import HotelDescription from 'components/detail/HotelDescription';
 import Map from 'components/Map/map';
 import Amenity from 'components/Amenity/Amenity';
+import HotelImage from 'components/HotelImage/HotelImage';
 import { useEffect, useState } from 'react';
 import { IntroDiv } from './HotelIntro.style';
 import { getHotelInfo } from 'src/utils/requests';
@@ -36,31 +37,68 @@ const findHotelIntro = (body: Object[]) => {
   return hotelIntro;
 };
 
+const findHotelMap = (body: Object[]) => {
+  interface MapInfo {
+    name: string;
+    fullAddress?: string;
+    latitude?: number;
+    longitude?: number;
+  }
+
+  const hotelMapinfo: MapInfo = {
+    name: body.propertyDescription.name,
+    fullAddress: body.propertyDescription.localisedAddress.fullAddress,
+    latitude: body.pdpHeader.hotelLocation.coordinates.latitude,
+    longitude: body.pdpHeader.hotelLocation.coordinates.longitude,
+  };
+  return hotelMapinfo;
+};
+
+const settingHotelOverview = (body: object[]) => {
+  interface Overview {
+    title?: string;
+    type?: string;
+    content: string[];
+  }
+  let sectionSetting: Overview = {
+    title: body.amenities[0].heading,
+    type: body.amenities[0].listItems[0].heading,
+    content: body.amenities[0].listItems[0].listItems,
+  };
+
+  const hotelOverview: object[] = [
+    body.overview.overviewSections[0],
+    sectionSetting,
+    body.overview.overviewSections[1],
+  ];
+
+  return hotelOverview;
+};
+
 const HotelIntro = () => {
   const [hotelId, setHotelId] = useState<number>(171138);
   const [hotelInfo, setHotelInfo] = useState<object>({});
-  const [coordinates, setCoordinates] = useState<object>({}); // 위도, 경도
-  const [address, setAddress] = useState<string>(''); //주소
+  const [coordinates, setCoordinates] = useState<object>({});
+  const [overviews, setOverviews] = useState<object[]>([]);
 
   useEffect(() => {
     const requestbody = async () => {
-      const overviewSections = await getHotelInfo(hotelId);
-      setHotelInfo(findHotelIntro(overviewSections));
-      setAddress(overviewSections.propertyDescription.localisedAddress.fullAddress);
-      setCoordinates(overviewSections.pdpHeader.hotelLocation.coordinates);
-      console.log(coordinates);
-      // console.log(overviewSections.pdpHeader.hotelLocation.coordinates);
+      const resoponse = await getHotelInfo(hotelId);
+      setHotelInfo(findHotelIntro(resoponse));
+      setCoordinates(findHotelMap(resoponse));
+      setOverviews(settingHotelOverview(resoponse));
     };
     requestbody();
   }, []);
 
   return (
     <>
+      <HotelImage />
       <IntroDiv>
         <HotelDescription hotelInfo={hotelInfo} />
-        <Map coordinates={coordinates} address={address} />
+        <Map coordinates={coordinates} />
       </IntroDiv>
-      <Amenity></Amenity>
+      <Amenity overviews={overviews}></Amenity>
     </>
   );
 };
