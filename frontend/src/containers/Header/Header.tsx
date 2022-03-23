@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { authLogIn, authLogOut, selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
+import { getUserById, createUser } from 'src/utils/users';
 import { StyledHeader } from './Header.style';
 
 const Header = () => {
@@ -19,8 +20,21 @@ const Header = () => {
     netlifyIdentity.logout();
   };
 
-  netlifyIdentity.on('login', ({ id, email, user_metadata: { full_name: nickname } }) => {
-    dispatch(authLogIn({ id, nickname, email }));
+  netlifyIdentity.on('login', async ({ id, email, user_metadata: { full_name: nickname } }) => {
+    const user = await getUserById(id);
+    let authorizedUser = {};
+    const iscreatedUser = user?.length;
+
+    authorizedUser = {
+      id: iscreatedUser ? id : user.id,
+      nickname: iscreatedUser ? nickname : user.nickname,
+      email: iscreatedUser ? email : user.email,
+      phone: iscreatedUser ? '' : user.phone,
+      reservations: iscreatedUser ? [] : user.reservations,
+      myReviews: iscreatedUser ? [] : user.myReviews,
+    };
+
+    dispatch(authLogIn({ ...authorizedUser }));
     netlifyIdentity.close();
   });
 
