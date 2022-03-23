@@ -8,6 +8,19 @@ let users = require('./data/users.json');
 const { PORT } = process.env;
 
 app.use(cors());
+app.use(express.json());
+
+app.get('/users/:searchId', (req, res) => {
+  const { searchId } = req.params;
+  const data = users.filter(({ id }) => id === searchId);
+  res.send(data);
+});
+
+app.post('/users', (req, res) => {
+  console.log('create user!');
+  users = [...users, req.body];
+  res.send(users);
+});
 
 app.get('/detail', (req, res) => {
   res.send(users);

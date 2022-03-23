@@ -177,7 +177,7 @@ const getAllRoomList = async (hotelId: string): Promise<[]> => {
     },
     headers: {
       'x-rapidapi-host': 'hotels4.p.rapidapi.com',
-      // 'x-rapidapi-key': '65c2b8e40fmshf6785c8d21db1cbp1581c4jsnae60b44b1c91'
+      'x-rapidapi-key': '65c2b8e40fmshf6785c8d21db1cbp1581c4jsnae60b44b1c91'
     },
   };
 
@@ -211,7 +211,7 @@ const getReviewTitleData = async (hotelId: string): Promise<[]> => {
     headers: {
       'x-rapidapi-host': 'hotels4.p.rapidapi.com',
       'x-rapidapi-key': '65c2b8e40fmshf6785c8d21db1cbp1581c4jsnae60b44b1c91'
-    }
+    },
   };
 
   return await axios
@@ -232,7 +232,7 @@ const getReviewTitleData = async (hotelId: string): Promise<[]> => {
     });
 };
 
-const getReviews = async (hotelId: string, paginationURL?:string): Promise<[]> => {
+const getReviews = async (hotelId: string, paginationURL?: string): Promise<[]> => {
   const options = {
     method: 'GET',
     url: 'https://hotels4.p.rapidapi.com/reviews/v2/list',
@@ -240,12 +240,12 @@ const getReviews = async (hotelId: string, paginationURL?:string): Promise<[]> =
       hotelId: hotelId,
       reviewOrder: 'date_newest_first',
       tripTypeFilter: 'all',
-      paginationURL: paginationURL
+      paginationURL: paginationURL,
     },
     headers: {
       'x-rapidapi-host': 'hotels4.p.rapidapi.com',
-      'x-rapidapi-key': '65c2b8e40fmshf6785c8d21db1cbp1581c4jsnae60b44b1c91'
-    }
+      'x-rapidapi-key': '65c2b8e40fmshf6785c8d21db1cbp1581c4jsnae60b44b1c91',
+    },
   };
 
   return await axios
@@ -255,9 +255,7 @@ const getReviews = async (hotelId: string, paginationURL?:string): Promise<[]> =
         data: {
           data: {
             reviews: {
-              body: { 
-                reviewContent
-              }
+              body: { reviewContent },
             },
           },
         },
@@ -267,7 +265,6 @@ const getReviews = async (hotelId: string, paginationURL?:string): Promise<[]> =
       console.error(error);
     });
 };
-
 
 const getHotelInfo = async (hotelId: number): Promise<[]> => {
   const options = {
@@ -312,4 +309,3 @@ export {
   getReviews,
   getHotelInfo,
 };
-
