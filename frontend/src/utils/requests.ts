@@ -165,7 +165,7 @@ const getLocalHotelList = async (destinationId: number): Promise<[]> => {
 
 const getAllRoomList = async (hotelId: string): Promise<[]> => {
   const options = {
-    Method: 'GET',
+    method: 'GET',
     url: 'https://hotels4.p.rapidapi.com/properties/get-details',
     params: {
       id: hotelId,
@@ -201,7 +201,7 @@ const getAllRoomList = async (hotelId: string): Promise<[]> => {
 
 const getReviewTitleData = async (hotelId: string): Promise<[]> => {
   const options = {
-    Method: 'GET',
+    method: 'GET',
     url: 'https://hotels4.p.rapidapi.com/properties/get-details',
     params: {
       id: hotelId,
@@ -210,7 +210,7 @@ const getReviewTitleData = async (hotelId: string): Promise<[]> => {
     },
     headers: {
       'x-rapidapi-host': 'hotels4.p.rapidapi.com',
-      // 'x-rapidapi-key': '65c2b8e40fmshf6785c8d21db1cbp1581c4jsnae60b44b1c91'
+      'x-rapidapi-key': '65c2b8e40fmshf6785c8d21db1cbp1581c4jsnae60b44b1c91'
     }
   };
 
@@ -246,7 +246,29 @@ const getReviews = async (hotelId: string, paginationURL?:string): Promise<[]> =
       'x-rapidapi-host': 'hotels4.p.rapidapi.com',
       'x-rapidapi-key': '65c2b8e40fmshf6785c8d21db1cbp1581c4jsnae60b44b1c91'
     }
-    
+  };
+
+  return await axios
+    .request(options)
+    .then(
+      ({
+        data: {
+          data: {
+            reviews: {
+              body: { 
+                reviewContent
+              }
+            },
+          },
+        },
+      }) => reviewContent,
+    )
+    .catch(error => {
+      console.error(error);
+    });
+};
+
+
 const getHotelInfo = async (hotelId: number): Promise<[]> => {
   const options = {
     method: 'GET',
@@ -279,6 +301,7 @@ const getHotelInfo = async (hotelId: number): Promise<[]> => {
     });
 };
 
+
 export {
   getSearchHotelsByQuery,
   getAllHotelList,
@@ -286,6 +309,7 @@ export {
   getLocalHotelList,
   getAllRoomList,
   getReviewTitleData,
-  getReviews
+  getReviews,
+  getHotelInfo,
 };
 
