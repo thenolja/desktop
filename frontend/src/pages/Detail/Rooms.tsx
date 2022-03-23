@@ -2,8 +2,9 @@ import CheckInOut from "components/CheckInOut/CheckInOut";
 import Room from "components/Room/Room";
 import { useEffect, useState } from "react";
 import { getAllRoomList } from "src/utils/requests";
-import { Buttons, SelectBtn } from "./Rooms.style";
+import { Buttons, SelectBtn, Selected } from "./Rooms.style";
 import { addDays } from 'date-fns';
+import { Link } from "react-router-dom";
 
 const Rooms = () => {
 
@@ -23,10 +24,11 @@ const Rooms = () => {
       setRooms(Rooms);
     };
     requestRooms();
+    setSelectedRoom([]);
   },[endDate]);
 
   return(
-    <div>
+    <>
       <CheckInOut
         startDate={startDate}
         setStartDate={setStartDate}
@@ -34,19 +36,22 @@ const Rooms = () => {
         setEndDate={setEndDate}
       />
       <ul>
-        {rooms.map((room, index) => 
-          <Room key={index} room={room} selectedRoom={selectedRoom} setSelectedRoom={setSelectedRoom} />
-        )}
+        {/* {rooms.map((room, index) => 
+          <Room key={index} room={room} setSelectedRoom={setSelectedRoom} />
+        )} */}
       </ul>
       <Buttons>
-      {
-      selectedRoom.name?
-      <SelectBtn>예약하기</SelectBtn>
-      :
-      <SelectBtn disabled>예약하기</SelectBtn>
-      }
+        {
+        selectedRoom.name?
+        <>
+          <Selected>현재 선택된 객실 : <span>{selectedRoom.name}</span></Selected>
+          <SelectBtn>예약하기</SelectBtn>
+        </>
+        :
+        <SelectBtn disabled>예약하기</SelectBtn>
+        }
       </Buttons>
-    </div>
+    </>
   )
 }
 

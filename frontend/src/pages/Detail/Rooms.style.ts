@@ -2,18 +2,18 @@ import styled from "styled-components";
 
 const Buttons = styled.section`
   width: 100%;
-  height: 140px;
+  height: fit-content;
   text-align: center;
-  padding: 40px 0;
   background-color: #fff;
   position: sticky;
   bottom:0;
-  left:0;
+  box-shadow: 0px -7px 12px -7px rgba(0, 0, 0, 0.2);
   `;
 
 const SelectBtn = styled.button`
   background-color: #DE2E5F;
-  border: 0.1rem solid #de2e5f;
+  margin: 30px 0;
+  border: 0.1rem solid #DE2E5F;
   color: white;
   width: 60%;
   min-width: 300px;
@@ -32,6 +32,17 @@ const SelectBtn = styled.button`
   }
 `;
 
+const Selected = styled.div`
+  font-size: 20px;
+  color: #181818;
+  padding-top: 30px;
+  font-weight: 700;
+  
+  span{
+    font-size: 20px;
+    color: #0152cc;
+  }
+`;
 
 
-export {Buttons, SelectBtn};
+export {Buttons, SelectBtn, Selected};
