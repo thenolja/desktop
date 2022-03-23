@@ -3,6 +3,7 @@ import ReactLoading from "react-loading";
 import styled from "styled-components";
 
 const LoaderWrap = styled.div`
+  margin: 30px 0;
   width: 100%;
   height: 80%;
   display: flex;
