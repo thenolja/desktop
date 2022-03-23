@@ -14,6 +14,7 @@ import TopReviews from 'src/pages/Detail/TopReviews';
 import Reviews from 'src/pages/Reviews/Reviews';
 import ProtectedRoute from 'src/pages/ProtectedRouter/ProtectedRouter';
 import Search from 'src/pages/Search/Search';
+import Reservation from 'src/pages/Reservation/Reservation';
 
 const App = () => {
   const { id, nickname, email } = useAppSelector(selectAuth);
@@ -39,11 +40,12 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="/reviews" element={<Reviews />} />
           <Route path="/detail" element={<Detail list={detailNavigation} />}>
             <Route index element={<Rooms />} />
             <Route path="topReviews" element={<TopReviews />} />
           </Route>
+          <Route path="/reviews" element={<Reviews />} />
+          <Route path="/reservation" element={<Reservation />} />
         </Routes>
       </Main>
       <Footer />
