@@ -1,12 +1,6 @@
 import DatePicker from 'react-datepicker';
 import styled from 'styled-components';
-
-interface DateType{
-  startDate: Date;
-  setStartDate: (value: Date) => void;
-  endDate: Date;
-  minDate: Date;
-}
+import { DateType } from './Date.type';
 
 const DatePickerWrapper=styled.div`
   position: absolute;
