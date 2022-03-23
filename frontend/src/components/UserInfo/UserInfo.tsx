@@ -3,7 +3,7 @@ import { useAppSelector } from 'src/contexts/state.type';
 import { UserInfoContainer } from './Profile.style';
 
 const UserInfo = ({ handleEditingMode }) => {
-  const { id, nickname, email, phone } = useAppSelector(selectAuth);
+  const { nickname, email, phone } = useAppSelector(selectAuth);
 
   return (
     <UserInfoContainer>
@@ -21,10 +21,10 @@ const UserInfo = ({ handleEditingMode }) => {
         </div>
         <div>
           <span>전화번호</span>
-          <span>{phone ?? '입력된 정보가 없습니다'}</span>
+          <span>{!phone ? '입력된 정보가 없습니다' : phone}</span>
         </div>
       </div>
-      <button className="submit" onClick={() => handleEditingMode(false)}>
+      <button className="submit" onClick={() => handleEditingMode(true)}>
         수정
       </button>
     </UserInfoContainer>

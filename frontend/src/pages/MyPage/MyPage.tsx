@@ -6,7 +6,7 @@ import Profile from 'components/UserInfo/Profile';
 const MyPage = () => {
   const [isEditing, setEditingMode] = useState<boolean>(false);
 
-  const handleEditingMode = useCallback(isEditing => setEditingMode(!isEditing), []);
+  const handleEditingMode = useCallback(isEditing => setEditingMode(isEditing), []);
 
   const MemoizedProfile = useMemo(
     () => <Profile isEditing={isEditing} handleEditingMode={handleEditingMode} />,

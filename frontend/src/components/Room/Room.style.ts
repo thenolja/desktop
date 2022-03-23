@@ -1,18 +1,39 @@
 import styled from "styled-components";
 
+const Selector = styled.div`
+  width: 100%;
+  height: 94%;
+  position: absolute;
+  cursor: pointer;
+  top:3%;
+  left:0;
+  background-color: transparent;
+
+  &:hover{
+    border: 2px solid #DE2E5F;
+    border-radius: 5px;
+  }
+
+  &:active {
+    border: 4px solid #DE2E5F;
+    border-radius: 5px;
+  }
+`;
+
 const RoomWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  padding: 20px 0;
+  padding: 20px 3%;
   border-bottom: 1px solid #f2f2f2;
   min-height: 250px;
-  cursor: pointer;
 `;
 
 const Image = styled.div`
-  width: 300px;
-  height: 200px;
+  width: 25%;
+  min-width: 300px;
+  min-height: 200px;
 `;
 
 const RoomInfo = styled.div`
@@ -30,8 +51,8 @@ const RoomName = styled.h3`
 
 const People = styled.p`
   line-height: 20px;
-  font-size: 14px;
-  color: #aaa;
+  font-size: 16px;
+  color: #919191;
 `;
 
 const PriceInfo = styled.div`
@@ -41,20 +62,14 @@ const PriceInfo = styled.div`
   line-height: 24px;
 `;
 
-const OriginPrice = styled.p`
-  color: #919191;
-  text-decoration: line-through;
+const TotalPrice = styled.p`
+  font-weight: 700;
 `;
 
-const SaledPrice = styled.p`
+const DailyPrice = styled.p`
   font-size: 24px;
-  font-weight: 500;
-
-  span{
-    color: #DE2E5F;
-    display: inline-block;
-    margin-right: 10px;
-  }
+  font-weight: 700;
+  color: #DE2E5F;
 `;
 
-export {RoomWrapper, Image, RoomInfo, RoomName, People, PriceInfo, OriginPrice, SaledPrice};
+export {Selector, RoomWrapper, Image, RoomInfo, RoomName, People, PriceInfo, DailyPrice, TotalPrice};

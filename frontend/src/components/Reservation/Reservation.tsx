@@ -1,19 +1,32 @@
-import DatePickerComponent from './DatePicker';
-import ReservationList from './Reservation.style';
-import { useEffect, useState } from 'react';
-import PostingReview from './PostingReview';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useScrollPrevent } from 'src/hooks/useScroll';
+import { selectAuth } from 'src/contexts/auth';
+import { useAppSelector } from 'src/contexts/state.type';
+
+import DatePickerComponent from './DatePicker';
+import PostingReview from './PostingReview';
+
+import ReservationList from './Reservation.style';
+import { getReservationByDate } from 'src/utils/reservations';
 
 const Reservations = () => {
-  let reservationList = [1];
+  const { id } = useAppSelector(selectAuth);
+
+  const [reservationList, setReservationList] = useState<Object[]>([]);
+
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
   const [showDialog, setDialog] = useState<boolean>(false);
 
   useScrollPrevent(showDialog);
 
-  useEffect(() => {
-    // 날짜 바뀌면 list 검색
+  useLayoutEffect(() => {
+    const getReservationList = async () => {
+      const list = await getReservationByDate(id, startDate, endDate);
+      setReservationList(list);
+      console.log(reservationList);
+    };
+    getReservationList();
   }, [startDate, endDate]);
 
   return (
@@ -25,49 +38,27 @@ const Reservations = () => {
         endDate={endDate}
         setEndDate={setEndDate}
       />
+      {showDialog && <PostingReview showDialog={showDialog} setDialog={setDialog} />}
       {reservationList.length ? (
         <ul>
-          {showDialog && <PostingReview showDialog={showDialog} setDialog={setDialog} />}
-          <li>
-            <img src="/src/assets/hotels/photo1.webp" alt="칵슬라우타넨 악틱 리조트" />
-            <div>
-              <span>칵슬라우타넨 악틱 리조트</span>
-              <span>기준 2명/최대 2명</span>
-              <span>이용 날짜</span>
-              <span>2022-02-26~ 2022-03-01</span>
-              <button onClick={() => setDialog(true)}>후기 남기기</button>
-            </div>
-          </li>
-          <li>
-            <img src="/src/assets/hotels/photo2.webp" alt="그랜드 미라마르 올 럭셔리 스위트 & 레지던스" />
-            <div>
-              <span>그랜드 미라마르 올 럭셔리 스위트 & 레지던스</span>
-              <span>기준 2명/최대 2명</span>
-              <span>이용 날짜</span>
-              <span>2022-02-26~ 2022-03-01</span>
-              <button onClick={() => setDialog(true)}>후기 남기기</button>
-            </div>
-          </li>
-          <li>
-            <img src="/src/assets/hotels/photo3.webp" alt="엑스플로라 파타고니아 - 올 인클루시브" />
-            <div>
-              <span>엑스플로라 파타고니아 - 올 인클루시브</span>
-              <span>기준 2명/최대 2명</span>
-              <span>이용 날짜</span>
-              <span>2022-02-26~ 2022-03-01</span>
-              <button onClick={() => setDialog(true)}>후기 남기기</button>
-            </div>
-          </li>
-          <li>
-            <img src="/src/assets/hotels/photo4.webp" alt="콘래드 서울" />
-            <div>
-              <span>콘래드 서울</span>
-              <span>기준 2명/최대 2명</span>
-              <span>이용 날짜</span>
-              <span>2022-02-26~ 2022-03-01</span>
-              <button onClick={() => setDialog(true)}>후기 남기기</button>
-            </div>
-          </li>
+          {reservationList.map(
+            ({ id, occupancy, adults, children, checkInDate, checkOutDate, review, photo, name }, index) => (
+              <li key={id + index}>
+                <img src={photo} alt={name} />
+                <div>
+                  <span>{name}</span>
+                  <span>
+                    기준{adults + children}명 / 최대{occupancy}명
+                  </span>
+                  <span>이용 날짜</span>
+                  <span>
+                    {checkInDate}~ {checkOutDate}
+                  </span>
+                  <button onClick={() => setDialog(true)}>{!!review ? '후기 수정' : '후기 작성'}</button>
+                </div>
+              </li>
+            ),
+          )}
         </ul>
       ) : (
         <p>예약 내역이 존재하지 않습니다</p>

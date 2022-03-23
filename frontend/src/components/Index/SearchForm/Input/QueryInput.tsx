@@ -24,6 +24,7 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
       const reconstructRes = res.suggestions.reduce((acc: [], { entities }) => {
         return [...acc, ...entities];
       }, []);
+      console.log(reconstructRes);
 
       inputRef.current.value = reconstructRes[0].name;
 
@@ -40,9 +41,17 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
     if (target.tagName !== 'LI') return;
 
     inputRef.current.value = target.dataset.name;
+    setQuery(target.dataset.name);
     setDestinationId(target.dataset.id);
     setQueryList([]);
-    setQuery(target.dataset.name);
+  };
+
+  const settingStates = (selectState: number, clear?: boolean) => {
+    inputRef.current.value = queryList[selectState].name;
+    setQuery(queryList[selectState].name);
+    setDestinationId(queryList[selectState].destinationId);
+
+    clear ? setQueryList([]) : setSelected(selectState);
   };
 
   const handlekeyUp = (e: React.KeyboardEvent) => {
@@ -50,16 +59,13 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
 
     if (e.key === 'ArrowUp') {
       tempSelected = selected > 0 ? selected - 1 : queryList.length - 1;
-      setSelected(tempSelected);
-      inputRef.current.value = queryList[tempSelected].name;
+      settingStates(tempSelected);
     } else if (e.key === 'ArrowDown') {
       tempSelected = selected + 1 > queryList.length - 1 ? 0 : selected + 1;
-      setSelected(tempSelected);
-      inputRef.current.value = queryList[tempSelected].name;
+      settingStates(tempSelected);
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      setQueryList([]);
-      inputRef.current.value = queryList[selected].name;
+      settingStates(selected, true);
     } else {
       setIsSearching(true);
     }

@@ -2,12 +2,12 @@ import QueryString from 'qs';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { getSearchHotelsByQuery } from 'src/utils/requests';
+import Spinner from 'components/Spinner/Spinner';
 import SearchForm from 'components/Index/SearchForm/SearchForm';
+import { getSearchHotelsByQuery } from 'src/utils/requests';
 import { StyledDiv, StyledUl } from './Search.style';
 import SearchLi from './SearchList/SearchLi';
 import { hotelTypes } from './Search.type';
-import Spinner from 'components/Spinner/Spinner';
 
 const Search = () => {
   const location = useLocation();
