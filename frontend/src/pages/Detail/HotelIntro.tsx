@@ -4,7 +4,7 @@ import Amenity from 'components/Amenity/Amenity';
 import HotelImage from 'components/HotelImage/HotelImage';
 import { useEffect, useState } from 'react';
 import { IntroDiv } from './HotelIntro.style';
-import { getHotelInfo } from 'src/utils/requests';
+import { getHotelInfo, getHotelPhotos } from 'src/utils/requests';
 
 const findHotelIntro = (body: Object[]) => {
   // 이름, 평점, 숙소소개,
@@ -75,25 +75,35 @@ const settingHotelOverview = (body: object[]) => {
   return hotelOverview;
 };
 
+const settingHotelImgage = (imgsArray: object[]): string[] => {
+  let sizeUrl = '?impolicy=fcrop&w=1000&h=666&q=medium';
+
+  return imgsArray.map(img => img.baseUrl.replace('{size}', 'z').concat(sizeUrl));
+};
+
 const HotelIntro = () => {
   const [hotelId, setHotelId] = useState<number>(171138);
   const [hotelInfo, setHotelInfo] = useState<object>({});
   const [coordinates, setCoordinates] = useState<object>({});
   const [overviews, setOverviews] = useState<object[]>([]);
+  const [photos, setPhotos] = useState<string[]>([]);
 
   useEffect(() => {
     const requestbody = async () => {
-      const resoponse = await getHotelInfo(hotelId);
-      setHotelInfo(findHotelIntro(resoponse));
-      setCoordinates(findHotelMap(resoponse));
-      setOverviews(settingHotelOverview(resoponse));
+      // const resoponseInfo = await getHotelInfo(hotelId);
+      // setHotelInfo(findHotelIntro(resoponseInfo));
+      // setCoordinates(findHotelMap(resoponseInfo));
+      // setOverviews(settingHotelOverview(resoponseInfo));
+
+      const resoponsePhotos = await getHotelPhotos(hotelId);
+      setPhotos(settingHotelImgage(resoponsePhotos));
     };
     requestbody();
   }, []);
 
   return (
     <>
-      <HotelImage />
+      <HotelImage photos={photos} />
       <IntroDiv>
         <HotelDescription hotelInfo={hotelInfo} />
         <Map coordinates={coordinates} />

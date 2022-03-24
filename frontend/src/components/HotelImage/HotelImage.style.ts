@@ -56,18 +56,16 @@ export const ImageModal = styled.div`
 `;
 
 export const ImageModalTitle = styled.div`
-  // background-color: red;
-  display: flex;
-  align-items: center;
-  height: 10%;
+  position: absolute;
+  top: 10px;
+  left: 10px;
   width: 100%;
-  // margin: 0px 0px -48px;
-  // padding-right: 12px;
+  padding: 10px;
 `;
 
 export const SliderWrapper = styled.div`
-  width: 90%;
-  height: 100%;
+  width: 70vw;
+  height: 70vh;
   align-items: center;
 `;
 
@@ -81,7 +79,7 @@ export const ImgFigcaption = styled.figcaption`
 `;
 
 export const ImgTitle = styled.div`
-  margin-top: 20px;
+  margin-top: 15px;
   align-items: flex-start;
   display: flex;
   height: 70px;

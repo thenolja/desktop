@@ -18,7 +18,8 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const HotelImage = () => {
+const HotelImage = ({ photos }) => {
+  const [initialslider, setInitialslider] = useState<number>(0);
   const [modalFlag, setModalFlag] = useState(false);
 
   const HotelImageModal = () => {
@@ -28,6 +29,7 @@ const HotelImage = () => {
       speed: 500,
       slidesToShow: 1,
       slidesToScroll: 1,
+      initialSlide: initialslider,
       nextArrow: <Button role="next" onClick={() => {}} />,
       prevArrow: <Button role="prev" onClick={() => {}} />,
     };
@@ -35,26 +37,24 @@ const HotelImage = () => {
     return (
       <ImageModal>
         <ImageModalTitle>
-          <ModalCloseBtn
+          <button
             onClick={() => {
               setModalFlag(false);
             }}
           >
             <FontAwesomeIcon icon={faX} style={{ color: '#FFF' }} size="2x" />
-          </ModalCloseBtn>
+          </button>
         </ImageModalTitle>
         <SliderWrapper>
-          <Slider {...settings}>
-            <div>
-              <Image src="https://images.trvl-media.com/hotels/1000000/490000/481300/481269/38f1ec2f.jpg?impolicy=resizecrop&rw=1200&ra=fit"></Image>
-            </div>
-            <div>
-              <Image src="https://images.trvl-media.com/hotels/1000000/490000/481300/481269/38f1ec2f.jpg?impolicy=resizecrop&rw=1200&ra=fit"></Image>
-            </div>
-            <div>
-              <h3>3</h3>
-            </div>
-          </Slider>
+          <div>
+            <Slider {...settings}>
+              {photos.map((photo, index) => (
+                <div key={index.toString()}>
+                  <Image src={photo}></Image>
+                </div>
+              ))}
+            </Slider>
+          </div>
         </SliderWrapper>
         <ImgTitle>기본 이미지</ImgTitle>
       </ImageModal>
@@ -68,42 +68,32 @@ const HotelImage = () => {
           <div>
             <figure>
               <div>
-                <Image src="https://images.trvl-media.com/hotels/1000000/490000/481300/481269/38f1ec2f.jpg?impolicy=resizecrop&rw=1200&ra=fit"></Image>
+                <Image src={photos[0]}></Image>
               </div>
-              <ImageBtn onClick={() => setModalFlag(true)}></ImageBtn>
+              <ImageBtn
+                onClick={() => {
+                  setModalFlag(true);
+                }}
+              ></ImageBtn>
             </figure>
           </div>
         </BigBox>
         <SmallBox>
-          <div>
-            <figure>
-              <div>
-                <Image src="https://images.trvl-media.com/hotels/1000000/490000/481300/481269/38f1ec2f.jpg?impolicy=resizecrop&rw=1200&ra=fit"></Image>
-              </div>
-              <ImageBtn></ImageBtn>
-            </figure>
-          </div>
-          <div>
-            <figure>
-              <div>
-                <Image src="https://images.trvl-media.com/hotels/1000000/490000/481300/481269/38f1ec2f.jpg?impolicy=resizecrop&rw=1200&ra=fit"></Image>
-              </div>
-            </figure>
-          </div>
-          <div>
-            <figure>
-              <div>
-                <Image src="https://images.trvl-media.com/hotels/1000000/490000/481300/481269/38f1ec2f.jpg?impolicy=resizecrop&rw=1200&ra=fit"></Image>
-              </div>
-            </figure>
-          </div>
-          <div>
-            <figure>
-              <div>
-                <Image src="https://images.trvl-media.com/hotels/1000000/490000/481300/481269/38f1ec2f.jpg?impolicy=resizecrop&rw=1200&ra=fit"></Image>
-              </div>
-            </figure>
-          </div>
+          {photos.slice(1, 5).map((url, index) => (
+            <div key={index.toString()}>
+              <figure>
+                <div>
+                  <Image src={url}></Image>
+                </div>
+                <ImageBtn
+                  onClick={() => {
+                    setModalFlag(true);
+                    setInitialslider(index + 1);
+                  }}
+                ></ImageBtn>
+              </figure>
+            </div>
+          ))}
         </SmallBox>
       </ImgageWrapper>
       {modalFlag ? HotelImageModal() : ''}
