@@ -1,0 +1,10 @@
+[
+  {
+    "id": "cee8d65a-ee85-48e3-aee9-b9e39d0c1b40",
+    "email": "soyo_0131@naver.com",
+    "nickname": "떡볶이",
+    "phone": "01012345678",
+    "reservations": [1, 2, 3, 4, 5],
+    "myReviews": [1]
+  }
+]
