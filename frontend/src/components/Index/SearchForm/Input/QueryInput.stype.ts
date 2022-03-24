@@ -10,6 +10,7 @@ const StyledUl = styled.ul`
   position: absolute;
   top: 68px;
   left: 0;
+  z-index: 10;
   background: #fff;
   padding: 20px;
   border-radius: 8px;

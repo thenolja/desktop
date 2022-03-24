@@ -33,7 +33,7 @@ const Map = ({ coordinates }) => {
 
   useEffect(() => {
     KakaoMapStart(coordinates.latitude, coordinates.longitude);
-  }, [modalFlag]);
+  }, [coordinates]);
 
   const MapDiv = (() => {
     return (
