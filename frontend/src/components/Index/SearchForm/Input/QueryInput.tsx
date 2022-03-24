@@ -31,6 +31,7 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
         setQueryList([
           { caption: '찾으시는 결과가 없습니다', destinationId: 'none', name: '찾으시는 결과가 없습니다.' },
         ]);
+        setDestinationId(null);
         setShowQueryList(true);
         return;
       }
