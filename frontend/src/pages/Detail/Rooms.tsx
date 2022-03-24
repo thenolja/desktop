@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 
 const Rooms = () => {
   const [hotelId, setHotelId] = useState<string>('229056');
+
   const [rooms, setRooms] = useState<object[]>([]);
   const [selectedRoom, setSelectedRoom] = useState<object[]>([]);
 
