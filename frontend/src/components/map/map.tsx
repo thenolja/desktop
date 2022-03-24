@@ -1,0 +1,91 @@
+import React, { useRef, useEffect, useState } from 'react';
+import {
+  MapWrapper,
+  MapCover,
+  MapAddress,
+  MapModal,
+  ModalHeader,
+  ModalTitle,
+  ModalCloseBtn,
+  ModalMapWrapper,
+} from './Map.style';
+import { Allbutton } from '../detail/HotelDescription.style';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons';
+
+const KakaoMapStart = (latitude: number, longitude: number) => {
+  const kakao = (window as any).kakao;
+  let container = document.getElementById('map');
+  let options = {
+    center: new kakao.maps.LatLng(latitude, longitude),
+    level: 3,
+  };
+  let map = new kakao.maps.Map(container, options);
+  let markerPosition = new kakao.maps.LatLng(latitude, longitude);
+  let marker = new kakao.maps.Marker({
+    position: markerPosition,
+  });
+  marker.setMap(map);
+};
+
+const Map = ({ coordinates }) => {
+  const [modalFlag, setModalFlag] = useState(false);
+
+  useEffect(() => {
+    KakaoMapStart(coordinates.latitude, coordinates.longitude);
+  }, [coordinates]);
+
+  const MapDiv = (() => {
+    return (
+      <>
+        <MapCover
+          id="map"
+          onClick={() => {
+            setModalFlag(true);
+          }}
+        ></MapCover>
+      </>
+    );
+  })();
+
+  const fullscreenMap = () => {
+    KakaoMapStart(coordinates.latitude, coordinates.longitude);
+    return (
+      <>
+        <MapModal>
+          <ModalHeader>
+            <ModalCloseBtn
+              onClick={() => {
+                setModalFlag(false);
+              }}
+            >
+              {/* <FontAwesomeIcon icon={faX} /> */}
+            </ModalCloseBtn>
+            <ModalTitle />
+            {coordinates.name}
+          </ModalHeader>
+          {MapDiv}
+        </MapModal>
+      </>
+    );
+  };
+
+  return (
+    <>
+      <MapWrapper>
+        {modalFlag ? fullscreenMap() : ''}
+        {MapDiv}
+        <MapAddress>{coordinates.fullAddress}</MapAddress>
+        <Allbutton
+          onClick={() => {
+            setModalFlag(true);
+          }}
+        >
+          지도로 보기
+        </Allbutton>
+      </MapWrapper>
+    </>
+  );
+};
+
+export default Map;
