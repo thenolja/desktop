@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react';
 import { getAllRoomList } from 'src/utils/requests';
 import { Buttons, SelectBtn, Selected } from './Rooms.style';
 import { addDays } from 'date-fns';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const Rooms = () => {
-  const [hotelId, setHotelId] = useState<string>('229056');
+  const { id }=useParams();
+
+  const [hotelId, setHotelId] = useState<string>(id);
 
   const [rooms, setRooms] = useState<object[]>([]);
   const [selectedRoom, setSelectedRoom] = useState<object[]>([]);
@@ -31,9 +33,9 @@ const Rooms = () => {
     <>
       <CheckInOut startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} />
       <ul>
-        {/* {rooms.map((room, index) => 
+        {rooms.map((room, index) => 
           <Room key={index} room={room} setSelectedRoom={setSelectedRoom} />
-        )} */}
+        )}
       </ul>
       <Buttons>
         {selectedRoom.name ? (
