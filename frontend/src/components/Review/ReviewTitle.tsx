@@ -1,12 +1,13 @@
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { getReviewTitleData } from 'src/utils/requests';
 import {Title, ReviewCount, Star, Average} from './ReviewTitle.style';
 
 const ReviewTitle=()=>{
-
-  const [hotelId, setHotelId] = useState<string>('229056');
+  const { id }=useParams();
+  const [hotelId, setHotelId] = useState<string>(id);
 
   const [total, setTotal]=useState({
     len: 0,
