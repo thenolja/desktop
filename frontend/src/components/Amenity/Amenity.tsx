@@ -36,6 +36,7 @@ const settingHotelOverview = (body: object[]) => {
   return hotelOverview;
 };
 const Amenity = () => {
+  const [hotelId, setHotelId] = useState<number>(171138);
   const [overviews, setOverviews] = useState<object[]>([]);
   useEffect(() => {
     const requestbody = async () => {
