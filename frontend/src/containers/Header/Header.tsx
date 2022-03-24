@@ -54,7 +54,7 @@ const Header = () => {
     <StyledHeader>
       <Link to="/">
         <h1>
-          <img src="/src/img/AnyConv.com__logo.webp" />
+          <img src="@/src/img/AnyConv.com__logo.webp" />
         </h1>
       </Link>
 
