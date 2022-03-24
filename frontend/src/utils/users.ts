@@ -1,16 +1,7 @@
 import axios from 'axios';
 
-const getUserById = async (id: string) => {
+const createUser = async ({ id, email, nickname }) => {
   return await axios
-    .get(`/api/users/${id}`)
-    .then(({ data }) => {
-      return data[0];
-    })
-    .catch(e => console.log(e));
-};
-
-const createUser = (id: string, email: string, nickname: string) => {
-  axios
     .post(`/api/users`, {
       id: id,
       email: email,
@@ -19,7 +10,9 @@ const createUser = (id: string, email: string, nickname: string) => {
       reservations: [],
       myReviews: [],
     })
-    .then(res => console.log(res))
+    .then(({ data }) => {
+      return data;
+    })
     .catch(e => console.log(e));
 };
 
@@ -35,4 +28,4 @@ const updateUser = async (id: string, nickname: string, phone: string) => {
     .catch(e => console.log(e));
 };
 
-export { getUserById, createUser, updateUser };
+export { createUser, updateUser };

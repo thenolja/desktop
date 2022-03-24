@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { authLogIn, authLogOut, selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
-import { getUserById, createUser } from 'src/utils/users';
+import { createUser } from 'src/utils/users';
 import { StyledHeader } from './Header.style';
 
 const Header = () => {
@@ -21,17 +21,20 @@ const Header = () => {
   };
 
   netlifyIdentity.on('login', async ({ id, email, user_metadata: { full_name: nickname } }) => {
-    const user = await getUserById(id);
     let authorizedUser = {};
-    const iscreatedUser = user?.length;
+
+    const { auth } = JSON.parse(sessionStorage.getItem('persist:root'));
+    const storedUser = JSON.parse(auth);
+
+    const user = await createUser({ id, email, nickname });
 
     authorizedUser = {
-      id: iscreatedUser ? id : user.id,
-      nickname: iscreatedUser ? nickname : user.nickname,
-      email: iscreatedUser ? email : user.email,
-      phone: iscreatedUser ? '' : user.phone,
-      reservations: iscreatedUser ? [] : user.reservations,
-      myReviews: iscreatedUser ? [] : user.myReviews,
+      id: storedUser.id ? storedUser.id : user.id,
+      nickname: storedUser.nickname ? storedUser.nickname : user.nickname,
+      email: storedUser.email ? storedUser.email : user.email,
+      phone: storedUser.phone ? storedUser.phone : user.phone,
+      reservations: storedUser.reservation ? storedUser.reservation : user.reservation,
+      myReviews: storedUser.myReviews ? storedUser.myReviews : user.myReviews,
     };
 
     dispatch(authLogIn({ ...authorizedUser }));
@@ -40,6 +43,7 @@ const Header = () => {
 
   netlifyIdentity.on('logout', () => {
     dispatch(authLogOut());
+    sessionStorage.clear();
   });
 
   useEffect(() => {

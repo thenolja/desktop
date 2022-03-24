@@ -13,16 +13,16 @@ const { PORT } = process.env;
 app.use(cors());
 app.use(express.json());
 
-app.get('/users/:searchId', (req, res) => {
-  const { searchId } = req.params;
-  const data = users.filter(({ id }) => id === searchId);
-  res.send(data);
-});
-
 app.post('/users', (req, res) => {
   console.log('create user!');
-  users = [...users, req.body];
-  res.send(users);
+  const user = users.find(({ id }) => id === req.body.id);
+
+  if (user) {
+    res.send(user);
+  } else {
+    users = [...users, req.body];
+    res.send(req.body);
+  }
 });
 
 app.patch('/users/:searchId', (req, res) => {
@@ -31,6 +31,7 @@ app.patch('/users/:searchId', (req, res) => {
   const data = users
     .filter(({ id }) => id === searchId)
     .map((state) => ({ ...state, ...req.body }));
+  console.log(data);
   res.send(data);
 });
 
