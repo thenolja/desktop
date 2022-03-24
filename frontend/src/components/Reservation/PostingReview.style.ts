@@ -44,7 +44,7 @@ const PostingReviewContainer = styled.div`
       font-size: 16px;
       position: absolute;
       top: 20px;
-      right: 50px;
+      right: 20px;
       width: 100px;
       padding: 15px;
     }
@@ -97,7 +97,7 @@ const PostingReviewContainer = styled.div`
     }
 
     textarea {
-      margin: 10px 0;
+      margin: 30px 0;
       width: 100%;
       height: 150px;
       font-size: 18px;
@@ -106,12 +106,11 @@ const PostingReviewContainer = styled.div`
     }
 
     .img-container {
-      width: 200px;
-      height: 200px;
+      width: 100%;
+      height: 300px;
 
-      margin-bottom: 150px;
       img {
-        margin: 20px 0;
+        margin: 0;
         border: 1px solid gray;
         width: 100%;
         height: 100%;

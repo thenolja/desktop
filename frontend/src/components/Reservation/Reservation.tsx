@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useScrollPrevent } from 'src/hooks/useScroll';
 import { selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
@@ -13,6 +13,7 @@ const Reservations = () => {
   const { id } = useAppSelector(selectAuth);
 
   const [reservationList, setReservationList] = useState<Object[]>([]);
+  const [selectedItem, setSelectedItem] = useState<Object>({});
 
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
@@ -20,15 +21,19 @@ const Reservations = () => {
 
   useScrollPrevent(showDialog);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const getReservationList = async () => {
       const list = await getReservationByDate(id, startDate, endDate);
       setReservationList(list);
-      console.log(reservationList);
     };
     getReservationList();
   }, [startDate, endDate]);
 
+  const selectItem = index => {
+    const { id, photo, spec, checkOutDate, checkInDate, name, review } = reservationList[index];
+    setSelectedItem({ id, photo, spec, checkInDate, checkOutDate, name, review });
+    setDialog(true);
+  };
   return (
     <ReservationList>
       <h2>예약내역</h2>
@@ -38,12 +43,12 @@ const Reservations = () => {
         endDate={endDate}
         setEndDate={setEndDate}
       />
-      {showDialog && <PostingReview showDialog={showDialog} setDialog={setDialog} />}
+      {showDialog && <PostingReview setDialog={setDialog} selectedItem={selectedItem} />}
       {reservationList.length ? (
         <ul>
           {reservationList.map(
             ({ id, occupancy, adults, children, checkInDate, checkOutDate, review, photo, name }, index) => (
-              <li key={id + index}>
+              <li key={id}>
                 <img src={photo} alt={name} />
                 <div>
                   <span>{name}</span>
@@ -54,7 +59,7 @@ const Reservations = () => {
                   <span>
                     {checkInDate}~ {checkOutDate}
                   </span>
-                  <button onClick={() => setDialog(true)}>{!!review ? '후기 수정' : '후기 작성'}</button>
+                  <button onClick={() => selectItem(index)}>{!!review ? '후기 수정' : '후기 작성'}</button>
                 </div>
               </li>
             ),
