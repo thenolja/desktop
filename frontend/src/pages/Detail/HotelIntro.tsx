@@ -54,27 +54,6 @@ const findHotelMap = (body: Object[]) => {
   return hotelMapinfo;
 };
 
-const settingHotelOverview = (body: object[]) => {
-  interface Overview {
-    title?: string;
-    type?: string;
-    content: string[];
-  }
-  let sectionSetting: Overview = {
-    title: body.amenities[0].heading,
-    type: body.amenities[0].listItems[0].heading,
-    content: body.amenities[0].listItems[0].listItems,
-  };
-
-  const hotelOverview: object[] = [
-    body.overview.overviewSections[0],
-    sectionSetting,
-    body.overview.overviewSections[1],
-  ];
-
-  return hotelOverview;
-};
-
 const settingHotelImgage = (imgsArray: object[]): string[] => {
   let sizeUrl = '?impolicy=fcrop&w=1000&h=666&q=medium';
 
@@ -85,7 +64,6 @@ const HotelIntro = () => {
   const [hotelId, setHotelId] = useState<number>(171138);
   const [hotelInfo, setHotelInfo] = useState<object>({});
   const [coordinates, setCoordinates] = useState<object>({});
-  const [overviews, setOverviews] = useState<object[]>([]);
   const [photos, setPhotos] = useState<string[]>([]);
 
   useEffect(() => {
@@ -93,7 +71,6 @@ const HotelIntro = () => {
       // const resoponseInfo = await getHotelInfo(hotelId);
       // setHotelInfo(findHotelIntro(resoponseInfo));
       // setCoordinates(findHotelMap(resoponseInfo));
-      // setOverviews(settingHotelOverview(resoponseInfo));
 
       const resoponsePhotos = await getHotelPhotos(hotelId);
       setPhotos(settingHotelImgage(resoponsePhotos));
@@ -108,7 +85,6 @@ const HotelIntro = () => {
         <HotelDescription hotelInfo={hotelInfo} />
         <Map coordinates={coordinates} />
       </IntroDiv>
-      <Amenity overviews={overviews}></Amenity>
     </>
   );
 };

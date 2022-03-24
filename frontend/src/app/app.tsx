@@ -14,6 +14,7 @@ import TopReviews from 'src/pages/Detail/TopReviews';
 import Reviews from 'src/pages/Reviews/Reviews';
 import ProtectedRoute from 'src/pages/ProtectedRouter/ProtectedRouter';
 import Search from 'src/pages/Search/Search';
+import Amenity from 'components/Amenity/Amenity';
 import Reservation from 'src/pages/Reservation/Reservation';
 
 const App = () => {
@@ -21,7 +22,7 @@ const App = () => {
 
   const [detailNavigation] = useState([
     { id: 'rooms', href: '', content: '객실' },
-    { id: 'test', href: 'test', content: '편의시설' },
+    { id: 'amenities', href: 'amenities', content: '편의시설' },
     { id: 'topReviews', href: 'topReviews', content: '후기' },
   ]);
 
@@ -42,6 +43,7 @@ const App = () => {
           />
           <Route path="/detail/:id" element={<Detail list={detailNavigation} />}>
             <Route index element={<Rooms />} />
+            <Route path="amenities" element={<Amenity />} />
             <Route path="topReviews" element={<TopReviews />} />
           </Route>
           <Route path="/reviews/:id" element={<Reviews />} />
