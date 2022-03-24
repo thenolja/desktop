@@ -1,26 +1,26 @@
 [
   {
-    "hotelId": 1,
+    "id": 1,
     "name": "칵슬라우타넨 악틱 리조트",
     "photo": "/src/assets/hotels/photo1.webp"
   },
   {
-    "hotelId": 2,
+    "id": 2,
     "name": "그랜드 미라마르 올 럭셔리 스위트 & 레지던스",
     "photo": "/src/assets/hotels/photo2.webp"
   },
   {
-    "hotelId": 3,
+    "id": 3,
     "name": "엑스플로라 파타고니아 - 올 인클루시브",
     "photo": "/src/assets/hotels/photo3.webp"
   },
   {
-    "hotelId": 4,
+    "id": 4,
     "name": "콘래드 서울",
     "photo": "/src/assets/hotels/photo4.webp"
   },
   {
-    "hotelId": 5,
+    "id": 5,
     "name": "ENA 스위트 호텔 남대문",
     "photo": "/src/assets/hotels/photo5.webp"
   }
