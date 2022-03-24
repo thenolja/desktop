@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import StyledDivProps from './StyledDiv.type';
 
@@ -14,6 +14,17 @@ const StyledDiv = styled.div<StyledDivProps>`
   border-radius: 15px;
   margin-right: 10px;
 
+  &::after {
+    ${props =>
+      props.person &&
+      css`
+        content: '명';
+        position: absolute;
+        left: 70px;
+        transform: translateY(-1px);
+      `}
+  }
+
   img {
     width: 30px;
     height: 30px;
@@ -22,10 +33,6 @@ const StyledDiv = styled.div<StyledDivProps>`
 
   input {
     width: calc(100% - 42px);
-  }
-
-  input::placeholder {
-    color: #000;
   }
 `;
 

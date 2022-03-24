@@ -300,7 +300,7 @@ const getHotelInfo = async (hotelId: number): Promise<[]> => {
     },
     headers: {
       'x-rapidapi-host': 'hotels4.p.rapidapi.com',
-      'x-rapidapi-key': '7ae7f445demsh43b864a8fa809c0p1d3ed5jsnae5decba40a1',
+      'X-RapidAPI-Key': '49b01f6e33mshbbffc3c750bef62p1f83e6jsnc9323f2068e8',
     },
   };
 
@@ -325,7 +325,7 @@ const getHotelPhotos = async (hotelId: number): Promise<[]> => {
     params: { id: hotelId },
     headers: {
       'x-rapidapi-host': 'hotels4.p.rapidapi.com',
-      'x-rapidapi-key': '7ae7f445demsh43b864a8fa809c0p1d3ed5jsnae5decba40a1',
+      'X-RapidAPI-Key': '49b01f6e33mshbbffc3c750bef62p1f83e6jsnc9323f2068e8',
     },
   };
 
