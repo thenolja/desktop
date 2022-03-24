@@ -1,4 +1,6 @@
 import React, { useRef, useState } from 'react';
+import reactTriggerChange from 'react-trigger-change';
+
 import { getDestinationIdsByQuery } from 'src/utils/requests';
 import { StyledDiv } from './InputDiv.style';
 import { StyledUl } from './QueryInput.stype';
@@ -6,6 +8,8 @@ import QueryListType from './QueryList.type';
 
 const QueryInput = ({ query, setQuery, setDestinationId }) => {
   const inputRef = useRef<HTMLInputElement>();
+  const recommendsRef = useRef<HTMLInputElement>();
+  const [showQueryList, setShowQueryList] = useState<boolean>(false);
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [queryList, setQueryList] = useState<QueryListType[]>([]);
   const [selected, setSelected] = useState<number>(0);
@@ -21,21 +25,43 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
 
     timer = setTimeout(async () => {
       const res = await getDestinationIdsByQuery(target.value);
+      console.log(res);
+
+      if (!res) {
+        setQueryList([
+          { caption: '찾으시는 결과가 없습니다', destinationId: 'none', name: '찾으시는 결과가 없습니다.' },
+        ]);
+        setShowQueryList(true);
+        return;
+      }
+
       const reconstructRes = res.suggestions.reduce((acc: [], { entities }) => {
         return [...acc, ...entities];
       }, []);
-      console.log(reconstructRes);
 
       inputRef.current.value = reconstructRes[0].name;
 
       setDestinationId(reconstructRes[0].destinationId);
       setQueryList(reconstructRes);
+      setShowQueryList(true);
       reconstructRes.length && setQuery(reconstructRes[0].name);
       setIsSearching(false);
-    }, 500);
+    }, 200);
   };
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleInputClick = (e: React.MouseEvent) => {
+    const target = e.target as HTMLInputElement;
+
+    if (target.value === '') return;
+
+    setIsSearching(true);
+
+    setTimeout(() => {
+      reactTriggerChange(inputRef.current);
+    }, 100);
+  };
+
+  const handleListClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLInputElement;
 
     if (target.tagName !== 'LI') return;
@@ -77,20 +103,29 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
     }
   };
 
+  document.addEventListener('click', e => {
+    const target = e.target as HTMLInputElement;
+
+    if (!recommendsRef.current?.contains(target)) {
+      setShowQueryList(false);
+    }
+  });
+
   return (
     <StyledDiv flexGrow={3}>
       <img src="/src/assets/location.png" alt="" />
       <input
         type="text"
         placeholder="지역, 지하철역, 숙소명으로 찾아보세요."
+        onClick={handleInputClick}
         onChange={handleChange}
         onKeyUp={handlekeyUp}
         onKeyDown={handleKeyDown}
         ref={inputRef}
         defaultValue={query}
       />
-      {queryList.length > 0 && (
-        <StyledUl onClick={handleClick}>
+      {showQueryList && queryList.length > 0 && (
+        <StyledUl onClick={handleListClick} ref={recommendsRef}>
           {queryList.map(({ caption, destinationId, name }, index) => (
             <li
               key={destinationId}
