@@ -21,9 +21,11 @@ const findHotelIntro = (body: Object[]) => {
     leaving: string;
   }
 
+  let editTag = body.propertyDescription.tagline.toString().replace(/[<b></b>]/g, '');
+
   const hotelIntro: HotelIntro = {
     name: body.propertyDescription.name,
-    tagline: body.propertyDescription.tagline,
+    tagline: editTag,
     formattedScale: body.guestReviews.brands.formattedScale,
     formattedRating: body.guestReviews.brands.formattedRating,
     totalcnt: body.guestReviews.brands.total,
