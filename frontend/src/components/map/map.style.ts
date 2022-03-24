@@ -3,26 +3,25 @@ import styled from 'styled-components';
 export const MapWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  width: 370px;
-  height: 310px;
+  width: 40vw;
+  height: 40vh;
+  padding-top: 10px;
 `;
 
 export const MapCover = styled.button`
-  align-items: flex-start;
-  width: 100%;
-  height: 100%;
+  width: 40vw;
+  height: 30vh;
+  margin-bottom: 10px;
 `;
 
 export const MapAddress = styled.div`
-  // flex-basis: 100%;
   font-size: 14px;
   line-height: 18px;
 `;
 
 export const MapModal = styled.div`
   position: fixed;
-  z-index: 10;
+  z-index: 2;
   top: 0px;
   left: 0px;
   width: 100vw;

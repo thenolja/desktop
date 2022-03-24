@@ -12,7 +12,7 @@ export const TitleWrapper = styled.div`
   margin-bottom: 15px;
 `;
 export const Title = styled.h1`
-  margin: 16px 0px 6px;
+  margin: 10px 0px 6px;
   line-height: 36px;
   color: #141d38;
   font-size: 20px;

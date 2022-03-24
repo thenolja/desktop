@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const AmenityWrapper = styled.div`
-  padding: 0px 12px;
+  padding: 12px;
   color: #333333;
   line-height: 24px;
 `;
