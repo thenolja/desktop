@@ -40,11 +40,11 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="/detail" element={<Detail list={detailNavigation} />}>
+          <Route path="/detail/:id" element={<Detail list={detailNavigation} />}>
             <Route index element={<Rooms />} />
             <Route path="topReviews" element={<TopReviews />} />
           </Route>
-          <Route path="/reviews" element={<Reviews />} />
+          <Route path="/reviews/:id" element={<Reviews />} />
           <Route path="/reservation" element={<Reservation />} />
         </Routes>
       </Main>

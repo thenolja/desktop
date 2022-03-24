@@ -6,9 +6,11 @@ import { getReviews } from "src/utils/requests";
 import Review from "../../components/Review/Review";
 import ReviewTitle from "../../components/Review/ReviewTitle";
 import {ReviewList, TopButton} from '../Detail/TopReviews.style';
+import { useParams } from "react-router-dom";
 
 const Reviews = ():JSX.Element =>{
-  const [hotelId, setHotelId]=useState<string>('229056');
+  const {id}=useParams();
+  const [hotelId, setHotelId]=useState<string>(id);
   
   const [target, setTarget]=useState(null);
   const [isLoaded, setIsLoaded]=useState(false);
