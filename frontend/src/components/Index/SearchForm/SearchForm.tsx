@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 const SearchForm = ({ propQuery, propStartDate, propEndDate }) => {
   const navigate = useNavigate();
   const [query, setQuery] = useState<string>(propQuery ?? '');
-  const [destinationId, setDestinationId] = useState<number>(759818);
+  const [destinationId, setDestinationId] = useState<number | null>(0);
   const [startDate, setStartDate] = useState(propStartDate ?? new Date());
   const [endDate, setEndDate] = useState(propEndDate ?? new Date());
   const [person, setPerson] = useState<number>(1);
@@ -23,6 +23,11 @@ const SearchForm = ({ propQuery, propStartDate, propEndDate }) => {
 
     const checkIn = changeDateFormat(startDate);
     const checkOut = changeDateFormat(endDate);
+
+    if (!destinationId) {
+      alert(destinationId === 0 ? '검색어를 입력해주세요' : '입력 값이 올바르지 않습니다.');
+      return;
+    }
 
     navigate(
       `/search/?query=${query}&destinationId=${destinationId}&checkIn=${checkIn}&checkOut=${checkOut}&person=${person}`,

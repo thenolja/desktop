@@ -8,7 +8,7 @@ const PersoInput = ({ setPerson }) => {
   };
 
   return (
-    <StyledDiv width="267px">
+    <StyledDiv width="267px" person={true}>
       <img src="/src/assets/person.png" alt="" />
       <input id="person" placeholder="1명" type="number" max={10} defaultValue={1} onChange={handleChange} />
     </StyledDiv>
