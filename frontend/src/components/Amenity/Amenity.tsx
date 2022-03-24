@@ -15,11 +15,12 @@ import {
 } from './Amenity.style';
 
 import { FeaturesWrapper, FeaturesTitle, FeaturesBox, FeaturesBoxTitle, FeatureList } from './AmenityFeatures.style';
+import Spinner from 'components/Spinner/Spinner';
 const settingHotelOverview = (body: object[]) => {
   interface Overview {
     title?: string;
     type?: string;
-    content: string[];
+    content?: string[];
   }
   let sectionSetting: Overview = {
     title: body.amenities[0].heading,
@@ -36,12 +37,17 @@ const settingHotelOverview = (body: object[]) => {
   return hotelOverview;
 };
 const Amenity = () => {
+  const [hotelId, setHotelId] = useState<number>(171138);
   const [overviews, setOverviews] = useState<object[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   useEffect(() => {
     const requestbody = async () => {
       const resoponseInfo = await getHotelInfo(hotelId);
+      setIsLoading(false);
       setOverviews(settingHotelOverview(resoponseInfo));
     };
+    setIsLoading(true);
     requestbody();
   }, []);
   const mockReviewList = [
@@ -75,16 +81,24 @@ const Amenity = () => {
       </AmenityWrapper>
       <FeaturesWrapper>
         <FeaturesTitle>숙박 시설 특징</FeaturesTitle>
-        <FeaturesBox>
-          {overviews.map(({ id, title, type, content }) => (
-            <ul>
-              <FeaturesTitle key={type}>{title}</FeaturesTitle>
-              {content.map(list => (
-                <FeatureList>{list}</FeatureList>
+        {isLoading ? (
+          <Spinner />
+        ) : overviews.length === 0 ? (
+          <FeaturesBox> "등록된 자료가 없습니다"</FeaturesBox>
+        ) : (
+          <>
+            <FeaturesBox>
+              {overviews.map(({ id, title, type, content }) => (
+                <ul>
+                  <FeaturesTitle key={type}>{title}</FeaturesTitle>
+                  {content.map(list => (
+                    <FeatureList>{list}</FeatureList>
+                  ))}
+                </ul>
               ))}
-            </ul>
-          ))}
-        </FeaturesBox>
+            </FeaturesBox>
+          </>
+        )}
       </FeaturesWrapper>
     </>
   );
