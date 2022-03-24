@@ -17,6 +17,7 @@ import Button from '../Carousels/Button/Button';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import Spinner from '../Spinner/Spinner';
 
 const HotelImage = ({ photos }) => {
   const [initialslider, setInitialslider] = useState<number>(0);
@@ -63,39 +64,42 @@ const HotelImage = ({ photos }) => {
 
   return (
     <>
-      <ImgageWrapper>
-        <BigBox>
-          <div>
-            <figure>
-              <div>
-                <Image src={photos[0]}></Image>
-              </div>
-              <ImageBtn
-                onClick={() => {
-                  setModalFlag(true);
-                }}
-              ></ImageBtn>
-            </figure>
-          </div>
-        </BigBox>
-        <SmallBox>
-          {photos.slice(1, 5).map((url, index) => (
-            <div key={index.toString()}>
+      {photos ? (
+        <ImgageWrapper>
+          <BigBox>
+            <div>
               <figure>
-                <div>
-                  <Image src={url}></Image>
-                </div>
+                <div>{photos[0] ? <Image src={photos[0]}></Image> : <Spinner></Spinner>}</div>
                 <ImageBtn
                   onClick={() => {
                     setModalFlag(true);
-                    setInitialslider(index + 1);
                   }}
                 ></ImageBtn>
               </figure>
             </div>
-          ))}
-        </SmallBox>
-      </ImgageWrapper>
+          </BigBox>
+          <SmallBox>
+            {photos.slice(1, 5).map((url, index) => (
+              <div key={index.toString()}>
+                <figure>
+                  <div>
+                    <Image src={url}></Image>
+                  </div>
+                  <ImageBtn
+                    onClick={() => {
+                      setModalFlag(true);
+                      setInitialslider(index + 1);
+                    }}
+                  ></ImageBtn>
+                </figure>
+              </div>
+            ))}
+          </SmallBox>
+        </ImgageWrapper>
+      ) : (
+        <Spinner></Spinner>
+      )}
+
       {modalFlag ? HotelImageModal() : ''}
     </>
   );

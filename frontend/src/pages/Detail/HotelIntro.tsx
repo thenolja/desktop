@@ -68,9 +68,9 @@ const HotelIntro = () => {
 
   useEffect(() => {
     const requestbody = async () => {
-      // const resoponseInfo = await getHotelInfo(hotelId);
-      // setHotelInfo(findHotelIntro(resoponseInfo));
-      // setCoordinates(findHotelMap(resoponseInfo));
+      const resoponseInfo = await getHotelInfo(hotelId);
+      setHotelInfo(findHotelIntro(resoponseInfo));
+      setCoordinates(findHotelMap(resoponseInfo));
 
       const resoponsePhotos = await getHotelPhotos(hotelId);
       setPhotos(settingHotelImgage(resoponsePhotos));
