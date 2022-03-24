@@ -12,11 +12,12 @@ const PostingReviewContainer = styled.div`
     left: 50%;
     top: 10%;
     width: 800px;
+    height: 850px;
     position: inherit;
-    padding: 20px;
-
+    padding: 20px 20px 0 20px;
     background: #fff;
-    transform: translateX(-50%);
+    transform: translate(-50%, -10%);
+
     h2 {
       font-size: 20px;
       font-weight: 700;
@@ -35,10 +36,11 @@ const PostingReviewContainer = styled.div`
 
     .submit {
       width: 100%;
+
       font-size: 24px;
       position: absolute;
       transform: translateX(-20px);
-      padding: 20px 0;
+      padding: 15px;
     }
     .cancel {
       font-size: 16px;
@@ -65,9 +67,9 @@ const PostingReviewContainer = styled.div`
     }
 
     .rating-container {
-      margin: 20px 0;
       display: flex;
       width: 200px;
+      margin-top: 10px;
       flex-direction: row-reverse;
       justify-content: space-around;
       text-align: center;
@@ -89,7 +91,7 @@ const PostingReviewContainer = styled.div`
       }
     }
     legend {
-      font-size: 20px;
+      font-size: 16px;
     }
     label {
       font-size: 24px;
@@ -97,7 +99,7 @@ const PostingReviewContainer = styled.div`
     }
 
     textarea {
-      margin: 30px 0;
+      margin: 10px 0;
       width: 100%;
       height: 150px;
       font-size: 18px;

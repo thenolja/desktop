@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const FeaturesWrapper = styled.div`
+  padding-bottom: 20px;
   height: 100%;
   font-size: 14px;
   line-height: 18px;
