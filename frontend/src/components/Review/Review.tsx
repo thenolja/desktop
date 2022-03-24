@@ -3,14 +3,19 @@ import { faStar, faStarHalf } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReviewProps } from './Review.type';
 import { memo } from 'react';
+import { useAppSelector } from 'src/contexts/state.type';
+import { selectAuth } from 'src/contexts/auth';
 
 const StarScore = (star:number) => {
   const stars = [];
   for(let i=0; i < star; i++) stars.push(<Star><FontAwesomeIcon icon={faStar} /></Star>);
+  if(star-Math.floor(star)>0) stars.push(<Star><FontAwesomeIcon icon={faStarHalf} /></Star>);
   return stars;
 }
 
 const Review = ({review}) => {
+  const { nickname } = useAppSelector(selectAuth);
+
 
   return(
     <article>
@@ -38,7 +43,7 @@ const Review = ({review}) => {
         <Text>
           {review.description}
         </Text>
-        <Button>삭제</Button>
+        {review.reviewer.name===nickname && <Button>삭제</Button>}
       </MainWrapper>
     </article>
   )
