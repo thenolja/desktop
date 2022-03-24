@@ -23,7 +23,7 @@ import {
 
 const Room = ({ room, setSelectedRoom }) => {
   const [modal, setModal] = useState(false);
-  // console.log(room)
+  console.log(room);
   const handleClick = () => {
     setSelectedRoom(room);
     toggleModal();
