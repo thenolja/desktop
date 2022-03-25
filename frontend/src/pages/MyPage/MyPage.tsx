@@ -13,7 +13,6 @@ const MyPage = () => {
     [isEditing],
   );
 
-  const MemoizedReservationList = useMemo(() => <ReservationList />, [ReservationList]);
   const MemoizedSignOut = useMemo(
     () => <SignOut>{isEditing ? <button className="submit">회원탈퇴</button> : ''}</SignOut>,
     [isEditing],
@@ -22,7 +21,7 @@ const MyPage = () => {
   return (
     <>
       {MemoizedProfile}
-      {MemoizedReservationList}
+      <ReservationList />
       {MemoizedSignOut}
     </>
   );
