@@ -45,6 +45,7 @@ const UserInfoForm = ({ handleEditingMode }) => {
           <input
             id="nickname"
             type="text"
+            required
             maxLength={6}
             value={tempNickname}
             placeholder="닉네임(최대 6자리까지)"
@@ -56,6 +57,7 @@ const UserInfoForm = ({ handleEditingMode }) => {
           <input
             id="phone"
             type="tel"
+            required
             maxLength={11}
             value={tempPhone}
             placeholder={'11자리 숫자를 입력하세요'}
