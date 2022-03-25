@@ -8,7 +8,7 @@ import QueryListType from './QueryList.type';
 
 const QueryInput = ({ query, setQuery, setDestinationId }) => {
   const inputRef = useRef<HTMLInputElement>();
-  const recommendsRef = useRef<HTMLInputElement>();
+  const recommendsRef = useRef<HTMLUListElement>();
   const [showQueryList, setShowQueryList] = useState<boolean>(false);
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [queryList, setQueryList] = useState<QueryListType[]>([]);

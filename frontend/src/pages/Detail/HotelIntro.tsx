@@ -1,5 +1,5 @@
 import HotelDescription from 'components/detail/HotelDescription';
-import Map from 'components/Map/map';
+import Map from 'components/map/map';
 import Amenity from 'components/Amenity/Amenity';
 import HotelImage from 'components/HotelImage/HotelImage';
 import { useEffect, useState } from 'react';
@@ -53,6 +53,7 @@ const findHotelMap = (body: Object[]) => {
     latitude: body.pdpHeader.hotelLocation.coordinates.latitude,
     longitude: body.pdpHeader.hotelLocation.coordinates.longitude,
   };
+
   return hotelMapinfo;
 };
 

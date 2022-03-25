@@ -8,6 +8,7 @@ const Buttons = styled.section`
   position: sticky;
   bottom:0;
   box-shadow: 0px -7px 12px -7px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
   `;
 
 const SelectBtn = styled.button`
