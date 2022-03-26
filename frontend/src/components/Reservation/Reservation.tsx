@@ -16,6 +16,7 @@ const Reservations = () => {
   const [selectedItem, setSelectedItem] = useState<Object>({});
 
   const [startDate, setStartDate] = useState<Date>(new Date());
+
   const [endDate, setEndDate] = useState<Date>(new Date());
   const [showDialog, setDialog] = useState<boolean>(false);
 
@@ -43,7 +44,9 @@ const Reservations = () => {
         endDate={endDate}
         setEndDate={setEndDate}
       />
-      {showDialog && <PostingReview setDialog={setDialog} selectedItem={selectedItem} />}
+      {showDialog && (
+        <PostingReview setDialog={setDialog} selectedItem={selectedItem} setReservationList={setReservationList} />
+      )}
       {reservationList.length ? (
         <ul>
           {reservationList.map(
