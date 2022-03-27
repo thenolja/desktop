@@ -54,6 +54,7 @@ const findHotelMap = (body: Object[]) => {
     latitude: body.pdpHeader.hotelLocation.coordinates.latitude,
     longitude: body.pdpHeader.hotelLocation.coordinates.longitude,
   };
+
   return hotelMapinfo;
 };
 

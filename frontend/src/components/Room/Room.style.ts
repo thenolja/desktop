@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {len} from "./Room.types";
 
 const Selector = styled.div`
   width: 100%;
@@ -36,7 +37,7 @@ const Image = styled.div`
   min-height: 200px;
 `;
 
-const RoomInfo = styled.div`
+const RoomInfoDiv = styled.div`
   height: 100%;
   width: 62%;
   padding-left: 1rem;
@@ -53,6 +54,11 @@ const People = styled.p`
   line-height: 20px;
   font-size: 16px;
   color: #919191;
+`;
+
+const NoImage = styled.img`
+  width: 60px;
+  height: 60px;
 `;
 
 const ModalBackground = styled.div`
@@ -89,6 +95,15 @@ const RoomAmenity = styled.div`
   text-align: center;
   overflow-y: scroll;
   z-index: 100;
+`;
+
+const RoomImages = styled.div`
+  overflow-x: scroll;
+  overflow-y: hidden;
+  div {
+    width: ${ (props:len) => props.length * 410}px;
+    height: fit-content;
+  }
 `;
 
 const RoomImage = styled.img`
@@ -188,4 +203,4 @@ const DailyPrice = styled.p`
   color: #DE2E5F;
 `;
 
-export {Selector, RoomWrapper, Image, ModalBackground, ModalHeader, ModalBody, ModalFooter, CloseBtn, RoomAmenity, RoomImage, SelectBtn, RoomInfo, RoomName, People, PriceInfo, DailyPrice, TotalPrice};
+export {Selector, RoomWrapper, NoImage, Image, ModalBackground, ModalHeader, ModalBody, ModalFooter, CloseBtn, RoomAmenity, RoomImages, RoomImage, SelectBtn, RoomInfoDiv, RoomName, People, PriceInfo, DailyPrice, TotalPrice};

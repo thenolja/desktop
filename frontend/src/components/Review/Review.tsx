@@ -1,7 +1,7 @@
 import {FlexBox, Imoji, Time, Info, Text, Star, Button, MainWrapper} from './Review.style';
 import { faStar, faStarHalf } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ReviewProps } from './Review.type';
+import { ReviewProps, ReviewType } from './Review.type';
 import { memo } from 'react';
 import { useAppSelector } from 'src/contexts/state.type';
 import { selectAuth } from 'src/contexts/auth';
@@ -13,7 +13,7 @@ const StarScore = (star:number) => {
   return stars;
 }
 
-const Review = ({review}) => {
+const Review = ({review}:ReviewType) => {
   const { nickname } = useAppSelector(selectAuth);
 
 
