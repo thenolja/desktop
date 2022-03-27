@@ -2,16 +2,10 @@
   "name": "thenolja",
   "version": "1.0.0",
   "scripts": {
-<<<<<<< HEAD
-    "start": "vite --host",
-    "build": "vite build",
-    "test": "jest"
-=======
     "frontend": "cd frontend && npm start",
     "backend": "cd backend && npm start",
     "start": "concurrently \"npm run frontend\" \"npm run backend\"",
     "build": "cd frontend && npm run build"
->>>>>>> develop
   },
   "dependencies": {
     "concurrently": "^7.0.0"

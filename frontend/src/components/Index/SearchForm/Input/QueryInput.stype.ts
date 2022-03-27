@@ -8,6 +8,7 @@ const StyledSelect = styled.select`
 
 const StyledUl = styled.ul`
   position: absolute;
+  z-index: 10;
   top: 68px;
   left: 0;
   background: #fff;

@@ -6,7 +6,7 @@ import Spinner from 'components/Spinner/Spinner';
 import SearchForm from 'components/Index/SearchForm/SearchForm';
 import { getSearchHotelsByQuery } from 'src/utils/requests';
 import { StyledDiv, StyledUl } from './Search.style';
-import SearchLi from './SearchList/SearchLi';
+import SearchLi from '../../components/SearchList/SearchLi';
 import { hotelTypes } from './Search.type';
 
 const Search = () => {
@@ -18,7 +18,6 @@ const Search = () => {
   useEffect(() => {
     const requestSearch = async () => {
       const res = await getSearchHotelsByQuery(queryData);
-      console.log(res);
 
       setIsLoading(false);
       setSearchedHotels(res ?? []);
