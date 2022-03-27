@@ -1,17 +1,17 @@
 import Loader from "components/Review/Loader";
-import Review from "components/Review/Review";
+import { ReviewList } from "components/Review/ReviewList";
 import ReviewTitle from "components/Review/ReviewTitle";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getReviews } from "src/utils/requests";
-import {ReviewList, ButtonWrapper, Button} from './TopReviews.style';
+import { ButtonWrapper, Button } from './TopReviews.style';
 
 const Reviews = () => {
   const { id }=useParams();
 
   const [hotelId, setHotelId]=useState<string>(id);
   const [reviews, setReviews]=useState<object[]>([]);
-  const [isLoaded, setIsLoaded]=useState(false);
+  const [isLoaded, setIsLoaded]=useState<boolean>(false);
 
   const totalReview=`/reviews/${hotelId}`;
   
@@ -28,13 +28,9 @@ const Reviews = () => {
 
   return(
     <>
-    <ReviewTitle />
-
-      <ReviewList>
-        {reviews.map(review => 
-          <Review key={review.itineraryId} review={review} />
-        )}
-      </ReviewList>
+      <ReviewTitle />
+      <ReviewList reviews={reviews}/>
+      
       {isLoaded && <Loader />}
       <ButtonWrapper>
         <Button>
