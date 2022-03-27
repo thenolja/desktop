@@ -1,6 +1,6 @@
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getReviewTitleData } from 'src/utils/requests';
 import {Title, ReviewCount, Star, Average} from './ReviewTitle.style';
@@ -46,4 +46,4 @@ const ReviewTitle=()=>{
   )
 }
 
-export default ReviewTitle;
+export default memo(ReviewTitle);

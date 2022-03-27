@@ -3,6 +3,7 @@ import Map from 'components/Map/map';
 import Amenity from 'components/Amenity/Amenity';
 import HotelImage from 'components/HotelImage/HotelImage';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { IntroDiv } from './HotelIntro.style';
 import { getHotelInfo, getHotelPhotos } from 'src/utils/requests';
 
@@ -53,6 +54,7 @@ const findHotelMap = (body: Object[]) => {
     latitude: body.pdpHeader.hotelLocation.coordinates.latitude,
     longitude: body.pdpHeader.hotelLocation.coordinates.longitude,
   };
+
   return hotelMapinfo;
 };
 
@@ -63,7 +65,9 @@ const settingHotelImgage = (imgsArray: object[]): string[] => {
 };
 
 const HotelIntro = () => {
-  const [hotelId, setHotelId] = useState<number>(171138);
+  const { id } = useParams();
+
+  const [hotelId, setHotelId] = useState<number>(id);
   const [hotelInfo, setHotelInfo] = useState<object>({});
   const [coordinates, setCoordinates] = useState<object>({});
   const [photos, setPhotos] = useState<string[]>([]);

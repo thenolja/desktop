@@ -22,9 +22,11 @@ const Header = () => {
 
   netlifyIdentity.on('login', async ({ id, email, user_metadata: { full_name: nickname } }) => {
     let authorizedUser = {};
-
-    const { auth } = JSON.parse(sessionStorage.getItem('persist:root'));
-    const storedUser = JSON.parse(auth);
+    let storedUser = { id: null, nickname: null, email: null, phone: null, reservation: null, myReviews: null };
+    if (sessionStorage.getItem('persist:root')) {
+      const { auth } = JSON.parse(sessionStorage.getItem('persist:root'));
+      storedUser = JSON.parse(auth);
+    }
 
     const user = await createUser({ id, email, nickname });
 
