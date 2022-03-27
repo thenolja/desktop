@@ -1,6 +1,7 @@
 import axios from 'axios';
+import changeDateFormatToIsoSTring from './dateToISOString';
 
-const today = new Date().toISOString().split('T')[0];
+const today = changeDateFormatToIsoSTring();
 
 const getDestinationIdsByQuery = async query => {
   var options = {
