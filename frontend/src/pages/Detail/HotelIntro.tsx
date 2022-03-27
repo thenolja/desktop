@@ -1,5 +1,5 @@
 import HotelDescription from 'components/detail/HotelDescription';
-import Map from 'components/map/map';
+import Map from 'components/Map/map';
 import Amenity from 'components/Amenity/Amenity';
 import HotelImage from 'components/HotelImage/HotelImage';
 import { useEffect, useState } from 'react';

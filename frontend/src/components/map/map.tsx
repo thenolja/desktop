@@ -34,20 +34,7 @@ const Map = ({ coordinates }) => {
 
   useEffect(() => {
     KakaoMapStart(coordinates.latitude, coordinates.longitude);
-  }, [coordinates]);
-
-  const MapDiv = (() => {
-    return (
-      <>
-        <MapCover
-          id="map"
-          onClick={() => {
-            setModalFlag(true);
-          }}
-        ></MapCover>
-      </>
-    );
-  })();
+  }, [coordinates, modalFlag]);
 
   const fullscreenMap = () => {
     KakaoMapStart(coordinates.latitude, coordinates.longitude);
