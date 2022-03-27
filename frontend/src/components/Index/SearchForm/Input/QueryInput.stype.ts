@@ -8,8 +8,10 @@ const StyledSelect = styled.select`
 
 const StyledUl = styled.ul`
   position: absolute;
+  z-index: 10;
   top: 68px;
   left: 0;
+  z-index: 10;
   background: #fff;
   padding: 20px;
   border-radius: 8px;
