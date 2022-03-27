@@ -1,19 +1,9 @@
 import { memo, useState } from 'react';
-<<<<<<< HEAD
-import DetailRoomInfo from './DetailRoomInfo';
-import { Selector, RoomWrapper, Image, NoImage } from './Room.style';
-import { RoomInfo } from './RoomInfo';
-
-const Room = ({ room, setSelectedRoom }) => {
-  const [modal, setModal] = useState<boolean>(false);
-
-=======
 import styled from 'styled-components';
 import {
   Selector,
   RoomWrapper,
   Image,
-  RoomInfo,
   RoomImage,
   RoomRatePlans,
   RoomName,
@@ -33,7 +23,6 @@ import {
 const Room = ({ room, setSelectedRoom }) => {
   const [modal, setModal] = useState(false);
   console.log(room);
->>>>>>> e53f41bb25d59b41b0a40463862e24c05de972d9
   const handleClick = () => {
     setSelectedRoom(room);
     toggleModal();
@@ -41,13 +30,6 @@ const Room = ({ room, setSelectedRoom }) => {
 
   const toggleModal = () => {
     setModal(!modal);
-<<<<<<< HEAD
-  }
-
-  return (
-    <li>
-      <DetailRoomInfo room={room} modal={modal} toggleModal={toggleModal} handleClick={handleClick} />
-=======
   };
 
   const RoomImages = styled.div`
@@ -95,19 +77,10 @@ const Room = ({ room, setSelectedRoom }) => {
           </ModalFooter>
         </RoomAmenity>
       </ModalBackground>
->>>>>>> e53f41bb25d59b41b0a40463862e24c05de972d9
       <RoomWrapper onClick={toggleModal}>
         <Selector />
         <Image>
           {room.images[0] ? (
-<<<<<<< HEAD
-            <img src={room.images[0].fullSizeUrl} title={room.name} alt={room.name}></img>
-          ) : (
-            <NoImage src={'https://img.icons8.com/ios/344/no-image.png'} title='noImage' alt='noImage'></NoImage>
-          )}
-        </Image>
-        <RoomInfo name={room.name} maxOccupancy={room.maxOccupancy} price={room.ratePlans[0].price} />
-=======
             <img src={room.images[0].fullSizeUrl}></img>
           ) : (
             <img src={'https://img.icons8.com/ios/344/no-image.png'} style={{ width: '30px', height: '30px' }}></img>
@@ -136,7 +109,6 @@ const Room = ({ room, setSelectedRoom }) => {
             <DailyPrice>{room.ratePlans[0].price.current}원</DailyPrice>
           </PriceInfo>
         </RoomInfo>
->>>>>>> e53f41bb25d59b41b0a40463862e24c05de972d9
       </RoomWrapper>
     </li>
   );

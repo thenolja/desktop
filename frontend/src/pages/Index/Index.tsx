@@ -8,7 +8,7 @@ const Index = () => {
     <>
       <Notice />
       <SearchForm />
-      {/* <CurrentGoods /> */}
+      <CurrentGoods />
       {/* <LocalGoods /> */}
     </>
   );
