@@ -18,6 +18,7 @@ import {
   DailyPrice,
   TotalPrice,
   ModalFooter,
+  RoomInfoDiv,
 } from './Room.style';
 
 const Room = ({ room, setSelectedRoom }) => {
@@ -86,7 +87,7 @@ const Room = ({ room, setSelectedRoom }) => {
             <img src={'https://img.icons8.com/ios/344/no-image.png'} style={{ width: '30px', height: '30px' }}></img>
           )}
         </Image>
-        <RoomInfo>
+        <RoomInfoDiv>
           <RoomName>{room.name}</RoomName>
           {room.maxOccupancy && (
             <People>
@@ -108,7 +109,7 @@ const Room = ({ room, setSelectedRoom }) => {
             <span>1박당 요금</span>
             <DailyPrice>{room.ratePlans[0].price.current}원</DailyPrice>
           </PriceInfo>
-        </RoomInfo>
+        </RoomInfoDiv>
       </RoomWrapper>
     </li>
   );

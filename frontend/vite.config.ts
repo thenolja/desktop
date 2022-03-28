@@ -16,6 +16,7 @@ export default defineConfig(configEnv => {
     },
     build: {
       sourcemap: true,
+      chunkSizeWarningLimit: 1500,
     },
     css: {
       modules: {
@@ -23,11 +24,11 @@ export default defineConfig(configEnv => {
       },
     },
     server: {
-      proxy:{
+      proxy: {
         '/api': {
           target: 'http://localhost:4000',
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, '')
+          rewrite: path => path.replace(/^\/api/, ''),
         },
       },
       open: '/',
