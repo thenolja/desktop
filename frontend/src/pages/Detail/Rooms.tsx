@@ -6,6 +6,7 @@ import { Buttons, SelectBtn, Selected } from './Rooms.style';
 import { addDays } from 'date-fns';
 import { Link, useParams } from 'react-router-dom';
 import Spinner from 'components/Spinner/Spinner';
+import { getReservedRooms } from 'src/utils/reservations';
 
 const Rooms = () => {
   const { id }=useParams();
@@ -22,11 +23,14 @@ const Rooms = () => {
   useEffect(() => {
     const requestRooms = async () => {
       setIsLoaded(true);
-      const checkIn = `${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()}`;
-      const checkOut = `${endDate.getFullYear()}-${endDate.getMonth() + 1}-${endDate.getDate()}`;
+      const checkIn = `${startDate.getFullYear()}-${(startDate.getMonth() + 1)<10?'0'+(startDate.getMonth() + 1):startDate.getMonth() + 1}-${startDate.getDate()<10?'0'+startDate.getDate():startDate.getDate()}`;
+      const checkOut = `${endDate.getFullYear()}-${(endDate.getMonth() + 1)<10?'0'+(endDate.getMonth() + 1):endDate.getMonth() + 1}-${endDate.getDate()<10?'0'+endDate.getDate():endDate.getDate()}`;
       
       const Rooms = await getAllRoomList(hotelId, checkIn, checkOut);
-      setRooms(Rooms);
+      const reservedRooms = await getReservedRooms(hotelId, checkIn, checkOut);
+      console.log(reservedRooms)
+      const nonReservedRooms=reservedRooms.length?Rooms.filter(room=>reservedRooms.indexOf(room.name) === -1) : Rooms;
+      setRooms(nonReservedRooms);
       setIsLoaded(false);
     };
     requestRooms();
