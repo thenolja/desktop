@@ -49,7 +49,12 @@ const App = () => {
             <Route path="topReviews" element={<TopReviews />} />
           </Route>
           <Route path="/reviews/:id" element={<Reviews />} />
-          <Route path="/reservation" element={<Reservation />} />
+          <Route path="/reservation/:id" element={
+            <ProtectedRoute isAllow={!!(id && nickname && email)}>
+              <Reservation />
+            </ProtectedRoute>
+          }
+           />
         </Routes>
       </Main>
       <Footer />
