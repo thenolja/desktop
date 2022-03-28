@@ -1,10 +1,10 @@
-import Loader from 'components/Review/Loader';
 import { memo, useEffect, useState } from 'react';
 import { getReviews } from 'src/utils/requests';
 import ReviewTitle from '../../components/Review/ReviewTitle';
 import { useParams } from 'react-router-dom';
 import { ReviewList } from 'components/Review/ReviewList';
 import { TopBtn } from 'components/Review/TopBtn';
+import Spinner from 'components/Spinner/Spinner';
 
 const Reviews = (): JSX.Element => {
   const { id } = useParams();
@@ -56,7 +56,7 @@ const Reviews = (): JSX.Element => {
       <ReviewTitle />
       <ReviewList reviews={reviews} />
       <TopBtn />
-      <div ref={setTarget}>{isLoaded && <Loader />}</div>
+      <div ref={setTarget}>{isLoaded && <Spinner />}</div>
     </>
   );
 };
