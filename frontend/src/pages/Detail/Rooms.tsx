@@ -16,7 +16,6 @@ const Rooms = () => {
   const [selectedRoom, setSelectedRoom] = useState<object[]>([]);
   const [isLoaded, setIsLoaded]=useState(false);
 
-
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(addDays(new Date(), 1));
 
@@ -49,7 +48,11 @@ const Rooms = () => {
             <Selected>
               현재 선택된 객실 : <span>{selectedRoom.name}</span>
             </Selected>
-            <SelectBtn>예약하기</SelectBtn>
+            <Link to={`/reservation/${hotelId}`} >
+              <SelectBtn>
+                예약하기
+              </SelectBtn>
+            </Link>
           </>
         ) : (
           <SelectBtn disabled>예약하기</SelectBtn>
