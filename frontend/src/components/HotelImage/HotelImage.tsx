@@ -68,7 +68,9 @@ const HotelImage = ({ photos }) => {
         <BigBox>
           <div>
             <figure>
-              <div>{photos[0] ? <Image src={photos[0]}></Image> : <Spinner></Spinner>}</div>
+              <div>
+                <Image src={photos[0]} />
+              </div>
               <ImageBtn
                 onClick={() => {
                   setModalFlag(true);
