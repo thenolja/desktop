@@ -3,7 +3,7 @@ import { RoomInfoType } from './Room.types';
 import { RoomOccupancy } from './RoomOccupancy';
 import { RoomPriceInfo } from './RoomPriceInfo';
 
-export const RoomInfo =({name, maxOccupancy, price}:RoomInfoType)=>{
+export const RoomInfo =({name, maxOccupancy, price}:RoomInfoType):JSX.Element=>{
   return(
     <RoomInfoDiv>
       <RoomName>{name}</RoomName>
