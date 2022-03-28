@@ -18,4 +18,18 @@ const patchReview = async ({ id, userId, reservationId, star, writeTime, nicknam
     .catch(e => console.log(e));
 };
 
-export { patchReview };
+const getMockdataReviews = async (id:string) => {
+  return await axios
+    .get(`/api/reviews/${id}`)
+    .then(({ data }) => data)
+    .catch(e => console.log(e));
+};
+
+const getMockdataReviewsTitle = async (id:string) => {
+  return await axios
+    .get(`/api/reviews/title/${id}`)
+    .then(({ data }) => data)
+    .catch(e => console.log(e));
+};
+
+export { patchReview, getMockdataReviews, getMockdataReviewsTitle };
