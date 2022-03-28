@@ -40,7 +40,7 @@ const Search = () => {
       ) : (
         <StyledUl>
           {searchedHotels.map((hotel: hotelTypes) => (
-            <SearchLi key={hotel.id} hotel={hotel} />
+            <SearchLi key={hotel.id} hotel={hotel} queryData={queryData} />
           ))}
         </StyledUl>
       )}

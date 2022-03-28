@@ -1,5 +1,18 @@
 import { memo, useState } from 'react';
-import { Selector, RoomWrapper, Image, RoomImage, SelectBtn, ModalBackground, CloseBtn, ModalHeader, ModalBody, RoomAmenity,ModalFooter, RoomImages } from './Room.style';
+import {
+  Selector,
+  RoomWrapper,
+  Image,
+  RoomImage,
+  SelectBtn,
+  ModalBackground,
+  CloseBtn,
+  ModalHeader,
+  ModalBody,
+  RoomAmenity,
+  ModalFooter,
+  RoomImages,
+} from './Room.style';
 import { RoomInfo } from './RoomInfo';
 
 const Room = ({ room, setSelectedRoom }) => {
@@ -25,8 +38,13 @@ const Room = ({ room, setSelectedRoom }) => {
           <ModalBody>
             <RoomImages length={room.images.length}>
               <div>
-                {room.images.map((image, index:number) => (
-                  <RoomImage key={index.toString()} src={image.fullSizeUrl} title={image.caption} alt={image.caption}></RoomImage>
+                {room.images.map((image, index: number) => (
+                  <RoomImage
+                    key={index.toString()}
+                    src={image.fullSizeUrl}
+                    title={image.caption}
+                    alt={image.caption}
+                  ></RoomImage>
                 ))}
               </div>
             </RoomImages>

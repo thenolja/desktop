@@ -1,9 +1,9 @@
 import { StyledLink } from './SearchLi.style';
 
-const SearchLi = ({ hotel }) => {
+const SearchLi = ({ hotel, queryData: { checkIn, checkOut, person } }) => {
   return (
     <li>
-      <StyledLink to={`/detail/${hotel.id}`}>
+      <StyledLink to={`/detail/${hotel.id}?checkIn=${checkIn}&checkOut=${checkOut}&person=${person}`}>
         <img src={hotel.optimizedThumbUrls.srpDesktop} alt={hotel.name + '썸네일 이미지'} />
         <div className="hotel-inform">
           <h3>{hotel.name}</h3>
