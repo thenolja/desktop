@@ -31,8 +31,7 @@ const Reservations = () => {
   }, [startDate, endDate]);
 
   const selectItem = index => {
-    const { id, photo, spec, checkOutDate, checkInDate, name, review } = reservationList[index];
-    setSelectedItem({ id, photo, spec, checkInDate, checkOutDate, name, review });
+    setSelectedItem(reservationList[index]);
     setDialog(true);
   };
   return (
