@@ -64,42 +64,39 @@ const HotelImage = ({ photos }) => {
 
   return (
     <>
-      {photos ? (
-        <ImgageWrapper>
-          <BigBox>
-            <div>
+      <ImgageWrapper>
+        <BigBox>
+          <div>
+            <figure>
+              <div>
+                <Image src={photos[0]} />
+              </div>
+              <ImageBtn
+                onClick={() => {
+                  setModalFlag(true);
+                }}
+              ></ImageBtn>
+            </figure>
+          </div>
+        </BigBox>
+        <SmallBox>
+          {photos.slice(1, 5).map((url, index) => (
+            <div key={index.toString()}>
               <figure>
-                <div>{photos[0] ? <Image src={photos[0]}></Image> : <Spinner></Spinner>}</div>
+                <div>
+                  <Image src={url}></Image>
+                </div>
                 <ImageBtn
                   onClick={() => {
                     setModalFlag(true);
+                    setInitialslider(index + 1);
                   }}
                 ></ImageBtn>
               </figure>
             </div>
-          </BigBox>
-          <SmallBox>
-            {photos.slice(1, 5).map((url, index) => (
-              <div key={index.toString()}>
-                <figure>
-                  <div>
-                    <Image src={url}></Image>
-                  </div>
-                  <ImageBtn
-                    onClick={() => {
-                      setModalFlag(true);
-                      setInitialslider(index + 1);
-                    }}
-                  ></ImageBtn>
-                </figure>
-              </div>
-            ))}
-          </SmallBox>
-        </ImgageWrapper>
-      ) : (
-        <Spinner />
-      )}
-
+          ))}
+        </SmallBox>
+      </ImgageWrapper>
       {modalFlag ? HotelImageModal() : ''}
     </>
   );
