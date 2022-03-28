@@ -1,7 +1,7 @@
 import DatePicker from 'react-datepicker';
 import { useCallback } from 'react';
 import { addDays } from 'date-fns';
-import { DateType } from './Date';
+import { DateType } from '../CheckInOut/Date.type';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePickerContainer from './DataPicker.style';
