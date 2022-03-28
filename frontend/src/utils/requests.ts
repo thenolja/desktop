@@ -201,7 +201,8 @@ const getAllRoomList = async (hotelId: string, checkIn: string, checkOut: string
     },
     headers: {
       'X-RapidAPI-Host': 'hotels4.p.rapidapi.com',
-      'X-RapidAPI-Key': 'c72648c7b6msh4e17692f1a47d60p1e9a12jsn41a04a7a87c9'    },
+      'X-RapidAPI-Key': 'c72648c7b6msh4e17692f1a47d60p1e9a12jsn41a04a7a87c9',
+    },
   };
 
   return await axios
@@ -233,7 +234,8 @@ const getReviewTitleData = async (hotelId: string): Promise<[]> => {
     },
     headers: {
       'X-RapidAPI-Host': 'hotels4.p.rapidapi.com',
-      'X-RapidAPI-Key': 'c72648c7b6msh4e17692f1a47d60p1e9a12jsn41a04a7a87c9'    },
+      'X-RapidAPI-Key': 'c72648c7b6msh4e17692f1a47d60p1e9a12jsn41a04a7a87c9',
+    },
   };
 
   return await axios
@@ -266,7 +268,8 @@ const getReviews = async (hotelId: string, paginationURL?: string): Promise<[]> 
     },
     headers: {
       'X-RapidAPI-Host': 'hotels4.p.rapidapi.com',
-      'X-RapidAPI-Key': 'c72648c7b6msh4e17692f1a47d60p1e9a12jsn41a04a7a87c9'    },
+      'X-RapidAPI-Key': 'c72648c7b6msh4e17692f1a47d60p1e9a12jsn41a04a7a87c9',
+    },
   };
 
   return await axios
@@ -301,7 +304,7 @@ const getHotelInfo = async (hotelId: number): Promise<[]> => {
     },
     headers: {
       'x-rapidapi-host': 'hotels4.p.rapidapi.com',
-      // 'X-RapidAPI-Key': '49b01f6e33mshbbffc3c750bef62p1f83e6jsnc9323f2068e8',
+      'X-RapidAPI-Key': 'c72648c7b6msh4e17692f1a47d60p1e9a12jsn41a04a7a87c9',
     },
   };
 
@@ -326,7 +329,7 @@ const getHotelPhotos = async (hotelId: number): Promise<[]> => {
     params: { id: hotelId },
     headers: {
       'x-rapidapi-host': 'hotels4.p.rapidapi.com',
-      // 'X-RapidAPI-Key': '49b01f6e33mshbbffc3c750bef62p1f83e6jsnc9323f2068e8',
+      'X-RapidAPI-Key': 'c72648c7b6msh4e17692f1a47d60p1e9a12jsn41a04a7a87c9',
     },
   };
 
