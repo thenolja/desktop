@@ -99,6 +99,26 @@ app.patch('/reviews', (req, res) => {
   res.send(data);
 });
 
+// ktmihs
+app.get('/reviews/:id', (req, res) => {
+  const { id } = req.params;
+
+  res.send(reviews.filter(review => id === review.hotelId));
+});
+
+app.get('/reviews/title/:id', (req, res) => {
+  const { id } = req.params;
+  let total = 0, rating = 0;
+
+  reviews.forEach(review => {
+    if (id === review.hotelId) {
+      rating += review.star;
+      total++;
+    }
+  });
+  res.send([total, rating]);
+});
+
 app.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT}`);
 });
