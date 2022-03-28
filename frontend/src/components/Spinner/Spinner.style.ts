@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { StyleType } from './Spinner';
 
-const StlyedDiv = styled.div`
+const StlyedDiv = styled.div<StyleType>`
   text-align: center;
 
   img {
