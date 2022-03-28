@@ -11,11 +11,7 @@ const CurrentGoods = () => {
   const [resHotels, setResHotels] = useState<[]>([]);
 
   const success = async ({ coords }) => {
-    console.log(coords);
-
     const res = await getNearHotelList(coords);
-    console.log(res);
-
     setResHotels(res);
     setAgreeInfo(true);
   };

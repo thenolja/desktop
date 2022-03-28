@@ -1,18 +1,18 @@
-import Loader from "components/Review/Loader";
-import { memo, useEffect, useState } from "react";
-import { getReviews } from "src/utils/requests";
-import ReviewTitle from "../../components/Review/ReviewTitle";
-import { useParams } from "react-router-dom";
+import Loader from 'components/Review/Loader';
+import { memo, useEffect, useState } from 'react';
+import { getReviews } from 'src/utils/requests';
+import ReviewTitle from '../../components/Review/ReviewTitle';
+import { useParams } from 'react-router-dom';
 import { ReviewList } from 'components/Review/ReviewList';
 import { TopBtn } from 'components/Review/TopBtn';
 
-const Reviews = ():JSX.Element =>{
-  const {id}=useParams();
-  const [hotelId, setHotelId]=useState<string>(id);
-  
-  const [target, setTarget]=useState(null);
-  const [isLoaded, setIsLoaded]=useState(false);
-  const [reviews, setReivews]=useState<object[]>([]);
+const Reviews = (): JSX.Element => {
+  const { id } = useParams();
+  const [hotelId, setHotelId] = useState<string>(id);
+
+  const [target, setTarget] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [reviews, setReivews] = useState<object[]>([]);
 
   let nextUrl = '';
   let currentPage = 1;
@@ -25,12 +25,15 @@ const Reviews = ():JSX.Element =>{
     currentPage = presentReview.pagination.currentPage;
     totalPage = presentReview.pagination.totalPages;
     nextUrl = presentReview.pagination.nextURL;
-    setReivews(currentReviews=>[...currentReviews, ...presentReview.reviews.hermes.groups[presentReview.reviews.hermes.groups.length-1].items]);
+    setReivews(currentReviews => [
+      ...currentReviews,
+      ...presentReview.reviews.hermes.groups[presentReview.reviews.hermes.groups.length - 1].items,
+    ]);
     setIsLoaded(false);
   };
 
   const onIntersect = async ([entry], observer) => {
-    if (entry.isIntersecting && !isLoaded && currentPage!==totalPage) {
+    if (entry.isIntersecting && !isLoaded && currentPage !== totalPage) {
       observer.unobserve(entry.target);
       await getMoreItem();
       observer.observe(entry.target);
@@ -46,19 +49,16 @@ const Reviews = ():JSX.Element =>{
       observer.observe(target);
     }
     return () => observer && observer.disconnect();
-  }, [target]);  
+  }, [target]);
 
-
-  return(
+  return (
     <>
       <ReviewTitle />
       <ReviewList reviews={reviews} />
       <TopBtn />
-      <div ref={setTarget}>
-        {isLoaded && <Loader />}
-      </div>
+      <div ref={setTarget}>{isLoaded && <Loader />}</div>
     </>
-  )
-}
+  );
+};
 
 export default memo(Reviews);
