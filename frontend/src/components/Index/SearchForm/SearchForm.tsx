@@ -9,10 +9,10 @@ import Button from './Button/Button';
 import { useNavigate } from 'react-router-dom';
 import changeDateFormatToIsoSTring from 'src/utils/dateToISOString';
 
-const SearchForm = ({ propQuery, propStartDate, propEndDate }) => {
+const SearchForm = ({ propQuery, propStartDate, propEndDate, propDestinationId }) => {
   const navigate = useNavigate();
   const [query, setQuery] = useState<string>(propQuery ?? '');
-  const [destinationId, setDestinationId] = useState<number | null>(0);
+  const [destinationId, setDestinationId] = useState<number | null>(propDestinationId ?? null);
   const [startDate, setStartDate] = useState(propStartDate ?? new Date());
   const [endDate, setEndDate] = useState(propEndDate ?? new Date());
   const [person, setPerson] = useState<number>(1);

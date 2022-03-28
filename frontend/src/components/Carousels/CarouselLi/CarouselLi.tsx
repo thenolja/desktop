@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+
+import star from '/src/assets/star.png';
 import { StyledLi } from './CarouselLi.style';
 
 const CarouselLi = ({ hotel }) => {
@@ -9,7 +11,7 @@ const CarouselLi = ({ hotel }) => {
         <h3>{hotel.name.split('(')[0]}</h3>
         <p>
           <span>
-            <img src="/src/assets/star.png" alt="별 이미지" className="star-img" />
+            <img src={star} alt="별 이미지" className="star-img" />
             {hotel.starRating || hotel.guestReviews.rating}
             /5
           </span>

@@ -1,6 +1,7 @@
 import DatePicker from 'react-datepicker';
 import { useCallback } from 'react';
 
+import calander from '/src/assets/calander.png';
 import { StyledDiv } from './InputDiv.style';
 
 const StartDatePicker = ({ startDate, setStartDate }) => {
@@ -8,7 +9,7 @@ const StartDatePicker = ({ startDate, setStartDate }) => {
 
   return (
     <StyledDiv width="174px">
-      <img src="/src/assets/calander.png" alt="" />
+      <img src={calander} alt="체크인 날짜" />
       <DatePicker
         selectsStart
         selected={startDate}
