@@ -2,11 +2,13 @@ import { size } from 'lodash';
 import {
   ReservationWrapper,
   SectionTitle,
+  SectionBody,
   Guidance,
   FormArticle,
   Necessary,
   InputDiv,
   TotalWrapper,
+  PaymentPolicy
 } from './Reservation.style';
 
 const Reservation = () => {
@@ -23,22 +25,22 @@ const Reservation = () => {
             <Guidance>상품 이용 시 필요한 필수 정보입니다.</Guidance>
             <section>
               <input type="checkbox" id="sameUser" value="" />
-              <label for="sameUser">예약자 정보와 동일합니다.</label>
+              <label htmlFor="sameUser">예약자 정보와 동일합니다.</label>
             </section>
             <section>
-              <label for="name">
+              <label htmlFor="name">
                 성명<Necessary>*</Necessary>
               </label>
               <InputDiv>
-                <input type="text" id="name" value="" placeholder="성명을 입력해주세요" />
+                <input type="text" id="name" placeholder="성명을 입력해주세요" />
               </InputDiv>
             </section>
             <section>
-              <label for="tel">
+              <label htmlFor="tel">
                 휴대폰 번호<Necessary>*</Necessary>
               </label>
               <InputDiv>
-                <input type="tel" id="tel" value="" placeholder="휴대폰 번호를 입력해주세요" />
+                <input type="tel" id="tel" placeholder="휴대폰 번호를 입력해주세요" />
               </InputDiv>
             </section>
           </FormArticle>
@@ -46,10 +48,16 @@ const Reservation = () => {
             <SectionTitle>
               숙소 방문 수단<Necessary>*</Necessary>
             </SectionTitle>
-            <select>
-              <option>차량</option>
-              <option>도보</option>
-            </select>
+            <SectionBody>
+              <div className="visited">
+                <input type="checkbox" id="car" />
+                <label htmlFor="car">차량</label>
+              </div>
+              <div className="visited">
+                <input type="checkbox" id="work" />
+                <label htmlFor="work">도보</label>
+              </div>
+            </SectionBody>
           </FormArticle>
           <FormArticle>
             <SectionTitle>금액 및 할인 정보</SectionTitle>
@@ -86,19 +94,19 @@ const Reservation = () => {
             <section>
               <div>
                 <input type="checkbox" id="total" />
-                <label for="total">전체 동의하기</label>
+                <label htmlFor="total">전체 동의하기</label>
               </div>
               <div className="agreeSection">
                 <input type="checkbox" id="agree1" />
-                <label for="agree1"> [필수] 만 14세 이상 이용 동의</label>
+                <label htmlFor="agree1"> [필수] 만 14세 이상 이용 동의</label>
               </div>
               <div className="agreeSection">
                 <input type="checkbox" id="agree2" />
-                <label for="agree2"> [선택] 이벤트, 혜택 정보 수신 동의</label>
+                <label htmlFor="agree2"> [선택] 이벤트, 혜택 정보 수신 동의</label>
               </div>
               <div className="agreeSection">
                 <input type="checkbox" id="agree3" />
-                <label for="agree3"> [선택] 이벤트, 혜택 정보 전송을 위한 개인정보 수집 및 이용 동의</label>
+                <label htmlFor="agree3"> [선택] 이벤트, 혜택 정보 전송을 위한 개인정보 수집 및 이용 동의</label>
               </div>
             </section>
             <p>
@@ -107,10 +115,10 @@ const Reservation = () => {
             </p>
           </FormArticle>
           <button type="submit">368,000원 결제하기</button>
-          <p>
+          <PaymentPolicy>
             (주)더놀자는 통신판매중개업자로서, 통신판매의 당사자가 아니라는 사실을 고지하며 상품의 결제, 이용 및 환불
             등과 관련한 의무와 책임은 각 판매자에게 있습니다.
-          </p>
+          </PaymentPolicy>
         </fieldset>
       </form>
     </ReservationWrapper>
