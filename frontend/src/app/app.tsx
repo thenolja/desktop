@@ -6,17 +6,7 @@ import loadable from '@loadable/component';
 
 import Header from 'src/containers/Header/Header';
 import Main from 'src/containers/Main/Main';
-import MyPage from 'src/pages/MyPage/MyPage';
 import Footer from 'src/containers/Footer/Footer';
-// import Index from 'src/pages/Index/Index';
-// import Detail from 'src/pages/Detail/Detail';
-// import Rooms from 'src/pages/Detail/Rooms';
-// import TopReviews from 'src/pages/Detail/TopReviews';
-// import Reviews from 'src/pages/Reviews/Reviews';
-// import ProtectedRoute from 'src/pages/ProtectedRouter/ProtectedRouter';
-// import Search from 'src/pages/Search/Search';
-// import Amenity from 'components/Amenity/Amenity';
-// import Reservation from 'src/pages/Reservation/Reservation';
 
 const Index = loadable(() => import('src/pages/Index/Index'));
 const Detail = loadable(() => import('src/pages/Detail/Detail'));
@@ -27,6 +17,7 @@ const ProtectedRoute = loadable(() => import('src/pages/ProtectedRouter/Protecte
 const Search = loadable(() => import('src/pages/Search/Search'));
 const Amenity = loadable(() => import('components/Amenity/Amenity'));
 const Reservation = loadable(() => import('src/pages/Reservation/Reservation'));
+const MyPage = loadable(() => import('src/pages/MyPage/MyPage'));
 
 const App = () => {
   const { id, nickname, email } = useAppSelector(selectAuth);
