@@ -9,7 +9,7 @@ import { useAppSelector } from 'src/contexts/state.type';
 
 const PostingReview = ({ setDialog, selectedItem, setReservationList }) => {
   const { id: userId, nickname } = useAppSelector(selectAuth);
-  const { id: itemId, photo, name, spec, checkInDate, checkOutDate, review } = selectedItem;
+  const { id: itemId, hotelId, photo, name, spec, checkInDate, checkOutDate, review } = selectedItem;
   const [reviewText, setReviewText] = useState<string>(review ? review.reviewText : '');
 
   let rating = useRef<HTMLInputElement>(null);
@@ -27,6 +27,7 @@ const PostingReview = ({ setDialog, selectedItem, setReservationList }) => {
     const myReview = {
       id: review?.id,
       userId: userId,
+      hotelId: hotelId,
       reservationId: itemId,
       star: rating.current.value,
       writeTime: new Date(),

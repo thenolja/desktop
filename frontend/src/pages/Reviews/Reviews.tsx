@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { ReviewList } from 'components/Review/ReviewList';
 import { TopBtn } from 'components/Review/TopBtn';
 import Spinner from 'components/Spinner/Spinner';
+import { getMockdataReviews } from 'src/utils/reviews';
 
 const Reviews = (): JSX.Element => {
   const { id } = useParams();
@@ -13,6 +14,7 @@ const Reviews = (): JSX.Element => {
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [reviews, setReivews] = useState<object[]>([]);
+  const [mockDataReviews, setMockDataReviews] = useState<object[]>([]);
 
   let nextUrl = '';
   let currentPage = 1;
@@ -40,6 +42,15 @@ const Reviews = (): JSX.Element => {
     } else return;
   };
 
+  useEffect(()=>{
+    const getReviews = async () => {
+      const reviews= await getMockdataReviews(hotelId);
+      setMockDataReviews(reviews);
+      console.log(reviews)
+    }
+    getReviews();
+  }, []);
+
   useEffect(() => {
     let observer;
     if (target) {
@@ -54,6 +65,7 @@ const Reviews = (): JSX.Element => {
   return (
     <>
       <ReviewTitle />
+      <ReviewList reviews={mockDataReviews} />
       <ReviewList reviews={reviews} />
       <TopBtn />
       <div ref={setTarget}>{isLoaded && <Spinner />}</div>
