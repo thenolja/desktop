@@ -1,4 +1,6 @@
 import { defineConfig } from 'vite';
+import copy from 'vite-plugin-copy';
+import viteCompression from 'vite-plugin-compression';
 import { resolve } from 'path';
 import react from '@vitejs/plugin-react';
 
@@ -15,7 +17,8 @@ export default defineConfig(configEnv => {
       },
     },
     build: {
-      sourcemap: true,
+      outDir: resolve(__dirname, 'dist'),
+      chunkSizeWarningLimit: 1500,
     },
     css: {
       modules: {
@@ -23,11 +26,11 @@ export default defineConfig(configEnv => {
       },
     },
     server: {
-      proxy:{
+      proxy: {
         '/api': {
           target: 'http://localhost:4000',
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, '')
+          rewrite: path => path.replace(/^\/api/, ''),
         },
       },
       open: '/',

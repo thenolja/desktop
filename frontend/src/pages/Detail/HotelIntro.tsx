@@ -1,8 +1,9 @@
 import HotelDescription from 'components/detail/HotelDescription';
-import Map from 'components/map/map';
+import Map from 'components/Map/map';
 import Amenity from 'components/Amenity/Amenity';
 import HotelImage from 'components/HotelImage/HotelImage';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { IntroDiv } from './HotelIntro.style';
 import { getHotelInfo, getHotelPhotos } from 'src/utils/requests';
 
@@ -21,9 +22,11 @@ const findHotelIntro = (body: Object[]) => {
     leaving: string;
   }
 
+  let editTag = body.propertyDescription.tagline.toString().replace(/[<b></b>]/g, '');
+
   const hotelIntro: HotelIntro = {
     name: body.propertyDescription.name,
-    tagline: body.propertyDescription.tagline,
+    tagline: editTag,
     formattedScale: body.guestReviews.brands.formattedScale,
     formattedRating: body.guestReviews.brands.formattedRating,
     totalcnt: body.guestReviews.brands.total,
@@ -62,7 +65,9 @@ const settingHotelImgage = (imgsArray: object[]): string[] => {
 };
 
 const HotelIntro = () => {
-  const [hotelId, setHotelId] = useState<number>(171138);
+  const { id } = useParams();
+
+  const [hotelId, setHotelId] = useState<number>(id);
   const [hotelInfo, setHotelInfo] = useState<object>({});
   const [coordinates, setCoordinates] = useState<object>({});
   const [photos, setPhotos] = useState<string[]>([]);

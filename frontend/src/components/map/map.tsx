@@ -8,7 +8,7 @@ import {
   ModalTitle,
   ModalCloseBtn,
   ModalMapWrapper,
-} from './Map.style';
+} from './map.style';
 import { Allbutton } from '../detail/HotelDescription.style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
@@ -26,6 +26,7 @@ const KakaoMapStart = (latitude: number, longitude: number) => {
     position: markerPosition,
   });
   marker.setMap(map);
+  map.relayout();
 };
 
 const Map = ({ coordinates }) => {
@@ -50,6 +51,7 @@ const Map = ({ coordinates }) => {
 
   const fullscreenMap = () => {
     KakaoMapStart(coordinates.latitude, coordinates.longitude);
+
     return (
       <>
         <MapModal>
@@ -59,12 +61,18 @@ const Map = ({ coordinates }) => {
                 setModalFlag(false);
               }}
             >
-              {/* <FontAwesomeIcon icon={faX} /> */}
+              <FontAwesomeIcon icon={faX} />
             </ModalCloseBtn>
             <ModalTitle />
             {coordinates.name}
           </ModalHeader>
-          {MapDiv}
+          <MapCover
+            id="map"
+            onClick={() => {
+              setModalFlag(true);
+            }}
+            style={{ width: '100vw', height: '100vh' }}
+          ></MapCover>
         </MapModal>
       </>
     );
@@ -74,7 +82,12 @@ const Map = ({ coordinates }) => {
     <>
       <MapWrapper>
         {modalFlag ? fullscreenMap() : ''}
-        {MapDiv}
+        <MapCover
+          id="map"
+          onClick={() => {
+            setModalFlag(true);
+          }}
+        ></MapCover>
         <MapAddress>{coordinates.fullAddress}</MapAddress>
         <Allbutton
           onClick={() => {

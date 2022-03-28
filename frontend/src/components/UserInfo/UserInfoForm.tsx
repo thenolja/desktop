@@ -19,14 +19,12 @@ const UserInfoForm = ({ handleEditingMode }) => {
 
   const updateProfile = async e => {
     e.preventDefault();
-
-    handleEditingMode(false);
-
     if (nickname === tempNickname && phone === tempPhone) return;
 
     if (/^[ㄱ-힣a-zA-Z0-9._]{2,6}$/.test(tempNickname) && /^[0-9]{11}$/.test(tempPhone)) {
       const updatedProfile = await updateUser(id, tempNickname, tempPhone);
       dispatch(authUpdate({ ...updatedProfile }));
+      handleEditingMode(false);
     }
   };
 
@@ -45,6 +43,8 @@ const UserInfoForm = ({ handleEditingMode }) => {
           <input
             id="nickname"
             type="text"
+            required
+            minLength={1}
             maxLength={6}
             value={tempNickname}
             placeholder="닉네임(최대 6자리까지)"
@@ -56,6 +56,8 @@ const UserInfoForm = ({ handleEditingMode }) => {
           <input
             id="phone"
             type="tel"
+            required
+            minLength={11}
             maxLength={11}
             value={tempPhone}
             placeholder={'11자리 숫자를 입력하세요'}

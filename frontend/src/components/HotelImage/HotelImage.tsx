@@ -12,7 +12,7 @@ import {
   SliderWrapper,
   ImageModalTitle,
 } from './HotelImage.style';
-import { ModalCloseBtn } from '../Map/Map.style';
+import { ModalCloseBtn } from '../Map/map.style';
 import Button from '../Carousels/Button/Button';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -97,7 +97,7 @@ const HotelImage = ({ photos }) => {
           </SmallBox>
         </ImgageWrapper>
       ) : (
-        <Spinner></Spinner>
+        <Spinner />
       )}
 
       {modalFlag ? HotelImageModal() : ''}

@@ -11,7 +11,8 @@ const CurrentGoods = () => {
   const [resHotels, setResHotels] = useState<[]>([]);
 
   const success = async ({ coords }) => {
-    setResHotels(await getNearHotelList(coords));
+    const res = await getNearHotelList(coords);
+    setResHotels(res);
     setAgreeInfo(true);
   };
 
@@ -26,8 +27,8 @@ const CurrentGoods = () => {
   return (
     <StyledDiv>
       <StyledH3>{agreeInfo ? '현재 지역에서의 추천 상품' : '전체 지역의 추천 상품'}</StyledH3>
-      {resHotels.length === 0 && <Spinner />}
-      {resHotels.length > 5 ? <MoveCarousel resHotels={resHotels} /> : <NoMoveCarousel resHotels={resHotels} />}
+      {resHotels?.length === 0 && <Spinner />}
+      {resHotels?.length > 5 ? <MoveCarousel resHotels={resHotels} /> : <NoMoveCarousel resHotels={resHotels} />}
     </StyledDiv>
   );
 };

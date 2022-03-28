@@ -7,7 +7,7 @@ import { patchReview } from 'src/utils/reviews';
 import { selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
 
-const PostingReview = ({ setDialog, selectedItem }) => {
+const PostingReview = ({ setDialog, selectedItem, setReservationList }) => {
   const { id: userId, nickname } = useAppSelector(selectAuth);
   const { id, photo, name, spec, checkInDate, checkOutDate, review } = selectedItem;
   const [reviewText, setReviewText] = useState<string>(review ? review.reviewText : '');
@@ -28,6 +28,7 @@ const PostingReview = ({ setDialog, selectedItem }) => {
     };
 
     const updatedReview = await patchReview(myReview);
+    setReservationList(items => items.map(item => (item.id === id ? { ...item, review: updatedReview } : item)));
     setDialog(false);
   };
 

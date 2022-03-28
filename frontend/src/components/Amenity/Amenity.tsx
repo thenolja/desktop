@@ -3,6 +3,7 @@ import Review from 'components/Review/Review';
 import { faStar, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getHotelInfo } from 'src/utils/requests';
+import { useParams } from 'react-router-dom';
 
 import {
   AmenityWrapper,
@@ -37,6 +38,7 @@ const settingHotelOverview = (body: object[]) => {
   return hotelOverview;
 };
 const Amenity = () => {
+  const { id } = useParams();
   const [hotelId, setHotelId] = useState<number>(171138);
   const [overviews, setOverviews] = useState<object[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);

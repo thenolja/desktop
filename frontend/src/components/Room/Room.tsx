@@ -1,25 +1,19 @@
 import { memo, useState } from 'react';
-import styled from 'styled-components';
 import {
   Selector,
   RoomWrapper,
   Image,
-  RoomInfo,
   RoomImage,
-  RoomRatePlans,
-  RoomName,
   SelectBtn,
-  People,
   ModalBackground,
   CloseBtn,
   ModalHeader,
   ModalBody,
   RoomAmenity,
-  PriceInfo,
-  DailyPrice,
-  TotalPrice,
   ModalFooter,
+  RoomImages,
 } from './Room.style';
+import { RoomInfo } from './RoomInfo';
 
 const Room = ({ room, setSelectedRoom }) => {
   const [modal, setModal] = useState(false);
@@ -33,15 +27,6 @@ const Room = ({ room, setSelectedRoom }) => {
     setModal(!modal);
   };
 
-  const RoomImages = styled.div`
-    overflow-x: scroll;
-    overflow-y: hidden;
-    div {
-      width: ${room.images.length * 410}px;
-      height: fit-content;
-    }
-  `;
-
   return (
     <li>
       <ModalBackground hidden={!modal}>
@@ -51,10 +36,15 @@ const Room = ({ room, setSelectedRoom }) => {
             <CloseBtn onClick={toggleModal} />
           </ModalHeader>
           <ModalBody>
-            <RoomImages>
+            <RoomImages length={room.images.length}>
               <div>
-                {room.images.map(image => (
-                  <RoomImage src={image.fullSizeUrl} title={image.caption} alt={image.caption}></RoomImage>
+                {room.images.map((image, index: number) => (
+                  <RoomImage
+                    key={index.toString()}
+                    src={image.fullSizeUrl}
+                    title={image.caption}
+                    alt={image.caption}
+                  ></RoomImage>
                 ))}
               </div>
             </RoomImages>
@@ -87,29 +77,7 @@ const Room = ({ room, setSelectedRoom }) => {
             <img src={'https://img.icons8.com/ios/344/no-image.png'} style={{ width: '30px', height: '30px' }}></img>
           )}
         </Image>
-        <RoomInfo>
-          <RoomName>{room.name}</RoomName>
-          {room.maxOccupancy && (
-            <People>
-              기준 {room.maxOccupancy.total}명 / 최대 {room.maxOccupancy.children + room.maxOccupancy.total}명
-            </People>
-          )}
-          <PriceInfo>
-            {room.ratePlans[0].price.nightlyPriceBreakdown ? (
-              <>
-                <span>{room.ratePlans[0].price.nightlyPriceBreakdown.additionalColumns[1].heading}</span>
-                <TotalPrice>{room.ratePlans[0].price.nightlyPriceBreakdown.additionalColumns[1].value}원</TotalPrice>
-              </>
-            ) : (
-              <>
-                <span>총 1박</span>
-                <TotalPrice>{room.ratePlans[0].price.current}원</TotalPrice>
-              </>
-            )}
-            <span>1박당 요금</span>
-            <DailyPrice>{room.ratePlans[0].price.current}원</DailyPrice>
-          </PriceInfo>
-        </RoomInfo>
+        <RoomInfo name={room.name} maxOccupancy={room.maxOccupancy} price={room.ratePlans[0].price} />
       </RoomWrapper>
     </li>
   );
