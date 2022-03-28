@@ -1,4 +1,6 @@
 import { defineConfig } from 'vite';
+import copy from 'vite-plugin-copy';
+import viteCompression from 'vite-plugin-compression';
 import { resolve } from 'path';
 import react from '@vitejs/plugin-react';
 
@@ -15,6 +17,7 @@ export default defineConfig(configEnv => {
       },
     },
     build: {
+      outDir: resolve(__dirname, 'dist'),
       sourcemap: true,
       chunkSizeWarningLimit: 1500,
     },

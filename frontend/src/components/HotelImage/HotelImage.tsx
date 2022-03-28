@@ -97,7 +97,7 @@ const HotelImage = ({ photos }) => {
           </SmallBox>
         </ImgageWrapper>
       ) : (
-        <Spinner></Spinner>
+        <Spinner />
       )}
 
       {modalFlag ? HotelImageModal() : ''}
