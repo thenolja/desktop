@@ -5,7 +5,7 @@ import { getAllRoomList } from 'src/utils/requests';
 import { Buttons, SelectBtn, Selected } from './Rooms.style';
 import { addDays } from 'date-fns';
 import { Link, useParams } from 'react-router-dom';
-import Loader from 'components/Review/Loader';
+import Spinner from 'components/Spinner/Spinner';
 
 const Rooms = () => {
   const { id }=useParams();
@@ -41,7 +41,7 @@ const Rooms = () => {
           <Room key={index} room={room} setSelectedRoom={setSelectedRoom} />
         )}
       </ul>
-      {isLoaded && <Loader />}
+      {isLoaded && <Spinner />}
       <Buttons>
         {selectedRoom.name ? (
           <>
