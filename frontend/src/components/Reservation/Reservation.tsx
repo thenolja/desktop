@@ -8,30 +8,30 @@ import PostingReview from './PostingReview';
 
 import ReservationList from './Reservation.style';
 import { getReservationByDate } from 'src/utils/reservations';
+import { ReservationItem } from './Reservation.type';
 
 const Reservations = () => {
   const { id } = useAppSelector(selectAuth);
 
   const [reservationList, setReservationList] = useState<Object[]>([]);
-  const [selectedItem, setSelectedItem] = useState<Object>({});
 
   const [startDate, setStartDate] = useState<Date>(new Date());
-
   const [endDate, setEndDate] = useState<Date>(new Date());
+
   const [showDialog, setDialog] = useState<boolean>(false);
 
   useScrollPrevent(showDialog);
 
   useEffect(() => {
-    const getReservationList = async () => {
+    const getReservationList = async (): Promise<void> => {
       const list = await getReservationByDate(id, startDate, endDate);
       setReservationList(list);
     };
     getReservationList();
   }, [startDate, endDate]);
 
-  const selectItem = index => {
-    setSelectedItem(reservationList[index]);
+  const selectItem = (index: number): void => {
+    sessionStorage.setItem('selectedItem', JSON.stringify(reservationList[index]));
     setDialog(true);
   };
   return (
@@ -43,13 +43,15 @@ const Reservations = () => {
         endDate={endDate}
         setEndDate={setEndDate}
       />
-      {showDialog && (
-        <PostingReview setDialog={setDialog} selectedItem={selectedItem} setReservationList={setReservationList} />
-      )}
+
+      {showDialog && <PostingReview setDialog={setDialog} setReservationList={setReservationList} />}
       {reservationList.length ? (
         <ul>
           {reservationList.map(
-            ({ id, occupancy, adults, children, checkInDate, checkOutDate, review, photo, name }, index) => (
+            (
+              { id, occupancy, adults, children, checkInDate, checkOutDate, review, photo, name }: ReservationItem,
+              index,
+            ) => (
               <li key={id}>
                 <img src={photo} alt={name} />
                 <div>

@@ -1,8 +1,9 @@
 import { selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
 import { UserInfoContainer } from './Profile.style';
+import { ProfileEditor } from './User.type';
 
-const UserInfo = ({ handleEditingMode }) => {
+const UserInfo = ({ setEditingMode }: ProfileEditor) => {
   const { nickname, email, phone } = useAppSelector(selectAuth);
 
   return (
@@ -24,7 +25,7 @@ const UserInfo = ({ handleEditingMode }) => {
           <span>{!phone ? '입력된 정보가 없습니다' : phone}</span>
         </div>
       </div>
-      <button className="submit" onClick={() => handleEditingMode(true)}>
+      <button className="submit" onClick={() => setEditingMode(true)}>
         수정
       </button>
     </UserInfoContainer>

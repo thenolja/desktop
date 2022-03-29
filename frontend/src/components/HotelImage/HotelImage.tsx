@@ -13,7 +13,7 @@ import {
   ImageModalTitle,
 } from './HotelImage.style';
 import { ModalCloseBtn } from '../Map/map.style';
-import Button from '../Carousels/Button/Button';
+import ButtonVer2 from '../Carousels/Button/ButtonVer2';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -31,8 +31,8 @@ const HotelImage = ({ photos }) => {
       slidesToShow: 1,
       slidesToScroll: 1,
       initialSlide: initialslider,
-      nextArrow: <Button role="next" onClick={() => {}} />,
-      prevArrow: <Button role="prev" onClick={() => {}} />,
+      nextArrow: <ButtonVer2 role={'next'} onClick={() => {}} />,
+      prevArrow: <ButtonVer2 role={'prev'} onClick={() => {}} />,
     };
 
     return (
@@ -51,7 +51,8 @@ const HotelImage = ({ photos }) => {
             <Slider {...settings}>
               {photos.map((photo, index) => (
                 <div key={index.toString()}>
-                  <Image src={photo}></Image>
+                  <Image src={photo} alt={'호텔 기본 이미지' + index + 1}></Image>
+                  <div>{index + 1 + '/' + photos.length}</div>
                 </div>
               ))}
             </Slider>
