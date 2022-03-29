@@ -120,6 +120,18 @@ app.get('/reviews/title/:id', (req, res) => {
   res.send([total, rating]);
 });
 
+app.get('/reserved/:hotelId', (req, res) => {
+  const { hotelId } = req.params;
+  const { checkIn, checkOut } = req.query;
+
+  const reservedRoom = [];
+  reservations.forEach(reservation => {
+    if (reservation.hotelId === +hotelId && +reservation.checkInDate.split('-').join('') >= +checkIn.split('-').join('') && +reservation.checkOutDate.split('-').join('') <= +checkOut.split('-').join('')) reservedRoom.push(reservation.spec);
+  })
+
+  res.send(reservedRoom);
+});
+
 app.post('/reservation/payment', (req, res) => {
   const id = generateId(payments);
   const { reservationId, payment, paymentDate } = req.body;
