@@ -5,9 +5,10 @@ import PriceInfo from 'components/Payment/PriceInfo';
 import UserInfo from 'components/Payment/UserInfo';
 import Visiting from 'components/Payment/Visiting';
 import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
+import changeDateFormatToIsoSTring from 'src/utils/dateToISOString';
 import { postHotel } from 'src/utils/hotels';
 import { postPayment } from 'src/utils/payment';
 import { postReservation } from 'src/utils/reservations';
@@ -18,23 +19,21 @@ const Reservation = () => {
 
   const { id:hotelId }=useParams();
 
- // 스토리지에서 받아오기
+  const roomInfo=JSON.parse(window.sessionStorage.getItem("SELECTED_ROOM"));
+
   const selectedRoom = {
-    name: 'hotel',
-    photo:'photo url',
-    checkIn: '2020-01-01',
-    checkOut: '2020-10-10',
-    cost: 10000,
-    occupancy: 2,
-    adults: 1,
-    children: 1,
+    name: roomInfo.name,
+    photo: roomInfo.images[0].fullSizeUrl,
+    checkIn: changeDateFormatToIsoSTring(roomInfo.startDate),
+    checkOut: changeDateFormatToIsoSTring(roomInfo.endDate),
+    cost: roomInfo.ratePlans[0].price.unformattedCurrent,
+    occupancy: roomInfo.maxOccupancy.total+roomInfo.maxOccupancy.children,
+    adults: roomInfo.maxOccupancy.total,
+    children: roomInfo.maxOccupancy.children,
     spec: '[room spec]'
   };
 
-  // ================ 데이터 받아오는 형식 정해진 후 하기 ====================
-
   const { id:userId, phone } = useAppSelector(selectAuth);
-
 
   const [reservation, setReservation]=useState({
     userId : userId,
@@ -72,7 +71,6 @@ const Reservation = () => {
       await handleSubmit();
       navigate('/mypage');
     } else{
-      e.preventDefault();
       return false;
     }
   }
@@ -102,7 +100,7 @@ const Reservation = () => {
           <PriceInfo cost={selectedRoom.cost} />
           <Notice />
           <Agreement reservation={reservation} setReservation={setReservation} />
-          <button type="submit" ref={sumbmitBtn} onClick={handleClick} onSubmit={handleSubmit}>{selectedRoom.cost}원 결제하기</button>
+          <button type="submit" ref={sumbmitBtn} onClick={handleClick} onSubmit={handleSubmit}>{selectedRoom.cost.toLocaleString()}원 결제하기</button>
           <Policy />
         </fieldset>
       </form>
