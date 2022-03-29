@@ -1,4 +1,6 @@
-export interface UserInfoType {
+import { Dispatch, SetStateAction } from 'react';
+
+export interface ProfileEditor {
   isEditing?: boolean;
-  handleEditingMode: (value: boolean) => void;
+  setEditingMode: Dispatch<SetStateAction<boolean>>;
 }
