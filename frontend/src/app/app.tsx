@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useAppSelector } from 'src/contexts/state.type';
 import { selectAuth } from 'src/contexts/auth';
 import { Route, Routes } from 'react-router-dom';
@@ -22,6 +22,22 @@ const MyPage = loadable(() => import('src/pages/MyPage/MyPage'));
 const App = () => {
   const { id, nickname, email } = useAppSelector(selectAuth);
 
+  const MemoizedHeader = useMemo(() => {
+    return (
+      <>
+        <Header />
+      </>
+    );
+  }, [id]);
+
+  const MemoizedFooter = useMemo(() => {
+    return (
+      <>
+        <Footer />
+      </>
+    );
+  }, []);
+
   const [detailNavigation] = useState([
     { id: 'rooms', href: '', content: '객실' },
     { id: 'amenities', href: 'amenities', content: '편의시설' },
@@ -30,7 +46,7 @@ const App = () => {
 
   return (
     <>
-      <Header />
+      {MemoizedHeader}
       <Main>
         <Routes>
           <Route index element={<Index />} />
@@ -49,15 +65,17 @@ const App = () => {
             <Route path="topReviews" element={<TopReviews />} />
           </Route>
           <Route path="/reviews/:id" element={<Reviews />} />
-          <Route path="/reservation/:id" element={
-            <ProtectedRoute isAllow={!!(id && nickname && email)}>
-              <Reservation />
-            </ProtectedRoute>
-          }
-           />
+          <Route
+            path="/reservation/:id"
+            element={
+              <ProtectedRoute isAllow={!!(id && nickname && email)}>
+                <Reservation />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </Main>
-      <Footer />
+      {MemoizedFooter}
     </>
   );
 };

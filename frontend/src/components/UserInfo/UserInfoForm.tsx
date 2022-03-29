@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { UserInfoFormContainer } from './Profile.style';
 import { authUpdate, selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
 import { useDispatch } from 'react-redux';
 import { updateUser } from 'src/utils/users';
+import { ProfileEditor } from './User.type';
 
-const UserInfoForm = ({ handleEditingMode }) => {
+const UserInfoForm = ({ setEditingMode }: ProfileEditor) => {
   const { id, nickname, email, phone } = useAppSelector(selectAuth);
 
   const [tempNickname, setNickname] = useState<string>(nickname);
@@ -17,14 +18,15 @@ const UserInfoForm = ({ handleEditingMode }) => {
 
   const dispatch = useDispatch();
 
-  const updateProfile = async e => {
+  const updateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (nickname === tempNickname && phone === tempPhone) return;
 
     if (/^[ㄱ-힣a-zA-Z0-9._]{2,6}$/.test(tempNickname) && /^[0-9]{11}$/.test(tempPhone)) {
-      const updatedProfile = await updateUser(id, tempNickname, tempPhone);
-      dispatch(authUpdate({ ...updatedProfile }));
-      handleEditingMode(false);
+      if (!(nickname === tempNickname && phone === tempPhone)) {
+        const updatedProfile = await updateUser(id, tempNickname, tempPhone);
+        dispatch(authUpdate({ ...updatedProfile }));
+      }
+      setEditingMode(false);
     }
   };
 
