@@ -30,6 +30,7 @@ const Search = () => {
     <div>
       <SearchForm
         propQuery={queryData.query}
+        propDestinationId={queryData.destinationId}
         propStartDate={new Date(queryData.checkIn)}
         propEndDate={new Date(queryData.checkOut)}
       />

@@ -2,6 +2,7 @@ import DatePicker from 'react-datepicker';
 import { useCallback, useEffect } from 'react';
 import { addDays } from 'date-fns';
 
+import calander from '/src/assets/calander.png';
 import { StyledDiv } from './InputDiv.style';
 
 const EndDatPicker = ({ startDate, endDate, setEndDate }) => {
@@ -17,7 +18,7 @@ const EndDatPicker = ({ startDate, endDate, setEndDate }) => {
 
   return (
     <StyledDiv width="174px">
-      <img src="/src/assets/calander.png" alt="" />
+      <img src={calander} alt="체크아웃 날짜" />
       <DatePicker
         selectsEnd
         selected={endDate}
