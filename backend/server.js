@@ -6,6 +6,7 @@ const app = express();
 let users = require('./data/users.json');
 let reservations = require('./data/reservations.json');
 let hotels = require('./data/hotels.json');
+let payments = require('./data/payment.json');
 let reviews = require('./data/reviews.json');
 
 const { PORT } = process.env;
@@ -119,16 +120,40 @@ app.get('/reviews/title/:id', (req, res) => {
   res.send([total, rating]);
 });
 
-app.get('/reserved/:hotelId', (req, res) => {
-  const { hotelId } = req.params;
-  const { checkIn, checkOut } = req.query;
+app.post('/reservation/payment', (req, res) => {
+  const id = generateId(payments);
+  const { reservationId, payment, paymentDate } = req.body;
+  const data = { paymentId: id, reservationId: reservationId, paymentDate: paymentDate, ...payment };
+  payments = [...payments, data];
+  console.log('payment', data);
+  res.send(data);
+})
 
-  const reservedRoom = [];
-  reservations.forEach(reservation => {
-    if (reservation.hotelId === +hotelId && +reservation.checkInDate.split('-').join('') >= +checkIn.split('-').join('') && +reservation.checkOutDate.split('-').join('') <= +checkOut.split('-').join('')) reservedRoom.push(reservation.spec);
+app.post('/reservation/reservation', (req, res) => {
+  const id = generateId(reservations);
+  const data = { id: id, ...req.body };
+  reservations = [...reservations, data];
+  console.log('reservation', data);
+  res.send(data);
+})
+
+app.post('/reservation/hotel', (req, res) => {
+  const id = generateId(hotels);
+  const data = { id: id, ...req.body };
+  hotels = [...hotels, data];
+  console.log('hotel', data);
+  res.send(data);
+})
+
+app.patch('/reservation/user', (req, res) => {
+  users.map(user => {
+    if (user.id === req.body.userId) {
+      user.reservations = [...user.reservations, req.body.reservationId];
+      return user;
+    }
   })
-
-  res.send(reservedRoom);
+  console.log(users);
+  res.send(users);
 })
 
 app.listen(PORT, () => {
