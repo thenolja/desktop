@@ -99,6 +99,38 @@ app.patch('/reviews', (req, res) => {
   res.send(data);
 });
 
+// ktmihs
+app.get('/reviews/:id', (req, res) => {
+  const { id } = req.params;
+
+  res.send(reviews.filter(review => id === review.hotelId));
+});
+
+app.get('/reviews/title/:id', (req, res) => {
+  const { id } = req.params;
+  let total = 0, rating = 0;
+
+  reviews.forEach(review => {
+    if (id === review.hotelId) {
+      rating += review.star;
+      total++;
+    }
+  });
+  res.send([total, rating]);
+});
+
+app.get('/reserved/:hotelId', (req, res) => {
+  const { hotelId } = req.params;
+  const { checkIn, checkOut } = req.query;
+
+  const reservedRoom = [];
+  reservations.forEach(reservation => {
+    if (reservation.hotelId === +hotelId && +reservation.checkInDate.split('-').join('') >= +checkIn.split('-').join('') && +reservation.checkOutDate.split('-').join('') <= +checkOut.split('-').join('')) reservedRoom.push(reservation.spec);
+  })
+
+  res.send(reservedRoom);
+})
+
 app.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT}`);
 });

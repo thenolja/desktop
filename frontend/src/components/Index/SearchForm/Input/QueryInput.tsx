@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import reactTriggerChange from 'react-trigger-change';
 
+import location from '/src/assets/location.png';
 import { getDestinationIdsByQuery } from 'src/utils/requests';
 import { StyledDiv } from './InputDiv.style';
 import { StyledUl } from './QueryInput.stype';
@@ -114,7 +115,7 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
 
   return (
     <StyledDiv flexGrow={3}>
-      <img src="/src/assets/location.png" alt="" />
+      <img src={location} alt="" />
       <input
         type="text"
         placeholder="지역, 지하철역, 숙소명으로 찾아보세요."
