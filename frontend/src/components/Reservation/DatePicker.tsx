@@ -11,15 +11,23 @@ const DatePickerComponent = ({ startDate, setStartDate, endDate, setEndDate }: D
 
   return (
     <DatePickerContainer>
+      <label className="srOnly" htmlFor="selectStart">
+        시작일
+      </label>
       <DatePicker
+        id="selectStart"
         selectsStart
         selected={startDate}
         dateFormat="yyyy-MM-dd"
         onChangeRaw={preventDefault}
         onChange={(date: Date) => setStartDate(date)}
       />
-      <span>~</span>
+
+      <label className="srOnly" htmlFor="selectEnd">
+        종료일
+      </label>
       <DatePicker
+        id="selectEnd"
         selectsEnd
         selected={endDate}
         dateFormat="yyyy-MM-dd"
