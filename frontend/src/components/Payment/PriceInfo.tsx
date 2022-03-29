@@ -7,11 +7,11 @@ const PriceInfo = ({ cost }) => {
       <section>
         <TotalWrapper>
           <span>총 예약 금액</span>
-          <span style={{ fontWeight: 700 }}>{cost}원</span>
+          <span style={{ fontWeight: 700 }}>{cost.toLocaleString()}원</span>
         </TotalWrapper>
         <TotalWrapper style={{ fontWeight: 700 }}>
           <span>결제 금액</span>
-          <span style={{ color: '#de2e5f', fontSize: '18px' }}>{cost}원</span>
+          <span style={{ color: '#de2e5f', fontSize: '18px' }}>{cost.toLocaleString()}원</span>
         </TotalWrapper>
       </section>
     </FormArticle>
