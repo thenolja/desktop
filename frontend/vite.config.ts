@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite';
-import viteCompression from 'vite-plugin-compression';
 import { resolve } from 'path';
 import react from '@vitejs/plugin-react';
 
@@ -20,6 +19,7 @@ export default defineConfig(configEnv => {
       outDir: resolve(__dirname, 'dist'),
       chunkSizeWarningLimit: 1500,
       sourcemap: false,
+      minify: true,
     },
     assetsInclude: ['*.webp', '*.gif'],
     css: {
