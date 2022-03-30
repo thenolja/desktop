@@ -29,7 +29,7 @@ const HotelDescription = ({ hotelInfo }) => {
             {hotelInfo.formattedRating}/{hotelInfo.formattedScale}-{hotelInfo.badgeText}
           </Grade>
           <GradeText>
-            이 숙박 시설의 청격 상태에 대한 고객님들의 평점은 {hotelInfo.formattedRating}/ {hotelInfo.formattedScale}{' '}
+            이 숙박 시설의 청결 상태에 대한 고객님들의 평점은 {hotelInfo.formattedRating}/ {hotelInfo.formattedScale}{' '}
             입니다
           </GradeText>
           <Allbutton>
