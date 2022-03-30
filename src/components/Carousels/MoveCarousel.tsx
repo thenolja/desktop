@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useLayoutEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 import { StyledDivInner, StyledDiv } from './Carousel.style';
 import CarouselUl from './CarouselUl/CarouselUl';
@@ -6,7 +6,6 @@ import Button from './Button/Button';
 
 const MoveCarousel = ({ resHotels }) => {
   const [slide, setSlide] = useState<number>(-1);
-  const [limit, setLimit] = useState<number>(0);
   const [hotels, setHotels] = useState<object[][]>([]);
   const [isMoving, setIsMoving] = useState<boolean>(false);
   const refDiv = useRef<HTMLDivElement>(null);
@@ -30,25 +29,23 @@ const MoveCarousel = ({ resHotels }) => {
 
   useEffect(() => {
     const resConstructRes = makeArray(resHotels);
-    setLimit(resConstructRes.length);
-
     setHotels([resConstructRes[resConstructRes.length - 1], ...resConstructRes, resConstructRes[0]]);
-  }, [resHotels]);
+  }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (isMoving) return;
 
     setIsMoving(true);
 
-    refDiv.current.style.transition = 'transform 0.6s';
+    refDiv.current.style.transition = 'transform 0.5s';
     refDiv.current.style.transform = `translateX(${slide * 100}%)`;
 
     setTimeout(() => {
       if (slide === 0) {
         refDiv.current.style.transition = 'none';
-        refDiv.current.style.transform = `translateX(${-limit * 100}%)`;
-        setSlide(-limit);
-      } else if (slide === -limit - 1) {
+        refDiv.current.style.transform = 'translateX(-400%)';
+        setSlide(-4);
+      } else if (slide === -5) {
         refDiv.current.style.transition = 'none';
         refDiv.current.style.transform = 'translateX(-100%)';
         setSlide(-1);

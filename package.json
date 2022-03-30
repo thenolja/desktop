@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "scripts": {
     "frontend": "cd frontend && npm run start",
-    "preview" : "cd frontend && npm run preview",
+    "preview": "cd frontend && npm run preview",
+    "build": "cd frontend && npm run build",
     "backend": "cd backend && npm start",
     "start": "concurrently \"npm run frontend\" \"npm run backend\"",
-    "build": "cd frontend && npm run build",
-    "buildPreview" : "concurrently \"npm run preview\" \"npm run backend\""
+    "buildPreview": "concurrently \"npm run preview\" \"npm run backend\""
   },
   "dependencies": {
     "concurrently": "^7.0.0"
