@@ -168,3 +168,49 @@ export const PaymentPolicy = styled.p`
   line-height: 20px;
   margin-bottom: 10px;
 `;
+
+export const SelectedWrapper = styled.div`
+  margin: 0 5%;
+`;
+
+export const SelectedInfo = styled.div`
+  p{
+    font-size: 16px;
+    line-height: 24px;
+    margin-top: 3px;
+  }
+  .hotelName{
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+`;
+
+export const Wrapper = styled.div`
+  margin:0 auto;
+`;
+
+export const SelectedBody = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  article:first-child{
+    width: 100%;
+    margin-right: 30px;
+    height: 100%;
+  }
+
+  article:last-child{
+    max-width: 400px;
+    width: 35%;
+    min-width: 250px;
+    height: 335px;
+
+    img{
+      width: 260px;
+    }
+  }
+`;
