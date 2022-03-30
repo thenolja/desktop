@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faX } from '@fortawesome/free-solid-svg-icons';
+
 import {
   ImgageWrapper,
   BigBox,
@@ -12,12 +11,12 @@ import {
   SliderWrapper,
   ImageModalTitle,
 } from './HotelImage.style';
-import { ModalCloseBtn } from '../Map/map.style';
 import ButtonVer2 from '../Carousels/Button/ButtonVer2';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Spinner from '../Spinner/Spinner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 
 const HotelImage = ({ photos }) => {
   const [initialslider, setInitialslider] = useState<number>(0);
@@ -31,6 +30,7 @@ const HotelImage = ({ photos }) => {
       slidesToShow: 1,
       slidesToScroll: 1,
       initialSlide: initialslider,
+      lazyLoad: true,
       nextArrow: <ButtonVer2 role={'next'} onClick={() => {}} />,
       prevArrow: <ButtonVer2 role={'prev'} onClick={() => {}} />,
     };
@@ -70,7 +70,7 @@ const HotelImage = ({ photos }) => {
           <div>
             <figure>
               <div>
-                <Image src={photos[0]} />
+                <Image src={photos[0]} alt={'호텔 대표이미지1'} />
               </div>
               <ImageBtn
                 onClick={() => {
@@ -85,7 +85,7 @@ const HotelImage = ({ photos }) => {
             <div key={index.toString()}>
               <figure>
                 <div>
-                  <Image src={url}></Image>
+                  <Image src={url} alt={'호텔 대표이미지' + index + 1}></Image>
                 </div>
                 <ImageBtn
                   onClick={() => {
