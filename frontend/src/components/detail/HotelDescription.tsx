@@ -16,7 +16,9 @@ const HotelDescription = ({ hotelInfo }) => {
   const { id } = useParams();
   const [hotelId, setHotelId] = useState<string>(id);
   const totalReview = `/reviews/${hotelId}`;
-
+  
+  window.sessionStorage.setItem("HOTEL_NAME", hotelInfo.name);
+  
   return (
     <>
       <Description>
