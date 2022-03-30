@@ -10,6 +10,7 @@ import Spinner from 'components/Spinner/Spinner';
 import { getReservedRooms } from 'src/utils/reservations';
 
 const Rooms = () => {
+
   const { id }=useParams();
   const location=useLocation();
   const queryData = QueryString.parse(location.search, { ignoreQueryPrefix: true });
@@ -28,6 +29,12 @@ const Rooms = () => {
     if(queryData.checkOut) setEndDate(new Date(queryData.checkOut));
   },[]);
 
+  const SELECTED_ROOM="SELECTED_ROOM";
+
+  useEffect(()=>{
+    window.sessionStorage.setItem(SELECTED_ROOM, JSON.stringify({...selectedRoom, startDate, endDate}));
+  },[selectedRoom]);
+
   useEffect(() => {
     const requestRooms = async () => {
       setIsLoaded(true);
@@ -36,7 +43,7 @@ const Rooms = () => {
       
       const Rooms = await getAllRoomList(hotelId, checkIn, checkOut);
       const reservedRooms = await getReservedRooms(hotelId, checkIn, checkOut);
-      console.log(reservedRooms)
+      
       const nonReservedRooms=reservedRooms.length?Rooms.filter(room=>reservedRooms.indexOf(room.name) === -1) : Rooms;
       setRooms(nonReservedRooms);
       setIsLoaded(false);
