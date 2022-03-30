@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import viteCompression from 'vite-plugin-compression';
+import VitePluginHtmlEnv from 'vite-plugin-html-env';
 import { resolve } from 'path';
 import react from '@vitejs/plugin-react';
 
@@ -7,7 +8,7 @@ export default defineConfig(configEnv => {
   const isDevelopment = configEnv.mode === 'development';
 
   return {
-    plugins: [react()],
+    plugins: [react(), VitePluginHtmlEnv()],
     resolve: {
       alias: {
         src: resolve(__dirname, 'src'),
