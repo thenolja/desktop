@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { SectionTitle, FormArticle, TotalWrapper } from './Payment.style';
 
 const PriceInfo = ({ cost }) => {
@@ -18,4 +19,4 @@ const PriceInfo = ({ cost }) => {
   )
 }
 
-export default PriceInfo;
+export default memo(PriceInfo);
