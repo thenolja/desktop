@@ -37,27 +37,34 @@ const Reservations = () => {
 
   const memoizedList = useMemo(
     () =>
-      reservationList.map(
-        (
-          { id, occupancy, adults, children, checkInDate, checkOutDate, review, photo, name }: ReservationItem,
-          index,
-        ) => (
-          <li key={id}>
-            <img src={photo} alt={name} />
-            <div>
-              <span>{name}</span>
-              <span>
-                기준{adults + children}명 / 최대{occupancy}명
-              </span>
-              <span>이용 날짜</span>
-              <span>
-                {checkInDate}~ {checkOutDate}
-              </span>
-              <button onClick={() => selectItem(index)}>{!!review ? '후기 수정' : '후기 작성'}</button>
-            </div>
-          </li>
-        ),
+      reservationList.length ? (
+        <ul>
+          {reservationList.map(
+            (
+              { id, occupancy, adults, children, checkInDate, checkOutDate, review, photo, name }: ReservationItem,
+              index,
+            ) => (
+              <li key={id}>
+                <img src={photo} alt={name} />
+                <div>
+                  <span>{name}</span>
+                  <span>
+                    기준{adults + children}명 / 최대{occupancy}명
+                  </span>
+                  <span>이용 날짜</span>
+                  <span>
+                    {checkInDate}~ {checkOutDate}
+                  </span>
+                  <button onClick={() => selectItem(index)}>{!!review ? '후기 수정' : '후기 작성'}</button>
+                </div>
+              </li>
+            ),
+          )}
+        </ul>
+      ) : (
+        <p>예약 내역이 존재하지 않습니다.</p>
       ),
+
     [reservationList],
   );
 
@@ -72,7 +79,7 @@ const Reservations = () => {
       />
 
       {showDialog && <PostingReview setDialog={setDialog} setReservationList={setReservationList} />}
-      {reservationList.length ? <ul>{memoizedList}</ul> : <p>예약 내역이 존재하지 않습니다</p>}
+      {memoizedList}
     </ReservationList>
   );
 };

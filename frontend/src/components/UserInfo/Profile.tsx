@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { ProfileContainer } from './Profile.style';
 import { ProfileEditor } from './User.type';
-import UserInfo from './UserInfo';
 import UserInfoForm from './UserInfoForm';
 
 const Profile = ({ isEditing, setEditingMode }: ProfileEditor) => {
@@ -17,7 +16,7 @@ const Profile = ({ isEditing, setEditingMode }: ProfileEditor) => {
   return (
     <ProfileContainer>
       {memoizedTitle}
-      {isEditing ? <UserInfoForm setEditingMode={setEditingMode} /> : <UserInfo setEditingMode={setEditingMode} />}
+      <UserInfoForm isEditing={isEditing} setEditingMode={setEditingMode} />
     </ProfileContainer>
   );
 };
