@@ -1,4 +1,4 @@
-import HotelDescription from 'components/detail/HotelDescription';
+import HotelDescription from 'components/Detail/HotelDescription';
 import Map from 'components/Map/map';
 import Amenity from 'components/Amenity/Amenity';
 import HotelImage from 'components/HotelImage/HotelImage';
@@ -6,29 +6,31 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { IntroDiv } from './HotelIntro.style';
 import { getHotelInfo, getHotelPhotos } from 'src/utils/requests';
+import Spinner from 'components/Spinner/Spinner';
 
 const findHotelIntro = (body: Object[]) => {
-  // 이름, 평점, 숙소소개,
   interface HotelIntro {
     name?: string;
     tagline?: string;
-    formattedScale?: string; //몇점 만점?
-    formattedRating?: string; // 해당  호텔 점수
-    totalcnt?: number; // 이용 후기 개수
-    starRating: number; // 호텔 등급
+    formattedScale?: string;
+    formattedRating?: string;
+    totalcnt?: number;
+    starRating: number;
     badgeText: string;
-    hotelSize: string[]; // 호텔 사이즈
-    arriving: string; //  체크인, 체크아웃 가져올 수 있음 //
+    hotelSize: string[];
+    arriving: string;
     leaving: string;
   }
 
   let editTag = body.propertyDescription.tagline.toString().replace(/[<b></b>]/g, '');
+  let formattedScale = Math.round(body.guestReviews.brands.formattedScale / 2);
+  let formattedRating = Math.round(body.guestReviews.brands.formattedRating / 2);
 
   const hotelIntro: HotelIntro = {
     name: body.propertyDescription.name,
     tagline: editTag,
-    formattedScale: body.guestReviews.brands.formattedScale,
-    formattedRating: body.guestReviews.brands.formattedRating,
+    formattedScale: formattedScale,
+    formattedRating: formattedRating,
     totalcnt: body.guestReviews.brands.total,
     starRating: body.propertyDescription.starRating,
     badgeText: body.guestReviews.brands.badgeText,
@@ -42,7 +44,7 @@ const findHotelIntro = (body: Object[]) => {
 
 const findHotelMap = (body: Object[]) => {
   interface MapInfo {
-    name: string;
+    name?: string;
     fullAddress?: string;
     latitude?: number;
     longitude?: number;
@@ -71,25 +73,39 @@ const HotelIntro = () => {
   const [hotelInfo, setHotelInfo] = useState<object>({});
   const [coordinates, setCoordinates] = useState<object>({});
   const [photos, setPhotos] = useState<string[]>([]);
+  const [isInfoLoading, setInfoLoading] = useState<boolean>(false);
+  const [isImageLoading, setImageLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const requestbody = async () => {
       const resoponseInfo = await getHotelInfo(hotelId);
       setHotelInfo(findHotelIntro(resoponseInfo));
       setCoordinates(findHotelMap(resoponseInfo));
-
+      setInfoLoading(false);
       const resoponsePhotos = await getHotelPhotos(hotelId);
       setPhotos(settingHotelImgage(resoponsePhotos));
+      setImageLoading(false);
     };
+    setInfoLoading(true);
+    setImageLoading(true);
     requestbody();
   }, []);
 
   return (
     <>
-      <HotelImage photos={photos} />
+      {isImageLoading ? <Spinner /> : photos ? <HotelImage photos={photos} /> : ''}
+
       <IntroDiv>
-        <HotelDescription hotelInfo={hotelInfo} />
-        <Map coordinates={coordinates} />
+        {isInfoLoading ? (
+          <Spinner />
+        ) : hotelInfo ? (
+          <>
+            <HotelDescription hotelInfo={hotelInfo} />
+            <Map coordinates={coordinates} />
+          </>
+        ) : (
+          ''
+        )}
       </IntroDiv>
     </>
   );

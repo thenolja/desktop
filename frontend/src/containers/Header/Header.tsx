@@ -56,7 +56,7 @@ const Header = () => {
     <StyledHeader>
       <Link to="/">
         <h1>
-          <img src="/src/img/AnyConv.com__logo.webp" />
+          <img src="/src/img/AnyConv.com__logo.webp" alt="더놀자" />
         </h1>
       </Link>
 

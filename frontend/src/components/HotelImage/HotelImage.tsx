@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faX } from '@fortawesome/free-solid-svg-icons';
+
 import {
   ImgageWrapper,
   BigBox,
@@ -12,12 +11,12 @@ import {
   SliderWrapper,
   ImageModalTitle,
 } from './HotelImage.style';
-import { ModalCloseBtn } from '../Map/map.style';
-import Button from '../Carousels/Button/Button';
+import ButtonVer2 from '../Carousels/Button/ButtonVer2';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import Spinner from '../Spinner/Spinner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 
 const HotelImage = ({ photos }) => {
   const [initialslider, setInitialslider] = useState<number>(0);
@@ -31,8 +30,9 @@ const HotelImage = ({ photos }) => {
       slidesToShow: 1,
       slidesToScroll: 1,
       initialSlide: initialslider,
-      nextArrow: <Button role="next" onClick={() => {}} />,
-      prevArrow: <Button role="prev" onClick={() => {}} />,
+      lazyLoad: true,
+      nextArrow: <ButtonVer2 role={'next'} onClick={() => {}} />,
+      prevArrow: <ButtonVer2 role={'prev'} onClick={() => {}} />,
     };
 
     return (
@@ -51,7 +51,8 @@ const HotelImage = ({ photos }) => {
             <Slider {...settings}>
               {photos.map((photo, index) => (
                 <div key={index.toString()}>
-                  <Image src={photo}></Image>
+                  <Image src={photo} alt={'호텔 기본 이미지' + index + 1}></Image>
+                  <div>{index + 1 + '/' + photos.length}</div>
                 </div>
               ))}
             </Slider>
@@ -64,42 +65,39 @@ const HotelImage = ({ photos }) => {
 
   return (
     <>
-      {photos ? (
-        <ImgageWrapper>
-          <BigBox>
-            <div>
+      <ImgageWrapper>
+        <BigBox>
+          <div>
+            <figure>
+              <div>
+                <Image src={photos[0]} alt={'호텔 대표이미지1'} />
+              </div>
+              <ImageBtn
+                onClick={() => {
+                  setModalFlag(true);
+                }}
+              ></ImageBtn>
+            </figure>
+          </div>
+        </BigBox>
+        <SmallBox>
+          {photos.slice(1, 5).map((url, index) => (
+            <div key={index.toString()}>
               <figure>
-                <div>{photos[0] ? <Image src={photos[0]}></Image> : <Spinner></Spinner>}</div>
+                <div>
+                  <Image src={url} alt={'호텔 대표이미지' + index + 1}></Image>
+                </div>
                 <ImageBtn
                   onClick={() => {
                     setModalFlag(true);
+                    setInitialslider(index + 1);
                   }}
                 ></ImageBtn>
               </figure>
             </div>
-          </BigBox>
-          <SmallBox>
-            {photos.slice(1, 5).map((url, index) => (
-              <div key={index.toString()}>
-                <figure>
-                  <div>
-                    <Image src={url}></Image>
-                  </div>
-                  <ImageBtn
-                    onClick={() => {
-                      setModalFlag(true);
-                      setInitialslider(index + 1);
-                    }}
-                  ></ImageBtn>
-                </figure>
-              </div>
-            ))}
-          </SmallBox>
-        </ImgageWrapper>
-      ) : (
-        <Spinner />
-      )}
-
+          ))}
+        </SmallBox>
+      </ImgageWrapper>
       {modalFlag ? HotelImageModal() : ''}
     </>
   );

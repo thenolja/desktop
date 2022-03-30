@@ -25,6 +25,22 @@ export const ReservationWrapper = styled.div`
     background-image: url('https://platform-site.yanolja.com/icons/checkbox-selected.svg?inline');
   }
 
+  input[type='radio'] {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    position: relative;
+    top: 4px;
+    line-height: 30px;
+  }
+  
+  input[type='radio'] + label {
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+    padding-left: 10px;
+  }
+
   button {
     width: 100%;
     height: 45px;
@@ -33,6 +49,16 @@ export const ReservationWrapper = styled.div`
     font-size: 16px;
     font-weight: 700;
     margin-bottom: 20px;
+  }
+  button:disabled {
+    width: 100%;
+    height: 45px;
+    background-color: #919191;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    cursor: not-allowed;
   }
 
   .agreeSection {

@@ -1,4 +1,5 @@
-import { useState, lazy, Suspense } from 'react';
+import { useState, lazy, Suspense, useMemo } from 'react';
+
 import { useAppSelector } from 'src/contexts/state.type';
 import { selectAuth } from 'src/contexts/auth';
 import { Route, Routes } from 'react-router-dom';
@@ -22,6 +23,22 @@ const MyPage = lazy(() => import('src/pages/MyPage/MyPage'));
 const App = () => {
   const { id, nickname, email } = useAppSelector(selectAuth);
 
+  const MemoizedHeader = useMemo(() => {
+    return (
+      <>
+        <Header />
+      </>
+    );
+  }, [id]);
+
+  const MemoizedFooter = useMemo(() => {
+    return (
+      <>
+        <Footer />
+      </>
+    );
+  }, []);
+
   const [detailNavigation] = useState([
     { id: 'rooms', href: '', content: '객실' },
     { id: 'amenities', href: 'amenities', content: '편의시설' },
@@ -30,31 +47,36 @@ const App = () => {
   const renderLoader = () => <p>Loading</p>;
   return (
     <>
-      <Header />
+      {MemoizedHeader}
       <Main>
-        <Suspense fallback={renderLoader}>
-          <Routes>
-            <Route index element={<Index />} />
-            <Route path="/search" element={<Search />} />
-            <Route
-              path="/mypage"
-              element={
-                <ProtectedRoute isAllow={!!(id && nickname && email)}>
-                  <MyPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/detail/:id" element={<Detail list={detailNavigation} />}>
-              <Route index element={<Rooms />} />
-              <Route path="amenities" element={<Amenity />} />
-              <Route path="topReviews" element={<TopReviews />} />
-            </Route>
-            <Route path="/reviews/:id" element={<Reviews />} />
-            <Route path="/reservation" element={<Reservation />} />
-          </Routes>
-        </Suspense>
+        <Routes>
+          <Route index element={<Index />} />
+          <Route path="/search" element={<Search />} />
+          <Route
+            path="/mypage"
+            element={
+              <ProtectedRoute isAllow={!!(id && nickname && email)}>
+                <MyPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/detail/:id" element={<Detail list={detailNavigation} />}>
+            <Route index element={<Rooms />} />
+            <Route path="amenities" element={<Amenity />} />
+            <Route path="topReviews" element={<TopReviews />} />
+          </Route>
+          <Route path="/reviews/:id" element={<Reviews />} />
+          <Route
+            path="/reservation/:id"
+            element={
+              <ProtectedRoute isAllow={!!(id && nickname && email)}>
+                <Reservation />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
       </Main>
-      <Footer />
+      {MemoizedFooter}
     </>
   );
 };
