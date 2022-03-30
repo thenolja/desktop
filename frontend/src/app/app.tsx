@@ -8,6 +8,7 @@ import { Route, Routes } from 'react-router-dom';
 import Header from 'src/containers/Header/Header';
 import Main from 'src/containers/Main/Main';
 import Footer from 'src/containers/Footer/Footer';
+import Spinner from 'components/Spinner/Spinner';
 
 const Index = lazy(() => import('src/pages/Index/Index'));
 const Detail = lazy(() => import('src/pages/Detail/Detail'));
@@ -44,37 +45,39 @@ const App = () => {
     { id: 'amenities', href: 'amenities', content: '편의시설' },
     { id: 'topReviews', href: 'topReviews', content: '후기' },
   ]);
-  const renderLoader = () => <p>Loading</p>;
+
   return (
     <>
       {MemoizedHeader}
       <Main>
-        <Routes>
-          <Route index element={<Index />} />
-          <Route path="/search" element={<Search />} />
-          <Route
-            path="/mypage"
-            element={
-              <ProtectedRoute isAllow={!!(id && nickname && email)}>
-                <MyPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/detail/:id" element={<Detail list={detailNavigation} />}>
-            <Route index element={<Rooms />} />
-            <Route path="amenities" element={<Amenity />} />
-            <Route path="topReviews" element={<TopReviews />} />
-          </Route>
-          <Route path="/reviews/:id" element={<Reviews />} />
-          <Route
-            path="/reservation/:id"
-            element={
-              <ProtectedRoute isAllow={!!(id && nickname && email)}>
-                <Reservation />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
+        <Suspense fallback={<Spinner />}>
+          <Routes>
+            <Route index element={<Index />} />
+            <Route path="/search" element={<Search />} />
+            <Route
+              path="/mypage"
+              element={
+                <ProtectedRoute isAllow={!!(id && nickname && email)}>
+                  <MyPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/detail/:id" element={<Detail list={detailNavigation} />}>
+              <Route index element={<Rooms />} />
+              <Route path="amenities" element={<Amenity />} />
+              <Route path="topReviews" element={<TopReviews />} />
+            </Route>
+            <Route path="/reviews/:id" element={<Reviews />} />
+            <Route
+              path="/reservation/:id"
+              element={
+                <ProtectedRoute isAllow={!!(id && nickname && email)}>
+                  <Reservation />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </Suspense>
       </Main>
       {MemoizedFooter}
     </>

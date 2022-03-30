@@ -20,6 +20,7 @@ export default defineConfig(configEnv => {
       chunkSizeWarningLimit: 1500,
       sourcemap: false,
       minify: true,
+      cssCodeSplit: true,
     },
     assetsInclude: ['*.webp', '*.gif'],
     css: {

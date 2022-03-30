@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useLayoutEffect } from 'react';
 
 import { StyledDivInner, StyledDiv } from './Carousel.style';
 import CarouselUl from './CarouselUl/CarouselUl';
@@ -39,7 +39,7 @@ const MoveCarousel = ({ resHotels }) => {
     setHotels([resConstructRes[resConstructRes.length - 1], ...resConstructRes, resConstructRes[0]]);
   }, [resHotels]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isMoving) return;
 
     setIsMoving(true);
@@ -73,12 +73,12 @@ const MoveCarousel = ({ resHotels }) => {
 
   return (
     <StyledDiv>
-      <Button role="prev" onClick={movePrev} />
+      <Button onClick={movePrev} aria-label="이전 호텔 목록 보기" />
       <StyledDivInner ref={refDiv}>
         {hotels.length !== 0 &&
           hotels.map((hotelArr, index) => <CarouselUl key={hotelArr.length * index} hotelArr={hotelArr} />)}
       </StyledDivInner>
-      <Button role="next" onClick={moveNext} />
+      <Button onClick={moveNext} ria-label="다음 호텔 목록 보기" />
     </StyledDiv>
   );
 };
