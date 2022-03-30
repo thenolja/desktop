@@ -1,14 +1,16 @@
+import swal from 'sweetalert';
+
 import PaymentForm from 'components/Payment/PaymentForm';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
 import changeDateFormatToIsoSTring from 'src/utils/dateToISOString';
-import { postHotel } from 'src/utils/hotels';
 import { postPayment } from 'src/utils/payment';
 import { postReservation } from 'src/utils/reservations';
 import { updateReservation } from 'src/utils/users';
 import { ReservationWrapper } from './Reservation.style';
+import { postHotel } from 'src/utils/hotels';
 
 const Reservation = () => {
 
@@ -60,15 +62,26 @@ const Reservation = () => {
   const sumbmitBtn=useRef();
   const navigate=useNavigate();
 
-  const handleClick=async e=>{
+  const handleClick=e=>{
     e.preventDefault();
-    const isAllow=confirm(`예약자:${reservation.username} 결제 하시겠습니까?`);
-    if(isAllow){
-      await handleSubmit();
-      navigate('/mypage');
-    } else{
-      return false;
-    }
+
+    swal({
+      title: '예약 정보를 확인해주세요!',
+      text: `예약자: ${reservation.username}\n연락처: ${reservation.phone}`,
+      icon: 'info',
+      buttons: ['취소', '결제하기']
+    }).then((result) => {
+      if (result) {
+        swal({
+          title: '결제 확인',
+          text: '결제가 성공적으로 완료되었습니다!',
+          icon: 'success',
+        })
+        handleSubmit();
+        navigate('/mypage');
+      }
+    })
+    
   }
 
   const handleSubmit=async ()=>{
@@ -89,7 +102,7 @@ const Reservation = () => {
   return (
     <ReservationWrapper>
       <h2 className="srOnly">예약 페이지</h2>
-      <PaymentForm sumbmitBtn={sumbmitBtn} handleClick={handleClick} handleSubmit={handleSubmit} reservation={reservation} setReservation={setReservation} phone={phone} cost={selectedRoom.cost} />
+      <PaymentForm selectedRoom={selectedRoom} sumbmitBtn={sumbmitBtn} handleClick={handleClick} handleSubmit={handleSubmit} reservation={reservation} setReservation={setReservation} phone={phone} cost={selectedRoom.cost} />
     </ReservationWrapper>
   );
 };
