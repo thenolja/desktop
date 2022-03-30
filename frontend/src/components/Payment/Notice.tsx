@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { SectionTitle, FormArticle } from './Payment.style';
 
 const Notice = () => {
@@ -22,4 +23,4 @@ const Notice = () => {
   )
 }
 
-export default Notice;
+export default memo(Notice);

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { PaymentPolicy } from "./Payment.style";
 
 const Policy = () => {
@@ -9,4 +10,4 @@ const Policy = () => {
   )
 }
 
-export default Policy;
+export default memo(Policy);
