@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 
 import { getAllHotelList, getNearHotelList } from 'src/utils/requests';
 import { StyledH3, StyledDiv } from './CurrentGoods.style';
@@ -33,4 +33,4 @@ const CurrentGoods = () => {
   );
 };
 
-export default CurrentGoods;
+export default memo(CurrentGoods);

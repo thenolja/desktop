@@ -1,5 +1,5 @@
 import netlifyIdentity from 'netlify-identity-widget';
-import { useEffect } from 'react';
+import { useEffect, memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -56,7 +56,7 @@ const Header = () => {
     <StyledHeader>
       <Link to="/">
         <h1>
-          <img src="/src/img/AnyConv.com__logo.webp" />
+          <img src="/src/img/AnyConv.com__logo.webp" alt="더놀자" />
         </h1>
       </Link>
 
@@ -74,4 +74,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

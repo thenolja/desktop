@@ -14,7 +14,7 @@ export interface StyleType {
 const Spinner = ({ style = { width: '100%', height: '100%' } }: Props) => {
   return (
     <StlyedDiv style={style}>
-      <img src={spinner} alt="spinner" />
+      <img src={spinner} alt="로딩중" />
     </StlyedDiv>
   );
 };

@@ -12,7 +12,7 @@ import {
 import { Allbutton } from '../Detail/HotelDescription.style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
-import kakaoMapStart from '../../utils/KakaoMapStart';
+import kakaoMapStart from '../../utils/kakaoMapStart';
 
 const Map = ({ coordinates }) => {
   const [modalFlag, setModalFlag] = useState(false);

@@ -69,12 +69,12 @@ const MoveCarousel = ({ resHotels }) => {
 
   return (
     <StyledDiv>
-      <Button role="prev" onClick={movePrev} />
+      <Button onClick={movePrev} role="prev" />
       <StyledDivInner ref={refDiv}>
         {hotels.length !== 0 &&
           hotels.map((hotelArr, index) => <CarouselUl key={hotelArr.length * index} hotelArr={hotelArr} />)}
       </StyledDivInner>
-      <Button role="next" onClick={moveNext} />
+      <Button onClick={moveNext} role="next" />
     </StyledDiv>
   );
 };

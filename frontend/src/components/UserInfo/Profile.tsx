@@ -1,17 +1,22 @@
+import { useMemo } from 'react';
 import { ProfileContainer } from './Profile.style';
-import UserInfo from './UserInfo';
+import { ProfileEditor } from './User.type';
 import UserInfoForm from './UserInfoForm';
 
-const Profile = ({ isEditing, handleEditingMode }) => {
+const Profile = ({ isEditing, setEditingMode }: ProfileEditor) => {
+  const memoizedTitle = useMemo(
+    () => (
+      <>
+        <h2 className="srOnly">마이페이지</h2>
+        <img src="/src/assets/user.svg" alt="유저 아이콘" />
+      </>
+    ),
+    [],
+  );
   return (
     <ProfileContainer>
-      <h2 className="srOnly">마이페이지</h2>
-      <img src="/src/assets/user.svg" alt="프로필사진" />
-      {isEditing ? (
-        <UserInfoForm handleEditingMode={handleEditingMode} />
-      ) : (
-        <UserInfo handleEditingMode={handleEditingMode} />
-      )}
+      {memoizedTitle}
+      <UserInfoForm isEditing={isEditing} setEditingMode={setEditingMode} />
     </ProfileContainer>
   );
 };

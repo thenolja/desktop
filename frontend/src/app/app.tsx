@@ -1,8 +1,9 @@
-import { useState, lazy, Suspense } from 'react';
+import { useState, lazy, Suspense, useMemo } from 'react';
+
 import { useAppSelector } from 'src/contexts/state.type';
 import { selectAuth } from 'src/contexts/auth';
 import { Route, Routes } from 'react-router-dom';
-import loadable from '@loadable/component';
+// import React.lazy from '@React.lazy/component';
 
 import Header from 'src/containers/Header/Header';
 import Main from 'src/containers/Main/Main';
@@ -23,6 +24,22 @@ const MyPage = lazy(() => import('src/pages/MyPage/MyPage'));
 const App = () => {
   const { id, nickname, email } = useAppSelector(selectAuth);
 
+  const MemoizedHeader = useMemo(() => {
+    return (
+      <>
+        <Header />
+      </>
+    );
+  }, [id]);
+
+  const MemoizedFooter = useMemo(() => {
+    return (
+      <>
+        <Footer />
+      </>
+    );
+  }, []);
+
   const [detailNavigation] = useState([
     { id: 'rooms', href: '', content: '객실' },
     { id: 'amenities', href: 'amenities', content: '편의시설' },
@@ -31,7 +48,7 @@ const App = () => {
 
   return (
     <>
-      <Header />
+      {MemoizedHeader}
       <Main>
         <Suspense fallback={<Spinner />}>
           <Routes>
@@ -62,7 +79,7 @@ const App = () => {
           </Routes>
         </Suspense>
       </Main>
-      <Footer />
+      {MemoizedFooter}
     </>
   );
 };

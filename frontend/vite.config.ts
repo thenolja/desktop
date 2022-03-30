@@ -1,12 +1,13 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import compress from 'vite-plugin-compression';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig(configEnv => {
   const isDevelopment = configEnv.mode === 'development';
 
   return {
-    plugins: [react()],
+    plugins: [compress(), react()],
     resolve: {
       alias: {
         src: resolve(__dirname, 'src'),
@@ -19,11 +20,12 @@ export default defineConfig(configEnv => {
       outDir: resolve(__dirname, 'dist'),
       chunkSizeWarningLimit: 1500,
       sourcemap: false,
-      minify: true,
+      minify: 'esbuild',
       watch: {
         include: 'src/**',
         exclude: 'node_modules/**',
       },
+      cssCodeSplit: true,
     },
     assetsInclude: ['*.webp', '*.gif'],
     css: {

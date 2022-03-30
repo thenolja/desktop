@@ -49,7 +49,9 @@ export const ReservationWrapper = styled.div`
     font-size: 16px;
     font-weight: 700;
     margin-bottom: 20px;
+    cursor: pointer;
   }
+  
   button:disabled {
     width: 100%;
     height: 45px;

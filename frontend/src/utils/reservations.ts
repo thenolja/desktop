@@ -16,4 +16,10 @@ const getReservedRooms = async (hotelId:string, checkIn:string, checkOut:string)
   .catch(e=>console.error(e));
 }
 
-export { getReservationByDate, getReservedRooms };
+const postReservation = async (reservation, hotelId)=>{
+  return await axios.post('/api/reservation/reservation', {reservation:reservation, hotelId:hotelId})
+  .then(({data})=>data)
+  .catch(e=>console.error(e));
+}
+
+export { getReservationByDate, getReservedRooms, postReservation};

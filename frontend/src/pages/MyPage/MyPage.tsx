@@ -6,23 +6,11 @@ import Profile from 'components/UserInfo/Profile';
 const MyPage = () => {
   const [isEditing, setEditingMode] = useState<boolean>(false);
 
-  const handleEditingMode = useCallback(isEditing => setEditingMode(isEditing), []);
-
-  const MemoizedProfile = useMemo(
-    () => <Profile isEditing={isEditing} handleEditingMode={handleEditingMode} />,
-    [isEditing],
-  );
-
-  const MemoizedSignOut = useMemo(
-    () => <SignOut>{isEditing ? <button className="submit">회원탈퇴</button> : ''}</SignOut>,
-    [isEditing],
-  );
-
   return (
     <>
-      {MemoizedProfile}
+      <Profile isEditing={isEditing} setEditingMode={setEditingMode} />
       <ReservationList />
-      {MemoizedSignOut}
+      <SignOut>{isEditing ? <button className="submit">회원탈퇴</button> : ''}</SignOut>,
     </>
   );
 };

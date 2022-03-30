@@ -4,24 +4,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { createPortal } from 'react-dom';
 import { useEffect, useRef, useState } from 'react';
 import { patchReview } from 'src/utils/reviews';
-import { selectAuth } from 'src/contexts/auth';
+import { authUpdate, selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
+import { PostingReviewProps } from './Reservation.type';
+import { useDispatch } from 'react-redux';
 
-const PostingReview = ({ setDialog, selectedItem, setReservationList }) => {
-  const { id: userId, nickname } = useAppSelector(selectAuth);
-  const { id: itemId, hotelId, photo, name, spec, checkInDate, checkOutDate, review } = selectedItem;
+const PostingReview = ({ setDialog, setReservationList }: PostingReviewProps) => {
+  const selectedItem = sessionStorage.getItem('selectedItem');
+  const { id: itemId, hotelId, photo, name, spec, checkInDate, checkOutDate, review } = JSON.parse(selectedItem);
+  const { id: userId, nickname, myReviews } = useAppSelector(selectAuth);
   const [reviewText, setReviewText] = useState<string>(review ? review.reviewText : '');
 
-  let rating = useRef<HTMLInputElement>(null);
+  const dispatch = useDispatch();
+
+  let rating = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     const star = review?.star;
     if (!star) return;
-    let input = document.querySelector(`.rating-container > input[value="${Math.round(+star)}"`);
+    let input = document.querySelector(`.rating-container > input[value="${Math.round(+star)}"`) as HTMLInputElement;
+    rating.current = input;
     input.checked = true;
   }, []);
 
-  const updateReview = async e => {
+  const updateReview = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const myReview = {
@@ -29,7 +35,7 @@ const PostingReview = ({ setDialog, selectedItem, setReservationList }) => {
       userId: userId,
       hotelId: hotelId,
       reservationId: itemId,
-      star: rating.current.value,
+      star: rating.current ? rating.current.value : '1',
       writeTime: new Date(),
       nickname: nickname,
       spec: spec,
@@ -37,7 +43,12 @@ const PostingReview = ({ setDialog, selectedItem, setReservationList }) => {
     };
 
     const updatedReview = await patchReview(myReview);
-    setReservationList(items => items.map(item => (item.id === itemId ? { ...item, review: updatedReview } : item)));
+    setReservationList(prevList =>
+      prevList.map(item => (item.id === itemId ? { ...item, review: updatedReview } : item)),
+    );
+
+    dispatch(authUpdate({ myReviews: [...myReviews, updatedReview.id] }));
+
     setDialog(false);
   };
 

@@ -7,11 +7,11 @@ const CarouselLi = ({ hotel }) => {
   return (
     <StyledLi data-id={hotel.id}>
       <Link to={`/detail/${hotel.id}`}>
-        <img src={hotel.optimizedThumbUrls.srpDesktop} alt="" />
-        <h3>{hotel.name.split('(')[0]}</h3>
+        <img src={hotel.optimizedThumbUrls.srpDesktop} width="177" height="99" alt="" />
+        <h4>{hotel.name.split('(')[0]}</h4>
         <p>
           <span>
-            <img src={star} alt="별 이미지" className="star-img" />
+            <img src={star} alt="별 이미지" className="star-img" width="13" height="13" />
             {hotel.starRating || hotel.guestReviews.rating}
             /5
           </span>
