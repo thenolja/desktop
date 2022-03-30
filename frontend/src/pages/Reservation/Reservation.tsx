@@ -1,9 +1,4 @@
-import Agreement from 'components/Payment/Agreement';
-import Notice from 'components/Payment/Notice';
-import Policy from 'components/Payment/Policy';
-import PriceInfo from 'components/Payment/PriceInfo';
-import UserInfo from 'components/Payment/UserInfo';
-import Visiting from 'components/Payment/Visiting';
+import PaymentForm from 'components/Payment/PaymentForm';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { selectAuth } from 'src/contexts/auth';
@@ -20,8 +15,10 @@ const Reservation = () => {
   const { id:hotelId }=useParams();
 
   const roomInfo=JSON.parse(window.sessionStorage.getItem("SELECTED_ROOM"));
+  const hotelName=window.sessionStorage.getItem("HOTEL_NAME");
 
   const selectedRoom = {
+    hotelName: hotelName,
     name: roomInfo.name,
     photo: roomInfo.images[0].fullSizeUrl,
     checkIn: changeDateFormatToIsoSTring(roomInfo.startDate),
@@ -30,14 +27,13 @@ const Reservation = () => {
     occupancy: roomInfo.maxOccupancy.total+roomInfo.maxOccupancy.children,
     adults: roomInfo.maxOccupancy.total,
     children: roomInfo.maxOccupancy.children,
-    spec: '[room spec]'
   };
 
   const { id:userId, phone } = useAppSelector(selectAuth);
 
   const [reservation, setReservation]=useState({
     userId : userId,
-    hotelId : hotelId,
+    hotelId : +hotelId,
     isAgrees : [false, false, false],
     checkInDate : selectedRoom.checkIn,
     checkOutDate : selectedRoom.checkOut,
@@ -46,7 +42,7 @@ const Reservation = () => {
     occupancy : selectedRoom.occupancy,
     adults : selectedRoom.adults,
     children : selectedRoom.children,
-    spec : selectedRoom.spec,
+    spec : selectedRoom.name,
     username :  '',
     phone :  null,
   });
@@ -57,7 +53,7 @@ const Reservation = () => {
   });
 
   const [hotel]=useState({
-    name: selectedRoom.name,
+    name: selectedRoom.hotelName,
     photo: selectedRoom.photo
   })
 
@@ -76,9 +72,10 @@ const Reservation = () => {
   }
 
   const handleSubmit=async ()=>{
-    const reservationdata=await postReservation(reservation);
+    const hotelData=await postHotel(hotel);
+    const hotelId=hotelData.id;
+    const reservationdata=await postReservation(reservation, hotelId);
     const reservationId=reservationdata.id;
-    await postHotel(hotel);
     await postPayment(reservationId, payment);
     await updateReservation(userId, reservationId);
   }
@@ -92,18 +89,7 @@ const Reservation = () => {
   return (
     <ReservationWrapper>
       <h2 className="srOnly">예약 페이지</h2>
-      <form>
-        <fieldset>
-          <legend className="srOnly">결제 정보</legend>
-          <UserInfo reservation={reservation} setReservation={setReservation} phone={phone} />
-          <Visiting reservation={reservation} setReservation={setReservation} />
-          <PriceInfo cost={selectedRoom.cost} />
-          <Notice />
-          <Agreement reservation={reservation} setReservation={setReservation} />
-          <button type="submit" ref={sumbmitBtn} onClick={handleClick} onSubmit={handleSubmit}>{selectedRoom.cost.toLocaleString()}원 결제하기</button>
-          <Policy />
-        </fieldset>
-      </form>
+      <PaymentForm sumbmitBtn={sumbmitBtn} handleClick={handleClick} handleSubmit={handleSubmit} reservation={reservation} setReservation={setReservation} phone={phone} cost={selectedRoom.cost} />
     </ReservationWrapper>
   );
 };

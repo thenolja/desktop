@@ -135,17 +135,17 @@ app.get('/reserved/:hotelId', (req, res) => {
 app.post('/reservation/payment', (req, res) => {
   const id = generateId(payments);
   const { reservationId, payment, paymentDate } = req.body;
-  const data = { paymentId: id, reservationId: reservationId, paymentDate: paymentDate, ...payment };
+  const data = { id: id, reservationId: reservationId, paymentDate: paymentDate, ...payment };
   payments = [...payments, data];
-  console.log('payment', data);
+  // console.log('payment', data);
   res.send(data);
 })
 
 app.post('/reservation/reservation', (req, res) => {
   const id = generateId(reservations);
-  const data = { id: id, ...req.body };
+  const data = { id: id, ...req.body.reservation, hotelId: req.body.hotelId };
   reservations = [...reservations, data];
-  console.log('reservation', data);
+  // console.log('reservation', reservations);
   res.send(data);
 })
 
@@ -153,7 +153,7 @@ app.post('/reservation/hotel', (req, res) => {
   const id = generateId(hotels);
   const data = { id: id, ...req.body };
   hotels = [...hotels, data];
-  console.log('hotel', data);
+  // console.log('hotel', data);
   res.send(data);
 })
 
@@ -164,7 +164,7 @@ app.patch('/reservation/user', (req, res) => {
       return user;
     }
   })
-  console.log(users);
+  // console.log(users);
   res.send(users);
 })
 
