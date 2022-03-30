@@ -34,34 +34,6 @@ const ProfileContainer = styled.section`
   }
 `;
 
-const UserInfoContainer = styled.section`
-  margin-left: auto;
-  width: 600px;
-  h2 {
-    font-size: 40px;
-    color: black;
-    letter-spacing: -3px;
-  }
-
-  span {
-    font-weight: 700;
-    font-size: 18px;
-
-    &:nth-child(1) {
-      display: inline-block;
-      width: 110px;
-      height: 35px;
-      margin-top: 35px;
-      margin-right: 30px;
-      border-radius: 10px;
-      text-align: center;
-      line-height: 35px;
-      color: #ffffff;
-      background-color: #de2e5f;
-    }
-  }
-`;
-
 const UserInfoFormContainer = styled.form`
   margin-left: auto;
   width: 600px;
@@ -101,4 +73,4 @@ const UserInfoFormContainer = styled.form`
   }
 `;
 
-export { ProfileContainer, UserInfoContainer, UserInfoFormContainer };
+export { ProfileContainer, UserInfoFormContainer };

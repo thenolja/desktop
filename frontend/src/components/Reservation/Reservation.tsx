@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useScrollPrevent } from 'src/hooks/useScroll';
 import { selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
@@ -34,18 +34,10 @@ const Reservations = () => {
     sessionStorage.setItem('selectedItem', JSON.stringify(reservationList[index]));
     setDialog(true);
   };
-  return (
-    <ReservationList>
-      <h2>예약내역</h2>
-      <DatePickerComponent
-        startDate={startDate}
-        setStartDate={setStartDate}
-        endDate={endDate}
-        setEndDate={setEndDate}
-      />
 
-      {showDialog && <PostingReview setDialog={setDialog} setReservationList={setReservationList} />}
-      {reservationList.length ? (
+  const memoizedList = useMemo(
+    () =>
+      reservationList.length ? (
         <ul>
           {reservationList.map(
             (
@@ -70,8 +62,24 @@ const Reservations = () => {
           )}
         </ul>
       ) : (
-        <p>예약 내역이 존재하지 않습니다</p>
-      )}
+        <p>예약 내역이 존재하지 않습니다.</p>
+      ),
+
+    [reservationList],
+  );
+
+  return (
+    <ReservationList>
+      <h2>예약내역</h2>
+      <DatePickerComponent
+        startDate={startDate}
+        setStartDate={setStartDate}
+        endDate={endDate}
+        setEndDate={setEndDate}
+      />
+
+      {showDialog && <PostingReview setDialog={setDialog} setReservationList={setReservationList} />}
+      {memoizedList}
     </ReservationList>
   );
 };
