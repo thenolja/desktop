@@ -28,7 +28,8 @@
     "react-trigger-change": "^1.0.2",
     "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
-    "styled-reset": "^4.3.4"
+    "styled-reset": "^4.3.4",
+    "sweetalert": "^2.1.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^13.2.1",

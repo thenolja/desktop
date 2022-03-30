@@ -4,14 +4,19 @@ import Policy from 'components/Payment/Policy';
 import PriceInfo from 'components/Payment/PriceInfo';
 import UserInfo from 'components/Payment/UserInfo';
 import Visiting from 'components/Payment/Visiting';
+import { SelectedBody } from './Payment.style';
+import SelectedRoom from './SelectedRoom';
 
-const PaymentForm = ({ sumbmitBtn, handleClick, handleSubmit, reservation, setReservation, phone, cost }) => {
+const PaymentForm = ({ selectedRoom, sumbmitBtn, handleClick, handleSubmit, reservation, setReservation, phone, cost }) => {
 
   return (
     <form>
       <fieldset>
         <legend className="srOnly">결제 정보</legend>
-        <UserInfo reservation={reservation} setReservation={setReservation} phone={phone} />
+        <SelectedBody>
+          <UserInfo reservation={reservation} setReservation={setReservation} phone={phone} />
+          <SelectedRoom selectedRoom={selectedRoom} />
+        </SelectedBody>
         <Visiting reservation={reservation} setReservation={setReservation} />
         <PriceInfo cost={cost} />
         <Notice />
