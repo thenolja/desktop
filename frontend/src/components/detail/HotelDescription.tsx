@@ -11,6 +11,7 @@ import {
 } from './HotelDescription.style';
 
 const HotelDescription = ({ hotelInfo }) => {
+  window.sessionStorage.setItem("HOTEL_NAME", hotelInfo.name);
   return (
     <>
       <Description>
