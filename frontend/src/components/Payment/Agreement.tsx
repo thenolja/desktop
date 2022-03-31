@@ -1,12 +1,13 @@
 import { useRef } from "react";
 import { FormArticle } from "./Payment.style";
+import { SetReservationType } from "./Payment.type";
 
-const Agreement = ({ reservation, setReservation }) => {
+const Agreement = ({ reservation, setReservation }: SetReservationType) => {
 
-  const totalAgree = useRef();
-  const agrees = useRef([]);
+  const totalAgree = useRef<HTMLInputElement>();
+  const agrees = useRef<HTMLInputElement[]>([]);
 
-  const handleAgree = e => {
+  const handleAgree = (e: any) => {
     if (e.target.id === 'total') {
       // 전체 동의하기에 따라 선택사항 체크박스 활성화
       setReservation({

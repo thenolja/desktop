@@ -1,10 +1,11 @@
 import { useEffect, useRef } from "react";
 import { FormArticle, Necessary, SectionBody, SectionTitle } from "./Payment.style";
+import { SetReservationType } from "./Payment.type";
 
 
-const Visiting = ({ reservation, setReservation }) => {
+const Visiting = ({ reservation, setReservation }:SetReservationType) => {
 
-  const carRef = useRef();
+  const carRef = useRef<HTMLInputElement>();
 
   // 숙소 방문 수단을 기본적으로 차량으로 세팅
   useEffect(() => {
