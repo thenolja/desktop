@@ -103,7 +103,7 @@ app.patch('/reviews', (req, res) => {
 app.get('/reviews/:id', (req, res) => {
   const { id } = req.params;
 
-  res.send(reviews.filter(review => id === review.hotelId));
+  res.send(reviews.filter(review => +id === review.hotelId));
 });
 
 app.get('/reviews/title/:id', (req, res) => {
@@ -111,7 +111,7 @@ app.get('/reviews/title/:id', (req, res) => {
   let total = 0, rating = 0;
 
   reviews.forEach(review => {
-    if (id === review.hotelId) {
+    if (+id === review.hotelId) {
       rating += review.star;
       total++;
     }
