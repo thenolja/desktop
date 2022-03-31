@@ -24,6 +24,7 @@ const StyledLi = styled.li`
 
     span {
       color: #333;
+      margin-bottom: 5px;
     }
   }
 `;
