@@ -1,19 +1,21 @@
 import { defineConfig, loadEnv } from 'vite';
-import viteCompression from 'vite-plugin-compression';
 import VitePluginHtmlEnv from 'vite-plugin-html-env';
+import { createHtmlPlugin } from 'vite-plugin-html';
 import { resolve } from 'path';
 import compress from 'vite-plugin-compression';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig(configEnv => {
   const isDevelopment = configEnv.mode === 'development';
-
-  process.env = { ...process.env, ...loadEnv(configEnv.mode, process.cwd()) };
-
-  console.log(process.env);
-
+  const env = loadEnv(configEnv.mode, process.cwd());
   return {
-    plugins: [compress(), react(), VitePluginHtmlEnv({ prefix: '<{', suffix: '}>' })],
+    plugins: [
+      compress(),
+      react(),
+      createHtmlPlugin({
+        inject: { data: { kakaoKey: env.VITE_APP_API_KAKAO_KEY } },
+      }),
+    ],
     resolve: {
       alias: {
         src: resolve(__dirname, 'src'),
@@ -43,7 +45,7 @@ export default defineConfig(configEnv => {
     server: {
       proxy: {
         '/api': {
-          target: 'http://localhost:8080',
+          target: 'http://localhost:3000',
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api/, ''),
         },
