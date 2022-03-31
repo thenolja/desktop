@@ -1,6 +1,7 @@
 {
   "name": "thenolja",
   "version": "1.0.0",
+  "homepage": ".",
   "scripts": {
     "frontend": "cd frontend && npm run start",
     "preview": "cd frontend && npm run preview",

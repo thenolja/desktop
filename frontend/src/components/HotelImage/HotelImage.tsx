@@ -73,6 +73,8 @@ const HotelImage = ({ photos }) => {
                 <Image src={photos[0]} alt={'호텔 대표이미지1'} />
               </div>
               <ImageBtn
+                type="button"
+                aria-label="Hotel representative"
                 onClick={() => {
                   setModalFlag(true);
                 }}

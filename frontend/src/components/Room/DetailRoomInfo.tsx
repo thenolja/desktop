@@ -13,6 +13,7 @@ const DetailRoomInfo=({room, modal, toggleModal, handleClick}:ModalType)=> {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    lazyLoad: true,
     initialSlide: initialslider,
     nextArrow: <Button role="next" onClick={() => {}} />,
     prevArrow: <Button role="prev" onClick={() => {}} />,

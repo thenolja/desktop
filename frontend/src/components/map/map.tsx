@@ -8,7 +8,7 @@ import {
   ModalTitle,
   ModalCloseBtn,
   ModalMapWrapper,
-} from './map.style';
+} from './Map.style';
 import { Allbutton } from '../Detail/HotelDescription.style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';

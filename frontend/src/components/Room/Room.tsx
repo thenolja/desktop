@@ -22,9 +22,9 @@ const Room = ({ room, setSelectedRoom }) => {
         <Selector />
         <Image>
           {room.images[0] ? (
-            <img src={room.images[0].fullSizeUrl}></img>
+            <img src={room.images[0].fullSizeUrl} alt={room.images[0].caption}></img>
           ) : (
-            <img src={'https://img.icons8.com/ios/344/no-image.png'} style={{ width: '30px', height: '30px' }}></img>
+            <img src={'https://img.icons8.com/ios/344/no-image.png'} style={{ width: '30px', height: '30px' }} alt="이미지 없음" ></img>
           )}
         </Image>
         <RoomInfo name={room.name} maxOccupancy={room.maxOccupancy} price={room.ratePlans[0].price} />

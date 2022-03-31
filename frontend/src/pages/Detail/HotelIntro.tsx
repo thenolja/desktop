@@ -1,12 +1,14 @@
 import HotelDescription from 'components/Detail/HotelDescription';
-import Map from 'components/Map/map';
+import Map from 'components/Map/Map';
 import Amenity from 'components/Amenity/Amenity';
+import { Helmet } from 'react-helmet-async';
 import HotelImage from 'components/HotelImage/HotelImage';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { IntroDiv } from './HotelIntro.style';
 import { getHotelInfo, getHotelPhotos } from 'src/utils/requests';
 import Spinner from 'components/Spinner/Spinner';
+import { setDocumentTitle } from 'src/utils/setDocumentTitle';
 
 const findHotelIntro = (body: Object[]) => {
   interface HotelIntro {
@@ -100,6 +102,9 @@ const HotelIntro = () => {
           <Spinner />
         ) : hotelInfo ? (
           <>
+            <Helmet>
+              <title>{setDocumentTitle(hotelInfo.name)}</title>
+            </Helmet>
             <HotelDescription hotelInfo={hotelInfo} />
             <Map coordinates={coordinates} />
           </>
