@@ -1,23 +1,22 @@
-import swal from 'sweetalert';
-
-import PaymentForm from 'components/Payment/PaymentForm';
-import { useEffect, useRef, useState } from 'react';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { selectAuth } from 'src/contexts/auth';
-import { useAppSelector } from 'src/contexts/state.type';
+import swal from 'sweetalert';
+import PaymentForm from 'components/Payment/PaymentForm';
 import changeDateFormatToIsoSTring from 'src/utils/dateToISOString';
-import { postPayment } from 'src/utils/payment';
+import { postHotel } from 'src/utils/hotels';
 import { postReservation } from 'src/utils/reservations';
 import { updateReservation } from 'src/utils/users';
+import { postPayment } from 'src/utils/payment';
+import { selectAuth } from 'src/contexts/auth';
+import { useAppSelector } from 'src/contexts/state.type';
 import { ReservationWrapper } from './Reservation.style';
-import { postHotel } from 'src/utils/hotels';
 
 const Reservation = () => {
 
-  const { id:hotelId }=useParams();
+  const { id: hotelId } = useParams();
 
-  const roomInfo=JSON.parse(window.sessionStorage.getItem("SELECTED_ROOM"));
-  const hotelName=window.sessionStorage.getItem("HOTEL_NAME");
+  const roomInfo = JSON.parse(window.sessionStorage.getItem("SELECTED_ROOM"));
+  const hotelName = window.sessionStorage.getItem("HOTEL_NAME");
 
   const selectedRoom = {
     hotelName: hotelName,
@@ -26,43 +25,43 @@ const Reservation = () => {
     checkIn: changeDateFormatToIsoSTring(roomInfo.startDate),
     checkOut: changeDateFormatToIsoSTring(roomInfo.endDate),
     cost: roomInfo.ratePlans[0].price.unformattedCurrent,
-    occupancy: roomInfo.maxOccupancy.total+roomInfo.maxOccupancy.children,
+    occupancy: roomInfo.maxOccupancy.total + roomInfo.maxOccupancy.children,
     adults: roomInfo.maxOccupancy.total,
     children: roomInfo.maxOccupancy.children,
   };
 
-  const { id:userId, phone } = useAppSelector(selectAuth);
+  const { id: userId, phone } = useAppSelector(selectAuth);
 
-  const [reservation, setReservation]=useState({
-    userId : userId,
-    hotelId : +hotelId,
-    isAgrees : [false, false, false],
-    checkInDate : selectedRoom.checkIn,
-    checkOutDate : selectedRoom.checkOut,
-    hasCar :  true,
-    cost : selectedRoom.cost,
-    occupancy : selectedRoom.occupancy,
-    adults : selectedRoom.adults,
-    children : selectedRoom.children,
-    spec : selectedRoom.name,
-    username :  '',
-    phone :  null,
+  const [reservation, setReservation] = useState({
+    userId: userId,
+    hotelAPIId: +hotelId,
+    isAgrees: [false, false, false],
+    checkInDate: selectedRoom.checkIn,
+    checkOutDate: selectedRoom.checkOut,
+    hasCar: true,
+    cost: selectedRoom.cost,
+    occupancy: selectedRoom.occupancy,
+    adults: selectedRoom.adults,
+    children: selectedRoom.children,
+    spec: selectedRoom.name,
+    username: '',
+    phone: null,
   });
 
-  const [payment]=useState({
+  const [payment] = useState({
     userId: userId,
     cost: selectedRoom.cost
   });
 
-  const [hotel]=useState({
+  const [hotel] = useState({
     name: selectedRoom.hotelName,
     photo: selectedRoom.photo
   })
 
-  const sumbmitBtn=useRef();
-  const navigate=useNavigate();
+  const sumbmitBtn = useRef<HTMLButtonElement>();
+  const navigate = useNavigate();
 
-  const handleClick=e=>{
+  const handleClick = (e: MouseEvent) => {
     e.preventDefault();
 
     swal({
@@ -81,23 +80,23 @@ const Reservation = () => {
         navigate('/mypage');
       }
     })
-    
+
   }
 
-  const handleSubmit=async ()=>{
-    const hotelData=await postHotel(hotel);
-    const hotelId=hotelData.id;
-    const reservationdata=await postReservation(reservation, hotelId);
-    const reservationId=reservationdata.id;
+  const handleSubmit = async () => {
+    const hotelData = await postHotel(hotel);
+    const hotelId = hotelData.id;
+    const reservationdata = await postReservation(reservation, hotelId);
+    const reservationId = reservationdata.id;
     await postPayment(reservationId, payment);
     await updateReservation(userId, reservationId);
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     // 모든 필수 입력이 입력되었을 때만 결제 버튼 활성화
     sumbmitBtn.current.disabled = !(reservation.username && reservation.phone && reservation.isAgrees[0]);
-    
-  },[reservation]);
+
+  }, [reservation]);
 
   return (
     <ReservationWrapper>

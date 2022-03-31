@@ -5,9 +5,10 @@ import PriceInfo from 'components/Payment/PriceInfo';
 import UserInfo from 'components/Payment/UserInfo';
 import Visiting from 'components/Payment/Visiting';
 import { SelectedBody } from './Payment.style';
+import { FormType } from './Payment.type';
 import SelectedRoom from './SelectedRoom';
 
-const PaymentForm = ({ selectedRoom, sumbmitBtn, handleClick, handleSubmit, reservation, setReservation, phone, cost }) => {
+const PaymentForm = ({ selectedRoom, sumbmitBtn, handleClick, handleSubmit, reservation, setReservation, phone, cost }:FormType) => {
 
   return (
     <form>
