@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 const StyledLi = styled.li`
-  h3 {
+  h4 {
+    min-height: 32px;
     font-size: 16px;
     font-weight: 700;
   }
@@ -22,7 +23,7 @@ const StyledLi = styled.li`
     text-align: right;
 
     span {
-      color: #aaaaaa;
+      color: #333;
     }
   }
 `;
