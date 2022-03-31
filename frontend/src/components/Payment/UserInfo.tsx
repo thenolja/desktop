@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { FormArticle, Guidance, InputDiv, Necessary, SectionTitle } from "./Payment.style";
+import { UserInfoType } from "./Payment.type";
 
-const UserInfo = ({ reservation, setReservation, phone }) => {
-  const [sameUser, setSameUser] = useState(false);
+const UserInfo = ({ reservation, setReservation, phone }:UserInfoType) => {
+  const [sameUser, setSameUser] = useState<boolean>(false);
 
   const handleClick = () => {
     setReservation({
@@ -13,7 +14,7 @@ const UserInfo = ({ reservation, setReservation, phone }) => {
     setSameUser(!sameUser)
   }
 
-  const handleInput = e => {
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setReservation({
       ...reservation,
       [e.target.id]: e.target.value
