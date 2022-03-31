@@ -34,7 +34,7 @@ const Reservation = () => {
 
   const [reservation, setReservation] = useState({
     userId: userId,
-    hotelId: +hotelId,
+    hotelAPIId: +hotelId,
     isAgrees: [false, false, false],
     checkInDate: selectedRoom.checkIn,
     checkOutDate: selectedRoom.checkOut,
