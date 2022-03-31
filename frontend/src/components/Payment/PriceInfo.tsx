@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { SectionTitle, FormArticle, TotalWrapper } from './Payment.style';
 
-const PriceInfo = ({ cost }) => {
+const PriceInfo = ({ cost }:{cost: number}) => {
   return (
     <FormArticle>
       <SectionTitle>금액 및 할인 정보</SectionTitle>

@@ -100,7 +100,6 @@ app.patch('/reviews', (req, res) => {
   res.send(data);
 });
 
-// ktmihs
 app.get('/reviews/:id', (req, res) => {
   const { id } = req.params;
 
@@ -126,7 +125,7 @@ app.get('/reserved/:hotelId', (req, res) => {
 
   const reservedRoom = [];
   reservations.forEach(reservation => {
-    if (reservation.hotelId === +hotelId && +reservation.checkInDate.split('-').join('') >= +checkIn.split('-').join('') && +reservation.checkOutDate.split('-').join('') <= +checkOut.split('-').join('')) reservedRoom.push(reservation.spec);
+    if (reservation.hotelAPIId === +hotelId && +reservation.checkInDate.split('-').join('') >= +checkIn.split('-').join('') && +reservation.checkOutDate.split('-').join('') <= +checkOut.split('-').join('')) reservedRoom.push(reservation.spec);
   })
 
   res.send(reservedRoom);
@@ -137,7 +136,6 @@ app.post('/reservation/payment', (req, res) => {
   const { reservationId, payment, paymentDate } = req.body;
   const data = { id: id, reservationId: reservationId, paymentDate: paymentDate, ...payment };
   payments = [...payments, data];
-  // console.log('payment', data);
   res.send(data);
 })
 
@@ -145,7 +143,6 @@ app.post('/reservation/reservation', (req, res) => {
   const id = generateId(reservations);
   const data = { id: id, ...req.body.reservation, hotelId: req.body.hotelId };
   reservations = [...reservations, data];
-  // console.log('reservation', reservations);
   res.send(data);
 })
 
@@ -153,7 +150,6 @@ app.post('/reservation/hotel', (req, res) => {
   const id = generateId(hotels);
   const data = { id: id, ...req.body };
   hotels = [...hotels, data];
-  // console.log('hotel', data);
   res.send(data);
 })
 
@@ -164,7 +160,6 @@ app.patch('/reservation/user', (req, res) => {
       return user;
     }
   })
-  // console.log(users);
   res.send(users);
 })
 
