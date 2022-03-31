@@ -1,14 +1,12 @@
 import HotelDescription from 'components/Detail/HotelDescription';
 import Map from 'components/Map/Map';
-import Amenity from 'components/Amenity/Amenity';
-import { Helmet } from 'react-helmet-async';
 import HotelImage from 'components/HotelImage/HotelImage';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { IntroDiv } from './HotelIntro.style';
 import { getHotelInfo, getHotelPhotos } from 'src/utils/requests';
 import Spinner from 'components/Spinner/Spinner';
-import { setDocumentTitle } from 'src/utils/setDocumentTitle';
+import { MetaTag, SEOMetaTag, MetaTagDefaults } from 'components/SeoMetaTag/SEOMetaTag';
 
 const findHotelIntro = (body: Object[]) => {
   interface HotelIntro {
@@ -68,13 +66,22 @@ const settingHotelImgage = (imgsArray: object[]): string[] => {
   return imgsArray.map(img => img.baseUrl.replace('{size}', 'z').concat(sizeUrl));
 };
 
+const settingSEOTags = (body: Object[]): MetaTag => {
+  return {
+    title: body.propertyDescription.name,
+    description: body.propertyDescription.tagline.toString().replace(/[<b></b>]/g, ''),
+    keywords: body.propertyDescription.localisedAddress.fullAddress,
+  };
+};
+
 const HotelIntro = () => {
   const { id } = useParams();
 
-  const [hotelId, setHotelId] = useState<number>(id);
+  const [hotelId, setHotelId] = useState<number | string>(id);
   const [hotelInfo, setHotelInfo] = useState<object>({});
   const [coordinates, setCoordinates] = useState<object>({});
   const [photos, setPhotos] = useState<string[]>([]);
+  const [seoTag, setSeoTag] = useState<MetaTag>(MetaTagDefaults);
   const [isInfoLoading, setInfoLoading] = useState<boolean>(false);
   const [isImageLoading, setImageLoading] = useState<boolean>(false);
 
@@ -83,6 +90,7 @@ const HotelIntro = () => {
       const resoponseInfo = await getHotelInfo(hotelId);
       setHotelInfo(findHotelIntro(resoponseInfo));
       setCoordinates(findHotelMap(resoponseInfo));
+      setSeoTag(settingSEOTags(resoponseInfo));
       setInfoLoading(false);
       const resoponsePhotos = await getHotelPhotos(hotelId);
       setPhotos(settingHotelImgage(resoponsePhotos));
@@ -102,9 +110,7 @@ const HotelIntro = () => {
           <Spinner />
         ) : hotelInfo ? (
           <>
-            <Helmet>
-              <title>{setDocumentTitle(hotelInfo.name)}</title>
-            </Helmet>
+            <SEOMetaTag metas={seoTag} />
             <HotelDescription hotelInfo={hotelInfo} />
             <Map coordinates={coordinates} />
           </>

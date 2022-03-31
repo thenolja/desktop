@@ -9,6 +9,7 @@ import Header from 'src/containers/Header/Header';
 import Main from 'src/containers/Main/Main';
 import Footer from 'src/containers/Footer/Footer';
 import Spinner from 'components/Spinner/Spinner';
+import { SEOMetaTag } from 'components/SeoMetaTag/SEOMetaTag';
 
 const Index = lazy(() => import('src/pages/Index/Index'));
 const Detail = lazy(() => import('src/pages/Detail/Detail'));
@@ -50,6 +51,7 @@ const App = () => {
     <>
       {MemoizedHeader}
       <Main>
+        <SEOMetaTag />
         <Suspense fallback={<Spinner />}>
           <Routes>
             <Route index element={<Index />} />
