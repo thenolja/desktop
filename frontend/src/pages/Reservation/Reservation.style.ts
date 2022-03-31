@@ -81,7 +81,7 @@ export const ReservationWrapper = styled.div`
     padding: 10px 10px;
 
     h5 {
-      color: #e67000;
+      color: #ff2020;
       font-weight: 700;
       line-height: 20px;
 
