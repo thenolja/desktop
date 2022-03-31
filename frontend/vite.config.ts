@@ -1,5 +1,4 @@
 import { defineConfig, loadEnv } from 'vite';
-import VitePluginHtmlEnv from 'vite-plugin-html-env';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import { resolve } from 'path';
 import compress from 'vite-plugin-compression';
@@ -45,7 +44,7 @@ export default defineConfig(configEnv => {
     server: {
       proxy: {
         '/api': {
-          target: 'http://localhost:3000',
+          target: 'http://localhost:8080',
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api/, ''),
         },
