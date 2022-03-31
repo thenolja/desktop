@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useLayoutEffect } from 'react';
+import { useEffect, useState, useRef, useLayoutEffect, useCallback } from 'react';
 
 import { StyledDivInner, StyledDiv } from './Carousel.style';
 import CarouselUl from './CarouselUl/CarouselUl';
@@ -13,7 +13,7 @@ const MoveCarousel = ({ resHotels }) => {
 
   const listNum = 5;
 
-  const makeArray = arr => {
+  const makeArray = useCallback(arr => {
     let index = 0;
 
     return arr.reduce((acc, cur) => {
@@ -26,7 +26,7 @@ const MoveCarousel = ({ resHotels }) => {
       acc[index].push(cur);
       return acc;
     }, []);
-  };
+  }, []);
 
   useEffect(() => {
     const resConstructRes = makeArray(resHotels);
