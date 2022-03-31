@@ -7,6 +7,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(configEnv => {
   const isDevelopment = configEnv.mode === 'development';
   const env = loadEnv(configEnv.mode, process.cwd());
+
   return {
     plugins: [
       compress(),

@@ -36,7 +36,7 @@ export const ImageBtn = styled.button`
   overflow: hidden;
   position: absolute;
   white-space: nowrap;
-  z-index: 100;
+  z-index: 1;
   cursor: pointer;
 `;
 
