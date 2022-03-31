@@ -1,8 +1,9 @@
 import { memo } from "react";
 import { FormArticle, Wrapper, SectionTitle, SelectedInfo } from "./Payment.style";
+import { SelectedRoomType } from "./Payment.type";
 
 
-const SelectedRoom=({selectedRoom})=>{
+const SelectedRoom=({selectedRoom}:SelectedRoomType)=>{
   return(
     <FormArticle>
       <Wrapper>

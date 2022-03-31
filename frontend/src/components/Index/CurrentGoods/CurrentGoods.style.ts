@@ -8,6 +8,7 @@ const StyledH3 = styled.h3`
 
 const StyledDiv = styled.div`
   margin-bottom: 72px;
+  min-height 240px;
 `;
 
 export { StyledH3, StyledDiv };
