@@ -5,7 +5,9 @@ import { useParams } from 'react-router-dom';
 import { ReviewList } from 'components/Review/ReviewList';
 import { TopBtn } from 'components/Review/TopBtn';
 import Spinner from 'components/Spinner/Spinner';
-import { getMockdataReviews } from 'src/utils/reviews';
+import { deleteReview, getMockdataReviews } from 'src/utils/reviews';
+import swal from 'sweetalert';
+import { updateReview } from 'src/utils/users';
 
 const Reviews = (): JSX.Element => {
   const { id } = useParams();
@@ -46,7 +48,6 @@ const Reviews = (): JSX.Element => {
     const getReviews = async () => {
       const reviews= await getMockdataReviews(hotelId);
       setMockDataReviews(reviews);
-      console.log(reviews)
     }
     getReviews();
   }, []);
@@ -62,10 +63,28 @@ const Reviews = (): JSX.Element => {
     return () => observer && observer.disconnect();
   }, [target]);
 
+  const handleDelete=(e)=>{
+    swal({
+      title: '삭제하시겠습니까?',
+      icon: 'info',
+      buttons: ['취소', '삭제']
+    }).then((result) => {
+      if (result) {
+        deleteReviewFunc(e.target.id, e.target.name);
+      }
+    })
+  }
+
+  const deleteReviewFunc=async(id:string, nickname:string)=>{
+    await updateReview(id, nickname);
+    const review=await deleteReview(id);
+    setMockDataReviews(review);
+  }
+
   return (
     <>
       <ReviewTitle />
-      <ReviewList reviews={mockDataReviews} />
+      <ReviewList reviews={mockDataReviews}  handleDelete={handleDelete} />
       <ReviewList reviews={reviews} />
       <TopBtn />
       <div ref={setTarget}>{isLoaded && <Spinner />}</div>

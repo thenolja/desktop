@@ -67,7 +67,7 @@ export const TotalWrapper = styled.div`
 
 export const PaymentPolicy = styled.p`
   font-size: 14px;
-  color: #919191;
+  color: #555;
   line-height: 20px;
   margin-bottom: 10px;
 `;

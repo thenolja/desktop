@@ -36,4 +36,11 @@ const updateReservation =async (userId:string, reservationId) => {
   .catch(e=>console.error(e));
 }
 
-export { createUser, updateUser, updateReservation };
+const updateReview =async (id:string, nickname:string) => {
+  return await axios.patch(`/api/review/user`,{
+    id:id,
+    nickname:nickname
+  }).then(({data})=>data)
+  .catch(e=>console.error(e));
+}
+export { createUser, updateUser, updateReservation, updateReview };

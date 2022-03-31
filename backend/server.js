@@ -163,6 +163,26 @@ app.patch('/reservation/user', (req, res) => {
   res.send(users);
 })
 
+app.delete('/review/:id', (req, res) => {
+  const { id } = req.params;
+  let idx;
+  reviews.forEach((review, index) => {
+    if (+id === review.id) idx = index;
+  })
+  reviews.splice(idx, 1);
+  res.send(reviews);
+})
+
+app.patch('/review/user', (req, res) => {
+  users.map(user => {
+    if (user.nickname === req.body.nickname) {
+      user.myReviews = user.myReviews.filter(review => review !== +req.body.id);
+      return user;
+    }
+  })
+  res.send(users);
+})
+
 app.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT}`);
 });
