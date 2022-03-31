@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, memo } from 'react';
 
 import { getLocalHotelList } from 'src/utils/requests';
 import { StyledH3, StyledDiv, StyledUl, StyledLi } from './localGoods.style';
@@ -66,4 +66,4 @@ const LocalGoods = () => {
   );
 };
 
-export default LocalGoods;
+export default memo(LocalGoods);

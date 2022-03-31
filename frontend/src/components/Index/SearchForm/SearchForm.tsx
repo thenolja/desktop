@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 
 import { StyledForm } from './SearchForm.style';
 import PersoInput from './Input/PersoInput';
@@ -44,4 +44,4 @@ const SearchForm = ({ propQuery, propStartDate, propEndDate, propDestinationId }
   );
 };
 
-export default SearchForm;
+export default memo(SearchForm);

@@ -1,5 +1,5 @@
 import netlifyIdentity from 'netlify-identity-widget';
-import { useEffect } from 'react';
+import { useEffect, memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -74,4 +74,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

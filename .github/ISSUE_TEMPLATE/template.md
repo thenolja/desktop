@@ -1,13 +1,13 @@
 ---
-name: 
-about: 
+name: template
+about: about this project
 title: ''
 labels: ''
 assignees: ''
 
 ---
 
-** 설명
+## 설명
 
 ## 구현목록
 - [ ] todo1

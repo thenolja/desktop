@@ -1,5 +1,5 @@
 import HotelDescription from 'components/Detail/HotelDescription';
-import Map from 'components/Map/map';
+import Map from 'components/Map/Map';
 import Amenity from 'components/Amenity/Amenity';
 import { Helmet } from 'react-helmet-async';
 import HotelImage from 'components/HotelImage/HotelImage';

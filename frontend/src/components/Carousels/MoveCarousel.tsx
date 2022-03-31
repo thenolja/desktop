@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useLayoutEffect, useCallback } from 'react';
 
 import { StyledDivInner, StyledDiv } from './Carousel.style';
 import CarouselUl from './CarouselUl/CarouselUl';
@@ -13,7 +13,7 @@ const MoveCarousel = ({ resHotels }) => {
 
   const listNum = 5;
 
-  const makeArray = arr => {
+  const makeArray = useCallback(arr => {
     let index = 0;
 
     return arr.reduce((acc, cur) => {
@@ -26,10 +26,6 @@ const MoveCarousel = ({ resHotels }) => {
       acc[index].push(cur);
       return acc;
     }, []);
-  };
-
-  useEffect(() => {
-    refDiv.current.style.transition = 'none';
   }, []);
 
   useEffect(() => {
@@ -39,7 +35,7 @@ const MoveCarousel = ({ resHotels }) => {
     setHotels([resConstructRes[resConstructRes.length - 1], ...resConstructRes, resConstructRes[0]]);
   }, [resHotels]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isMoving) return;
 
     setIsMoving(true);
@@ -73,12 +69,12 @@ const MoveCarousel = ({ resHotels }) => {
 
   return (
     <StyledDiv>
-      <Button role="prev" onClick={movePrev} />
+      <Button onClick={movePrev} role="prev" />
       <StyledDivInner ref={refDiv}>
         {hotels.length !== 0 &&
           hotels.map((hotelArr, index) => <CarouselUl key={hotelArr.length * index} hotelArr={hotelArr} />)}
       </StyledDivInner>
-      <Button role="next" onClick={moveNext} />
+      <Button onClick={moveNext} role="next" />
     </StyledDiv>
   );
 };
