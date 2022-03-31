@@ -22,7 +22,11 @@ const Calendar=({ startDate, setStartDate, endDate, minDate }: DateType)=>{
   
   return(
     <DatePickerWrapper>
+      <label className="srOnly" htmlFor="calendar">
+        체크인 체크아웃
+      </label>
       <DatePicker
+        id="calendar"
         selected={startDate}
         onChange={(date) => setStartDate(date)}
         selectsStart
