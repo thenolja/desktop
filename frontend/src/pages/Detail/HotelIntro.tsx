@@ -23,8 +23,8 @@ const findHotelIntro = (body: Object[]) => {
   }
 
   let editTag = body.propertyDescription.tagline.toString().replace(/[<b></b>]/g, '');
-  let formattedScale = Math.round(body.guestReviews.brands.formattedScale / 2);
-  let formattedRating = Math.round(body.guestReviews.brands.formattedRating / 2);
+  let formattedScale = (body.guestReviews.brands.formattedScale / 2).toFixed(1);
+  let formattedRating = (body.guestReviews.brands.formattedRating / 2).toFixed(1);
 
   const hotelIntro: HotelIntro = {
     name: body.propertyDescription.name,
