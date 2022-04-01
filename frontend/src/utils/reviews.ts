@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-const patchReview = async ({ id, userId, reservationId, star, writeTime, nickname, spec, reviewText }) => {
+const patchReview = async ({ id, userId, reservationId, hotelAPIId, star, writeTime, nickname, spec, reviewText }) => {
   return await axios
     .patch(`/api/reviews?userId=${userId}`, {
       id: id,
       reservationId: reservationId,
+      hotelId: hotelAPIId,
       star: star,
       writeTime: writeTime.toISOString().slice(0, 10),
       nickname: nickname,
