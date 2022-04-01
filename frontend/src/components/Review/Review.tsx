@@ -1,7 +1,7 @@
 import {FlexBox, Imoji, Time, Info, Text, Star, Button, MainWrapper} from './Review.style';
 import { faStar, faStarHalf } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ReviewProps, ReviewType } from './Review.type';
+import { ReviewProps } from './Review.type';
 import { memo } from 'react';
 import { useAppSelector } from 'src/contexts/state.type';
 import { selectAuth } from 'src/contexts/auth';
@@ -12,7 +12,7 @@ const StarScore = (star:number) => {
   return stars;
 }
 
-const Review = ({review}:ReviewType | ReviewProps) => {
+const Review = ({review, handleDelete}:ReviewProps) => {
   const { nickname } = useAppSelector(selectAuth);
 
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -48,7 +48,7 @@ const Review = ({review}:ReviewType | ReviewProps) => {
         <Text>
           {review.description ? review.description : review.reviewText}
         </Text>
-        {(review.reviewer ? review.reviewer.name : review.nickname)===nickname && <Button>삭제</Button>}
+        {(review.reviewer ? review.reviewer.name : review.nickname)===nickname && <Button id={review.id.toString()} name={nickname} onClick={handleDelete}>삭제</Button>}
       </MainWrapper>
     </article>
   )
