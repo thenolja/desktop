@@ -103,7 +103,7 @@ app.patch('/reviews', (req, res) => {
 app.get('/reviews/:id', (req, res) => {
   const { id } = req.params;
 
-  res.send(reviews.filter(review => id === review.hotelId));
+  res.send(reviews.filter(review => +id === review.hotelId));
 });
 
 app.get('/reviews/title/:id', (req, res) => {
@@ -111,7 +111,7 @@ app.get('/reviews/title/:id', (req, res) => {
   let total = 0, rating = 0;
 
   reviews.forEach(review => {
-    if (id === review.hotelId) {
+    if (+id === review.hotelId) {
       rating += review.star;
       total++;
     }
@@ -157,6 +157,26 @@ app.patch('/reservation/user', (req, res) => {
   users.map(user => {
     if (user.id === req.body.userId) {
       user.reservations = [...user.reservations, req.body.reservationId];
+      return user;
+    }
+  })
+  res.send(users);
+})
+
+app.delete('/review/:id', (req, res) => {
+  const { id } = req.params;
+  let idx;
+  reviews.forEach((review, index) => {
+    if (+id === review.id) idx = index;
+  })
+  reviews.splice(idx, 1);
+  res.send(reviews);
+})
+
+app.patch('/review/user', (req, res) => {
+  users.map(user => {
+    if (user.nickname === req.body.nickname) {
+      user.myReviews = user.myReviews.filter(review => review !== +req.body.id);
       return user;
     }
   })

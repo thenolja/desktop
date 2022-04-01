@@ -12,8 +12,7 @@ const CarouselLi = ({ hotel }) => {
         <p>
           <span>
             <img src={star} alt="별 이미지" className="star-img" width="13" height="13" />
-            {hotel.starRating || hotel.guestReviews.rating}
-            /5
+            {hotel.starRating || hotel.guestReviews.rating} / 5
           </span>
           <span>후기 {hotel.guestReviews ? hotel.guestReviews.total : 0}개</span>
         </p>
