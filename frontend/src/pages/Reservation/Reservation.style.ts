@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const ReservationWrapper = styled.div`
   padding: 10px;
-
   section {
     margin-bottom: 30px;
   }
@@ -76,12 +75,12 @@ export const ReservationWrapper = styled.div`
     background-color: #fef8f2;
     border-radius: 4px;
     color: #1a1a1a;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 22px;
     padding: 10px 10px;
 
-    h5 {
-      color: #ff2020;
+    h4 {
+      color: #2020df;
       font-weight: 700;
       line-height: 20px;
 
@@ -91,6 +90,9 @@ export const ReservationWrapper = styled.div`
       p {
         margin-bottom: 5px;
       }
+    }
+    p{
+      font-size: 15px;
     }
   }
 `;
