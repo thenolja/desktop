@@ -18,7 +18,7 @@ export interface ReservationItem {
   children: number;
   checkInDate: string;
   checkOutDate: string;
-  review: MyReview;
+  review: MyReview | null;
   photo: string;
   name: string;
   spec: string;

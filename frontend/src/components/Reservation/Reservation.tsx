@@ -6,12 +6,15 @@ import { useAppSelector } from 'src/contexts/state.type';
 import DatePickerComponent from './DatePicker';
 import PostingReview from './PostingReview';
 
+import swal from 'sweetalert';
 import ReservationList from './Reservation.style';
 import { getReservationByDate } from 'src/utils/reservations';
-import { MyReview, ReservationItem } from './Reservation.type';
+import { ReservationItem } from './Reservation.type';
+import { deleteReview } from 'src/utils/reviews';
+import { updateReview } from 'src/utils/users';
 
 const Reservations = () => {
-  const { id } = useAppSelector(selectAuth);
+  const { id, nickname } = useAppSelector(selectAuth);
 
   const [reservationList, setReservationList] = useState<Object[]>([]);
 
@@ -37,6 +40,21 @@ const Reservations = () => {
     setDialog(true);
   };
 
+  const handleDeleteReview = (selectedItem: number) => {
+    swal({
+      title: '삭제하시겠습니까?',
+      icon: 'info',
+      buttons: ['취소', '삭제'],
+    }).then(result => {
+      if (result) {
+        updateReview(id, nickname);
+        deleteReview(+selectedItem);
+        setReservationList(prevList =>
+          prevList.map(item => (item.id === selectedItem ? { ...item, review: null } : item)),
+        );
+      }
+    });
+  };
   const memoizedList = useMemo(
     () =>
       reservationList.length ? (
@@ -60,7 +78,7 @@ const Reservations = () => {
                   {isValidateReservation(checkOutDate) && (
                     <div className="button-group">
                       <button onClick={() => postReview(index)}>{!!review ? '후기 수정' : '후기 작성'}</button>
-                      {!!review ? <button onClick={() => {}}>후기 삭제</button> : ''}
+                      {!!review ? <button onClick={() => handleDeleteReview(id)}>후기 삭제</button> : ''}
                     </div>
                   )}
                 </div>
@@ -71,7 +89,6 @@ const Reservations = () => {
       ) : (
         <p>예약 내역이 존재하지 않습니다.</p>
       ),
-
     [reservationList],
   );
 
