@@ -1,5 +1,15 @@
 import { Dispatch, SetStateAction } from 'react';
-import { ReviewProps } from '../Review/Review.type';
+
+export interface MyReview {
+  id: number;
+  hotelId: string;
+  reservationId: number;
+  star: number;
+  writeTime: string;
+  nickname: string;
+  spec: string;
+  reviewText: string;
+}
 
 export interface ReservationItem {
   id: number;
@@ -8,7 +18,7 @@ export interface ReservationItem {
   children: number;
   checkInDate: string;
   checkOutDate: string;
-  review: ReviewProps;
+  review: MyReview;
   photo: string;
   name: string;
   spec: string;
