@@ -8,7 +8,7 @@ import PostingReview from './PostingReview';
 
 import ReservationList from './Reservation.style';
 import { getReservationByDate } from 'src/utils/reservations';
-import { ReservationItem } from './Reservation.type';
+import { MyReview, ReservationItem } from './Reservation.type';
 
 const Reservations = () => {
   const { id } = useAppSelector(selectAuth);
@@ -30,7 +30,9 @@ const Reservations = () => {
     getReservationList();
   }, [startDate, endDate]);
 
-  const selectItem = (index: number): void => {
+  const isValidateReservation = (date: string): boolean => new Date(date) < new Date();
+
+  const postReview = (index: number): void => {
     sessionStorage.setItem('selectedItem', JSON.stringify(reservationList[index]));
     setDialog(true);
   };
@@ -46,7 +48,7 @@ const Reservations = () => {
             ) => (
               <li key={id}>
                 <img src={photo} alt={name} />
-                <div>
+                <div className="info-container">
                   <span>{name}</span>
                   <span>
                     기준{adults + children}명 / 최대{occupancy}명
@@ -55,7 +57,12 @@ const Reservations = () => {
                   <span>
                     {checkInDate}~ {checkOutDate}
                   </span>
-                  <button onClick={() => selectItem(index)}>{!!review ? '후기 수정' : '후기 작성'}</button>
+                  {isValidateReservation(checkOutDate) && (
+                    <div className="button-group">
+                      <button onClick={() => postReview(index)}>{!!review ? '후기 수정' : '후기 작성'}</button>
+                      {!!review ? <button onClick={() => {}}>후기 삭제</button> : ''}
+                    </div>
+                  )}
                 </div>
               </li>
             ),
