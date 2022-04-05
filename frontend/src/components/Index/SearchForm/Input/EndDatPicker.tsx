@@ -7,7 +7,7 @@ import { StyledDiv } from './InputDiv.style';
 
 const EndDatPicker = ({ startDate, endDate, setEndDate }) => {
   const preventDefault = useCallback(e => e.preventDefault(), []);
-  const getTimeofDate = (date: Date) => new Date(date).getTime();
+  const getTimeofDate = (date: Date): number => new Date(date).getTime();
 
   useEffect(() => {
     const startTime = getTimeofDate(startDate);

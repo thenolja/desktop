@@ -22,7 +22,7 @@ const SearchForm = ({
   const [endDate, setEndDate] = useState<Date>(propEndDate);
   const [person, setPerson] = useState<number>(1);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
 
     const checkIn = changeDateFormatToIsoSTring(startDate);

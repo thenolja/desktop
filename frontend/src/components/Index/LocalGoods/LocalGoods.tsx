@@ -21,7 +21,7 @@ const LocalGoods = () => {
     [],
   );
 
-  const changeLocal = async (e: React.MouseEvent<HTMLUListElement>) => {
+  const changeLocal = async (e: React.MouseEvent<HTMLUListElement>): Promise<void> => {
     const target = e.target as HTMLLIElement;
     const id = target.dataset.id;
     setIsLoading(true);

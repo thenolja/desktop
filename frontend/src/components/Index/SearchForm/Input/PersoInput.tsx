@@ -4,7 +4,7 @@ import person from '/src/assets/person.png';
 import { StyledDiv } from './InputDiv.style';
 
 const PersoInput = ({ setPerson }) => {
-  const handleChange = (e: React.ChangeEvent) => {
+  const handleChange = (e: React.ChangeEvent): void => {
     const target = e.target as HTMLInputElement;
     setPerson(target.value);
   };

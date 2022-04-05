@@ -11,7 +11,7 @@ const MoveCarousel = ({ resHotels }) => {
   const [isMoving, setIsMoving] = useState<boolean>(false);
   const refDiv = useRef<HTMLDivElement>(null);
 
-  const listNum = 5;
+  const listNum: number = 5;
 
   const makeArray = useCallback(arr => {
     let index = 0;
@@ -57,12 +57,12 @@ const MoveCarousel = ({ resHotels }) => {
     }, 500);
   }, [slide]);
 
-  const movePrev = () => {
+  const movePrev = (): void => {
     if (isMoving) return;
     setSlide(slide + 1);
   };
 
-  const moveNext = () => {
+  const moveNext = (): void => {
     if (isMoving) return;
     setSlide(slide - 1);
   };
