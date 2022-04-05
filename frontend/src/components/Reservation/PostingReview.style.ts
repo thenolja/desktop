@@ -102,6 +102,7 @@ const PostingReviewContainer = styled.div`
       margin: 10px 0;
       width: 100%;
       height: 150px;
+      font-family: none;
       font-size: 18px;
       border: 0;
       padding: 10px;

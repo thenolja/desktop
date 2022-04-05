@@ -63,7 +63,7 @@ const ReservationList = styled.section`
 
       object-fit: cover;
     }
-    div {
+    .info-container {
       display: flex;
       flex-grow: 1;
       flex-direction: column;
@@ -88,15 +88,26 @@ const ReservationList = styled.section`
     }
 
     button {
-      align-self: flex-end;
-      flex-grow: 1;
+      margin-left: 20px;
       border-radius: 10px;
       font-size: 18px;
+      font-weight: bold;
+      padding: 2%;
       text-align: center;
       line-height: 35px;
-      color: #ffffff;
-      background-color: #de2e5f;
       cursor: pointer;
+      &:nth-child(1) {
+        color: #ffffff;
+        background-color: #de2e5f;
+      }
+      &:nth-child(2) {
+        color: black;
+        background-color: #f9f7f7;
+      }
+    }
+
+    .button-group {
+      text-align: right;
     }
   }
 `;
