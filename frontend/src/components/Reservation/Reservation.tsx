@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useScrollPrevent } from 'src/hooks/useScroll';
-import { selectAuth } from 'src/contexts/auth';
+import { authUpdate, selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
 
 import DatePickerComponent from './DatePicker';
@@ -12,6 +12,7 @@ import { getReservationByDate } from 'src/utils/reservations';
 import { ReservationItem } from './Reservation.type';
 import { deleteReview } from 'src/utils/reviews';
 import { updateReview } from 'src/utils/users';
+import { useDispatch } from 'react-redux';
 
 const Reservations = () => {
   const { id, nickname } = useAppSelector(selectAuth);
@@ -22,6 +23,8 @@ const Reservations = () => {
   const [endDate, setEndDate] = useState<Date>(new Date());
 
   const [showDialog, setDialog] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
 
   useScrollPrevent(showDialog);
 
@@ -45,9 +48,10 @@ const Reservations = () => {
       title: '삭제하시겠습니까?',
       icon: 'info',
       buttons: ['취소', '삭제'],
-    }).then(result => {
+    }).then(async result => {
       if (result) {
-        updateReview(id, nickname);
+        const { myReviews } = await updateReview(id, nickname);
+        dispatch(authUpdate({ myReviews: myReviews ? myReviews : [] }));
         deleteReview(+selectedItem);
         setReservationList(prevList =>
           prevList.map(item => (item.id === selectedItem ? { ...item, review: null } : item)),

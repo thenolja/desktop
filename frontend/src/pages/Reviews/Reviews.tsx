@@ -8,6 +8,8 @@ import Spinner from 'components/Spinner/Spinner';
 import { deleteReview, getMockdataReviews } from 'src/utils/reviews';
 import swal from 'sweetalert';
 import { updateReview } from 'src/utils/users';
+import { authUpdate } from 'src/contexts/auth';
+import { useDispatch } from 'react-redux';
 
 const Reviews = (): JSX.Element => {
   const { id } = useParams();
@@ -17,6 +19,8 @@ const Reviews = (): JSX.Element => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [reviews, setReivews] = useState<object[]>([]);
   const [mockDataReviews, setMockDataReviews] = useState<object[]>([]);
+
+  const dispatch = useDispatch();
 
   let nextUrl = '';
   let currentPage = 1;
@@ -44,11 +48,11 @@ const Reviews = (): JSX.Element => {
     } else return;
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     const getReviews = async () => {
-      const reviews= await getMockdataReviews(hotelId);
+      const reviews = await getMockdataReviews(hotelId);
       setMockDataReviews(reviews);
-    }
+    };
     getReviews();
   }, []);
 
@@ -63,28 +67,29 @@ const Reviews = (): JSX.Element => {
     return () => observer && observer.disconnect();
   }, [target]);
 
-  const handleDelete=(e)=>{
+  const handleDelete = e => {
     swal({
       title: '삭제하시겠습니까?',
       icon: 'info',
-      buttons: ['취소', '삭제']
-    }).then((result) => {
+      buttons: ['취소', '삭제'],
+    }).then(result => {
       if (result) {
         deleteReviewFunc(e.target.id, e.target.name);
       }
-    })
-  }
+    });
+  };
 
-  const deleteReviewFunc=async(id:string, nickname:string)=>{
-    await updateReview(id, nickname);
-    const review=await deleteReview(id);
+  const deleteReviewFunc = async (id: string, nickname: string) => {
+    const { myReviews } = await updateReview(id, nickname);
+    dispatch(authUpdate({ myReviews: myReviews ? myReviews : [] }));
+    const review = await deleteReview(id);
     setMockDataReviews(review);
-  }
+  };
 
   return (
     <>
       <ReviewTitle />
-      <ReviewList reviews={mockDataReviews}  handleDelete={handleDelete} />
+      <ReviewList reviews={mockDataReviews} handleDelete={handleDelete} />
       <ReviewList reviews={reviews} />
       <TopBtn />
       <div ref={setTarget}>{isLoaded && <Spinner />}</div>
