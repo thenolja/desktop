@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 
 const PostingReview = ({ setDialog, setReservationList }: PostingReviewProps) => {
   const selectedItem = sessionStorage.getItem('selectedItem');
-  const { id: itemId, hotelId, photo, name, spec, checkInDate, checkOutDate, review } = JSON.parse(selectedItem);
+  const { id: itemId, hotelAPIId, photo, name, spec, checkInDate, checkOutDate, review } = JSON.parse(selectedItem);
   const { id: userId, nickname, myReviews } = useAppSelector(selectAuth);
   const [reviewText, setReviewText] = useState<string>(review ? review.reviewText : '');
 
@@ -33,7 +33,7 @@ const PostingReview = ({ setDialog, setReservationList }: PostingReviewProps) =>
     const myReview = {
       id: review?.id,
       userId: userId,
-      hotelId: hotelId,
+      hotelAPIId: hotelAPIId,
       reservationId: itemId,
       star: rating.current ? rating.current.value : '1',
       writeTime: new Date(),

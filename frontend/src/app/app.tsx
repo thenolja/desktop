@@ -9,6 +9,7 @@ import Main from 'src/containers/Main/Main';
 import Footer from 'src/containers/Footer/Footer';
 import Spinner from 'components/Spinner/Spinner';
 import { SEOMetaTag } from 'components/SeoMetaTag/SEOMetaTag';
+import { NotFound } from 'src/pages/NotFound/NotFound';
 
 const Index = lazy(() => import('src/pages/Index/Index'));
 const Detail = lazy(() => import('src/pages/Detail/Detail'));
@@ -77,6 +78,7 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
       </Main>
