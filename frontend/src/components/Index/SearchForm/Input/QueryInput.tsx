@@ -1,4 +1,4 @@
-import React, { useRef, useState, forwardRef } from 'react';
+import React, { useRef, useState, forwardRef, useEffect } from 'react';
 import reactTriggerChange from 'react-trigger-change';
 
 import location from '/src/assets/location.png';
@@ -16,6 +16,11 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
   const [selected, setSelected] = useState<number>(0);
 
   let timer = null;
+
+  useEffect(() => {
+    if (!isSearching) return;
+    reactTriggerChange(inputRef.current);
+  }, [isSearching]);
 
   const handleChange = (e: React.ChangeEvent) => {
     if (!isSearching) return;
@@ -54,12 +59,7 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
     const target = e.target as HTMLInputElement;
 
     if (target.value === '') return;
-
     setIsSearching(true);
-
-    setTimeout(() => {
-      reactTriggerChange(inputRef.current);
-    }, 100);
   };
 
   const handleListClick = (e: React.MouseEvent) => {
