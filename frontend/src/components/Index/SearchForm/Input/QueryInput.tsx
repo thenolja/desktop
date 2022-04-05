@@ -26,7 +26,6 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
 
     timer = setTimeout(async () => {
       const res = await getDestinationIdsByQuery(target.value);
-      console.log(res);
 
       if (!res) {
         setQueryList([
