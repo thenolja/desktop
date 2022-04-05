@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, forwardRef } from 'react';
 import reactTriggerChange from 'react-trigger-change';
 
 import location from '/src/assets/location.png';
@@ -9,7 +9,7 @@ import QueryListType from './QueryList.type';
 
 const QueryInput = ({ query, setQuery, setDestinationId }) => {
   const inputRef = useRef<HTMLInputElement>();
-  const recommendsRef = useRef<HTMLInputElement>();
+  const recommendsRef = useRef<HTMLUListElement>();
   const [showQueryList, setShowQueryList] = useState<boolean>(false);
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [queryList, setQueryList] = useState<QueryListType[]>([]);
@@ -105,6 +105,23 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
     }
   };
 
+  const ForwardRefUl = forwardRef<HTMLUListElement>((_, ref) => {
+    const recommendItems = queryList.map(({ caption, destinationId, name }, index) => (
+      <li
+        key={destinationId}
+        data-id={destinationId}
+        data-name={name}
+        dangerouslySetInnerHTML={{ __html: caption }}
+        className={index === selected ? 'selected-li' : ''}
+      />
+    ));
+    return (
+      <StyledUl onClick={handleListClick} ref={ref}>
+        {recommendItems}
+      </StyledUl>
+    );
+  });
+
   document.addEventListener('click', e => {
     const target = e.target as HTMLInputElement;
 
@@ -126,19 +143,7 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
         ref={inputRef}
         defaultValue={query}
       />
-      {showQueryList && queryList.length > 0 && (
-        <StyledUl onClick={handleListClick} ref={recommendsRef}>
-          {queryList.map(({ caption, destinationId, name }, index) => (
-            <li
-              key={destinationId}
-              data-id={destinationId}
-              data-name={name}
-              dangerouslySetInnerHTML={{ __html: caption }}
-              className={index === selected ? 'selected-li' : ''}
-            />
-          ))}
-        </StyledUl>
-      )}
+      {showQueryList && queryList.length > 0 && <ForwardRefUl ref={recommendsRef} />}
     </StyledDiv>
   );
 };

@@ -9,12 +9,17 @@ import Button from './Button/Button';
 import { useNavigate } from 'react-router-dom';
 import changeDateFormatToIsoSTring from 'src/utils/dateToISOString';
 
-const SearchForm = ({ propQuery, propStartDate, propEndDate, propDestinationId }) => {
+const SearchForm = ({
+  propQuery = '',
+  propDestinationId = null,
+  propStartDate = new Date(),
+  propEndDate = new Date(),
+}) => {
   const navigate = useNavigate();
-  const [query, setQuery] = useState<string>(propQuery ?? '');
-  const [destinationId, setDestinationId] = useState<number | null>(propDestinationId ?? null);
-  const [startDate, setStartDate] = useState(propStartDate ?? new Date());
-  const [endDate, setEndDate] = useState(propEndDate ?? new Date());
+  const [query, setQuery] = useState<string>(propQuery);
+  const [destinationId, setDestinationId] = useState<number | null>(propDestinationId);
+  const [startDate, setStartDate] = useState<Date>(propStartDate);
+  const [endDate, setEndDate] = useState<Date>(propEndDate);
   const [person, setPerson] = useState<number>(1);
 
   const handleSubmit = async (e: React.FormEvent) => {
