@@ -22,7 +22,7 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
     reactTriggerChange(inputRef.current);
   }, [isSearching]);
 
-  const handleChange = (e: React.ChangeEvent) => {
+  const handleChange = (e: React.ChangeEvent): void => {
     if (!isSearching) return;
 
     const target = e.target as HTMLInputElement;
@@ -55,7 +55,7 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
     }, 200);
   };
 
-  const handleInputClick = (e: React.MouseEvent) => {
+  const handleInputClick = (e: React.MouseEvent): void => {
     const target = e.target as HTMLInputElement;
 
     if (target.value === '') return;
@@ -73,7 +73,7 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
     setQueryList([]);
   };
 
-  const settingStates = (selectState: number, clear?: boolean) => {
+  const settingStates = (selectState: number, clear?: boolean): void => {
     inputRef.current.value = queryList[selectState].name;
     setQuery(queryList[selectState].name);
     setDestinationId(queryList[selectState].destinationId);
@@ -81,7 +81,7 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
     clear ? setQueryList([]) : setSelected(selectState);
   };
 
-  const handlekeyUp = (e: React.KeyboardEvent) => {
+  const handlekeyUp = (e: React.KeyboardEvent): void => {
     let tempSelected = 0;
 
     if (e.key === 'ArrowUp') {
@@ -98,7 +98,7 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent): void => {
     if (e.key === 'Enter') {
       e.preventDefault();
     }

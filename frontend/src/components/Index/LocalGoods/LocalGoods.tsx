@@ -21,7 +21,7 @@ const LocalGoods = () => {
     [],
   );
 
-  const changeLocal = async (e: React.MouseEvent<HTMLUListElement>) => {
+  const changeLocal = async (e: React.MouseEvent<HTMLUListElement>): Promise<void> => {
     const target = e.target as HTMLLIElement;
     const id = target.dataset.id;
     setIsLoading(true);
@@ -31,7 +31,7 @@ const LocalGoods = () => {
   useEffect(() => {
     const nowLocal = locals.find(localData => localData.destiId === +local);
 
-    const requestHotels = async () => {
+    const requestHotels = async (): Promise<void> => {
       nowLocal.datas = await getLocalHotelList(+local);
       setIsLoading(false);
       setResHotels(nowLocal.datas);
