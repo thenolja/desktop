@@ -62,11 +62,10 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
     setIsSearching(true);
   };
 
-  const handleListClick = (e: React.MouseEvent) => {
+  const handleListClick = (e: React.MouseEvent): void => {
     const target = e.target as HTMLInputElement;
 
     if (target.tagName !== 'LI') return;
-
     inputRef.current.value = target.dataset.name;
     setQuery(target.dataset.name);
     setDestinationId(target.dataset.id);

@@ -56,12 +56,12 @@ const MoveCarousel = ({ resHotels }) => {
     }, 500);
   }, [slide]);
 
-  const movePrev = () => {
+  const movePrev = (): void => {
     if (isMoving) return;
     setSlide(slide + 1);
   };
 
-  const moveNext = () => {
+  const moveNext = (): void => {
     if (isMoving) return;
     setSlide(slide - 1);
   };
