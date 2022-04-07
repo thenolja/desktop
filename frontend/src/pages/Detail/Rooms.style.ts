@@ -47,7 +47,7 @@ const Selected = styled.div`
 
 const NotFoundRooms = styled.div`
   text-align: center;
-  margin: 50px 0;
+  margin: 100px 0;
   font-size: 20px;
   line-height: 30px;
 `;
