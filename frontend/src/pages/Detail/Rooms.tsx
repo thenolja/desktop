@@ -3,7 +3,7 @@ import CheckInOut from 'components/CheckInOut/CheckInOut';
 import Room from 'components/Room/Room';
 import { useEffect, useState } from 'react';
 import { getAllRoomList } from 'src/utils/requests';
-import { Buttons, SelectBtn, Selected } from './Rooms.style';
+import { Buttons, SelectBtn, Selected, NotFoundRooms } from './Rooms.style';
 import { addDays } from 'date-fns';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Spinner from 'components/Spinner/Spinner';
@@ -44,8 +44,8 @@ const Rooms = () => {
       const Rooms = await getAllRoomList(hotelId, checkIn, checkOut);
       const reservedRooms = await getReservedRooms(hotelId, checkIn, checkOut);
       
-      const nonReservedRooms=reservedRooms.length?Rooms.filter(room=>reservedRooms.indexOf(room.name) === -1) : Rooms;
-      setRooms(nonReservedRooms);
+      const nonReservedRooms=reservedRooms.length && Rooms.length?Rooms.filter(room=>reservedRooms.indexOf(room.name) === -1) : Rooms;
+      Rooms?setRooms(nonReservedRooms):setRooms([]);
       setIsLoaded(false);
     };
     requestRooms();
@@ -55,12 +55,19 @@ const Rooms = () => {
   return (
     <>
       <CheckInOut startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} />
-      <ul>
-        {rooms.map((room, index) => 
-          <Room key={index} room={room} setSelectedRoom={setSelectedRoom} />
-        )}
-      </ul>
-      {isLoaded && <Spinner />}
+      {
+      rooms.length?
+        <>
+          <ul>
+            {rooms.map((room, index) => 
+              <Room key={index} room={room} setSelectedRoom={setSelectedRoom} />
+            )}
+          </ul>
+          {isLoaded && <Spinner />}
+        </>
+      :
+        <NotFoundRooms><p>예약할 수 있는 객실이 존재하지 않습니다.</p><p>다른 날짜를 선택해주세요.</p></NotFoundRooms>
+      }
       <Buttons>
         {selectedRoom.name ? (
           <>
