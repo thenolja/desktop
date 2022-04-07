@@ -60,30 +60,6 @@ const NoImage = styled.img`
   height: 60px;
 `;
 
-const ModalBackground = styled.div`
-  position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 99;
-`;
-
-const RoomAmenity = styled.div`
-  position: fixed;
-  top: 100px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 700px;
-  height: 700px;
-  background-color: #fff;
-  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.4);
-  text-align: center;
-  overflow-y: scroll;
-  z-index: 100;
-`;
-
 const PriceInfo = styled.div`
   padding-top: 70px;
   float: right;
@@ -101,4 +77,4 @@ const DailyPrice = styled.p`
   color: #DE2E5F;
 `;
 
-export {Selector, RoomWrapper, NoImage, Image, ModalBackground, RoomAmenity, RoomInfoDiv, RoomName, People, PriceInfo, DailyPrice, TotalPrice};
+export {Selector, RoomWrapper, NoImage, Image, RoomInfoDiv, RoomName, People, PriceInfo, DailyPrice, TotalPrice};

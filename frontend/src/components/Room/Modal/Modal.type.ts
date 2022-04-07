@@ -1,3 +1,5 @@
+import { DetailRoomProps } from "../Room.types";
+
 export interface BodyType{
   images: [{
     fullSizeUrl: string;
@@ -8,4 +10,11 @@ export interface BodyType{
     info: string,
   }],
   amenities: string[]
+}
+
+export interface ModalType {
+  room: DetailRoomProps,
+  modal: boolean,
+  toggleModal: () => void;
+  handleClick: () => void;
 }

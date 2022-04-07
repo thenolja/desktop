@@ -1,9 +1,9 @@
 import { memo } from 'react';
-import ModalBody from './Modal/ModalBody';
-import ModalFooter from './Modal/ModalFooter';
-import ModalHeader from './Modal/ModalHeader';
-import { ModalBackground, RoomAmenity } from './Room.style';
-import { ModalType } from './Room.types';
+import ModalBody from './ModalBody';
+import ModalFooter from './ModalFooter';
+import ModalHeader from './ModalHeader';
+import { ModalBackground, RoomAmenity } from './Modal.style';
+import { ModalType } from './Modal.type';
 
 const DetailRoomInfo = ({ room, modal, toggleModal, handleClick }: ModalType): JSX.Element => {
   return (
