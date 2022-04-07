@@ -1,17 +1,18 @@
 import { memo, useState } from 'react';
 import DetailRoomInfo from './DetailRoomInfo';
 import { Selector, RoomWrapper, Image } from './Room.style';
+import { DetailRoomProps, RoomProps } from './Room.types';
 import { RoomInfo } from './RoomInfo';
 
-const Room = ({ room, setSelectedRoom }) => {
+const Room = ({ room, setSelectedRoom }:{ room:DetailRoomProps, setSelectedRoom: (value: RoomProps) => void}) => {
   const [modal, setModal] = useState(false);
 
-  const handleClick = () => {
+  const handleClick = ():void => {
     setSelectedRoom(room);
     toggleModal();
   };
 
-  const toggleModal = () => {
+  const toggleModal = ():void => {
     setModal(!modal);
   };
 

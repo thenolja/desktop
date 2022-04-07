@@ -16,12 +16,11 @@ interface ratePlantype{
   price: string
 }
 
-export interface DetailRoomProps{
+export interface DetailRoomProps extends RoomProps{
   images: [{
     fullSizeUrl: string;
     caption: string;
   }],
-  name: string,
   ratePlans: ratePlantype[],
   additionalInfo: {
     details: {

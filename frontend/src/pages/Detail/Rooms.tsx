@@ -8,7 +8,7 @@ import { addDays } from 'date-fns';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Spinner from 'components/Spinner/Spinner';
 import { getReservedRooms } from 'src/utils/reservations';
-import { RoomProps } from 'components/Room/Room.types';
+import { DetailRoomProps, RoomProps } from 'components/Room/Room.types';
 import changeDateFormatToIsoSTring from '../../utils/dateToISOString';
 
 const Rooms = () => {
@@ -19,7 +19,7 @@ const Rooms = () => {
 
   const [hotelId, setHotelId] = useState<string>(id);
 
-  const [rooms, setRooms] = useState<RoomProps[] | undefined>([]);
+  const [rooms, setRooms] = useState<DetailRoomProps[] | undefined>([]);
   const [selectedRoom, setSelectedRoom] = useState<RoomProps>();
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
