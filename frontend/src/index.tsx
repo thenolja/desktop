@@ -9,8 +9,6 @@ import { PersistGate } from 'redux-persist/integration/react';
 import App from 'app/app';
 import { store, persistor } from './contexts/store';
 
-console.log(import.meta.env);
-
 ReactDOM.render(
   <React.StrictMode>
     <GlobalStyle />
