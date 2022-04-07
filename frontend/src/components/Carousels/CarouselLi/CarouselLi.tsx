@@ -16,7 +16,6 @@ const CarouselLi = ({ hotel }) => {
           </span>
           <span>후기 {hotel.guestReviews ? hotel.guestReviews.total : 0}개</span>
         </p>
-
         <p className="price-wrapper">
           <span>1박 기준</span>
           <br />
