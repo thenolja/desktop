@@ -2,25 +2,40 @@ import PostingReviewContainer from './PostingReview.style';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { createPortal } from 'react-dom';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { patchReview } from 'src/utils/reviews';
-import { selectAuth } from 'src/contexts/auth';
+import { authUpdate, selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
+import { PostingReviewProps } from './Reservation.type';
+import { useDispatch } from 'react-redux';
 
-const PostingReview = ({ setDialog, selectedItem, setReservationList }) => {
-  const { id: userId, nickname } = useAppSelector(selectAuth);
-  const { id, photo, name, spec, checkInDate, checkOutDate, review } = selectedItem;
+const PostingReview = ({ setDialog, setReservationList }: PostingReviewProps) => {
+  const selectedItem = sessionStorage.getItem('selectedItem');
+  const { id: itemId, hotelAPIId, photo, name, spec, checkInDate, checkOutDate, review } = JSON.parse(selectedItem);
+  const { id: userId, nickname, myReviews } = useAppSelector(selectAuth);
   const [reviewText, setReviewText] = useState<string>(review ? review.reviewText : '');
-  const [rating, setRating] = useState<string>(review ? review.star : '0');
 
-  const updateReview = async e => {
+  const dispatch = useDispatch();
+
+  let rating = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    const star = review?.star;
+    if (!star) return;
+    let input = document.querySelector(`.rating-container > input[value="${Math.round(+star)}"`) as HTMLInputElement;
+    rating.current = input;
+    input.checked = true;
+  }, []);
+
+  const updateReview = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const myReview = {
       id: review?.id,
       userId: userId,
-      reservationId: id,
-      star: rating,
+      hotelAPIId: hotelAPIId,
+      reservationId: itemId,
+      star: rating.current ? rating.current.value : '1',
       writeTime: new Date(),
       nickname: nickname,
       spec: spec,
@@ -28,14 +43,19 @@ const PostingReview = ({ setDialog, selectedItem, setReservationList }) => {
     };
 
     const updatedReview = await patchReview(myReview);
-    setReservationList(items => items.map(item => (item.id === id ? { ...item, review: updatedReview } : item)));
+    setReservationList(prevList =>
+      prevList.map(item => (item.id === itemId ? { ...item, review: updatedReview } : item)),
+    );
+
+    dispatch(authUpdate({ myReviews: [...myReviews, updatedReview.id] }));
+
     setDialog(false);
   };
 
-  const hanldeRating = ({ target }) => {
+  const handleRating = ({ target }) => {
     if (target.name !== 'rating') return;
-    target.checked = true;
-    setRating(target.value);
+    rating.current = target;
+    rating.current.checked = true;
   };
 
   const handleChange = ({ target }) => {
@@ -65,7 +85,7 @@ const PostingReview = ({ setDialog, selectedItem, setReservationList }) => {
         <form onSubmit={updateReview}>
           <fieldset>
             <legend>이곳에서의 경험은 어떠셨나요?</legend>
-            <div className="rating-container" onChange={hanldeRating}>
+            <div className="rating-container" onChange={handleRating}>
               <input type="radio" id="5-stars" name="rating" value="5" />
               <label htmlFor="5-stars">
                 <FontAwesomeIcon icon={faStar} />
@@ -90,6 +110,8 @@ const PostingReview = ({ setDialog, selectedItem, setReservationList }) => {
             <textarea
               onChange={handleChange}
               value={reviewText}
+              required
+              minLength={5}
               placeholder={
                 reviewText ? '' : '이곳에서 머물렀던 기억을 자세히 말해줄 수 있나요? (5자 이상 작성해주세요)'
               }

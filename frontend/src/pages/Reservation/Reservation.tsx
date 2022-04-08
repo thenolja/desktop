@@ -1,126 +1,107 @@
-import { size } from 'lodash';
-import {
-  ReservationWrapper,
-  SectionTitle,
-  SectionBody,
-  Guidance,
-  FormArticle,
-  Necessary,
-  InputDiv,
-  TotalWrapper,
-  PaymentPolicy
-} from './Reservation.style';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import swal from 'sweetalert';
+import PaymentForm from 'components/Payment/PaymentForm';
+import changeDateFormatToIsoSTring from 'src/utils/dateToISOString';
+import { postHotel } from 'src/utils/hotels';
+import { postReservation } from 'src/utils/reservations';
+import { updateReservation } from 'src/utils/users';
+import { postPayment } from 'src/utils/payment';
+import { selectAuth } from 'src/contexts/auth';
+import { useAppSelector } from 'src/contexts/state.type';
+import { ReservationWrapper } from './Reservation.style';
 
 const Reservation = () => {
+
+  const { id: hotelId } = useParams();
+
+  const roomInfo = JSON.parse(window.sessionStorage.getItem("SELECTED_ROOM"));
+  const hotelName = window.sessionStorage.getItem("HOTEL_NAME");
+
+  const selectedRoom = {
+    hotelName: hotelName,
+    name: roomInfo.name,
+    photo: roomInfo.images[0].fullSizeUrl,
+    checkIn: changeDateFormatToIsoSTring(roomInfo.startDate),
+    checkOut: changeDateFormatToIsoSTring(roomInfo.endDate),
+    cost: roomInfo.ratePlans[0].price.unformattedCurrent,
+    occupancy: roomInfo.maxOccupancy.total + roomInfo.maxOccupancy.children,
+    adults: roomInfo.maxOccupancy.total,
+    children: roomInfo.maxOccupancy.children,
+  };
+
+  const { id: userId, phone } = useAppSelector(selectAuth);
+
+  const [reservation, setReservation] = useState({
+    userId: userId,
+    hotelAPIId: +hotelId,
+    isAgrees: [false, false, false],
+    checkInDate: selectedRoom.checkIn,
+    checkOutDate: selectedRoom.checkOut,
+    hasCar: true,
+    cost: selectedRoom.cost,
+    occupancy: selectedRoom.occupancy,
+    adults: selectedRoom.adults,
+    children: selectedRoom.children,
+    spec: selectedRoom.name,
+    username: '',
+    phone: null,
+  });
+
+  const [payment] = useState({
+    userId: userId,
+    cost: selectedRoom.cost
+  });
+
+  const [hotel] = useState({
+    name: selectedRoom.hotelName,
+    photo: selectedRoom.photo
+  })
+
+  const sumbmitBtn = useRef<HTMLButtonElement>();
+  const navigate = useNavigate();
+
+  const handleClick = (e: MouseEvent) => {
+    e.preventDefault();
+
+    swal({
+      title: '예약 정보를 확인해주세요!',
+      text: `예약자: ${reservation.username}\n연락처: ${reservation.phone}`,
+      icon: 'info',
+      buttons: ['취소', '결제하기']
+    }).then((result) => {
+      if (result) {
+        swal({
+          title: '결제 확인',
+          text: '결제가 성공적으로 완료되었습니다!',
+          icon: 'success',
+        })
+        handleSubmit();
+        navigate('/mypage');
+      }
+    })
+
+  }
+
+  const handleSubmit = async () => {
+    const hotelData = await postHotel(hotel);
+    const hotelId = hotelData.id;
+    const reservationdata = await postReservation(reservation, hotelId);
+    const reservationId = reservationdata.id;
+    await postPayment(reservationId, payment);
+    await updateReservation(userId, reservationId);
+  }
+
+  useEffect(() => {
+    // 모든 필수 입력이 입력되었을 때만 결제 버튼 활성화
+    sumbmitBtn.current.disabled = !(reservation.username && reservation.phone && reservation.isAgrees[0]);
+
+  }, [reservation]);
+
   return (
     <ReservationWrapper>
       <h2 className="srOnly">예약 페이지</h2>
-      <form>
-        <fieldset>
-          <legend className="srOnly">이용자 정보</legend>
-          <FormArticle>
-            <SectionTitle>
-              이용자 정보<Necessary>*</Necessary>
-            </SectionTitle>
-            <Guidance>상품 이용 시 필요한 필수 정보입니다.</Guidance>
-            <section>
-              <input type="checkbox" id="sameUser" value="" />
-              <label htmlFor="sameUser">예약자 정보와 동일합니다.</label>
-            </section>
-            <section>
-              <label htmlFor="name">
-                성명<Necessary>*</Necessary>
-              </label>
-              <InputDiv>
-                <input type="text" id="name" placeholder="성명을 입력해주세요" />
-              </InputDiv>
-            </section>
-            <section>
-              <label htmlFor="tel">
-                휴대폰 번호<Necessary>*</Necessary>
-              </label>
-              <InputDiv>
-                <input type="tel" id="tel" placeholder="휴대폰 번호를 입력해주세요" />
-              </InputDiv>
-            </section>
-          </FormArticle>
-          <FormArticle>
-            <SectionTitle>
-              숙소 방문 수단<Necessary>*</Necessary>
-            </SectionTitle>
-            <SectionBody>
-              <div className="visited">
-                <input type="checkbox" id="car" />
-                <label htmlFor="car">차량</label>
-              </div>
-              <div className="visited">
-                <input type="checkbox" id="work" />
-                <label htmlFor="work">도보</label>
-              </div>
-            </SectionBody>
-          </FormArticle>
-          <FormArticle>
-            <SectionTitle>금액 및 할인 정보</SectionTitle>
-            <section>
-              <TotalWrapper>
-                <span>총 예약 금액</span>
-                <span style={{ fontWeight: 700 }}>368,000원</span>
-              </TotalWrapper>
-              <TotalWrapper style={{ fontWeight: 700 }}>
-                <span>결제 금액</span>
-                <span style={{ color: '#de2e5f', fontSize: '18px' }}>368,000원</span>
-              </TotalWrapper>
-            </section>
-          </FormArticle>
-          <FormArticle>
-            <SectionTitle className="srOnly">notice</SectionTitle>
-            <div className="notice">
-              <h5>
-                <i>ⓘ</i>현장결제
-              </h5>
-              <p>추가 인원 비용 등의 현장 결제 발생 상품을 확인하세요.</p>
-              <h5>
-                <i>ⓘ</i>취소 불가 및 수수료
-              </h5>
-              <p>추가 및 환불 규정에 따라 취소 불가, 수수료가 발생할 수 있습니다.</p>
-              <h5>
-                <i>ⓘ</i>미성년자 및 법정 대리인 필수
-              </h5>
-              <p>미성년자는 법정 대리인 동행 없이 투숙이 불가능합니다.</p>
-            </div>
-          </FormArticle>
-
-          <FormArticle>
-            <section>
-              <div>
-                <input type="checkbox" id="total" />
-                <label htmlFor="total">전체 동의하기</label>
-              </div>
-              <div className="agreeSection">
-                <input type="checkbox" id="agree1" />
-                <label htmlFor="agree1"> [필수] 만 14세 이상 이용 동의</label>
-              </div>
-              <div className="agreeSection">
-                <input type="checkbox" id="agree2" />
-                <label htmlFor="agree2"> [선택] 이벤트, 혜택 정보 수신 동의</label>
-              </div>
-              <div className="agreeSection">
-                <input type="checkbox" id="agree3" />
-                <label htmlFor="agree3"> [선택] 이벤트, 혜택 정보 전송을 위한 개인정보 수집 및 이용 동의</label>
-              </div>
-            </section>
-            <p>
-              이용규칙, 취소 및 환불 규칙, 개인정보 수집 및 이용 및 개인정보 제3자 제공에 동의하실 경우 결제하기를
-              클릭해주세요.
-            </p>
-          </FormArticle>
-          <button type="submit">368,000원 결제하기</button>
-          <PaymentPolicy>
-            (주)더놀자는 통신판매중개업자로서, 통신판매의 당사자가 아니라는 사실을 고지하며 상품의 결제, 이용 및 환불
-            등과 관련한 의무와 책임은 각 판매자에게 있습니다.
-          </PaymentPolicy>
-        </fieldset>
-      </form>
+      <PaymentForm selectedRoom={selectedRoom} sumbmitBtn={sumbmitBtn} handleClick={handleClick} handleSubmit={handleSubmit} reservation={reservation} setReservation={setReservation} phone={phone} cost={selectedRoom.cost} />
     </ReservationWrapper>
   );
 };

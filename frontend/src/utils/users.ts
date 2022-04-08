@@ -28,4 +28,19 @@ const updateUser = async (id: string, nickname: string, phone: string) => {
     .catch(e => console.log(e));
 };
 
-export { createUser, updateUser };
+const updateReservation =async (userId:string, reservationId) => {
+  return await axios.patch(`/api/reservation/user`,{
+    userId:userId,
+    reservationId:reservationId
+  }).then(({data})=>data)
+  .catch(e=>console.error(e));
+}
+
+const updateReview =async (id:string, nickname:string) => {
+  return await axios.patch(`/api/review/user`,{
+    id:id,
+    nickname:nickname
+  }).then(({data})=>data)
+  .catch(e=>console.error(e));
+}
+export { createUser, updateUser, updateReservation, updateReview };

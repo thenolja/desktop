@@ -8,49 +8,21 @@ import {
   ModalTitle,
   ModalCloseBtn,
   ModalMapWrapper,
-} from './map.style';
-import { Allbutton } from '../detail/HotelDescription.style';
+} from './Map.style';
+import { Allbutton } from '../Detail/HotelDescription.style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
-
-const KakaoMapStart = (latitude: number, longitude: number) => {
-  const kakao = (window as any).kakao;
-  let container = document.getElementById('map');
-  let options = {
-    center: new kakao.maps.LatLng(latitude, longitude),
-    level: 3,
-  };
-  let map = new kakao.maps.Map(container, options);
-  let markerPosition = new kakao.maps.LatLng(latitude, longitude);
-  let marker = new kakao.maps.Marker({
-    position: markerPosition,
-  });
-  marker.setMap(map);
-  map.relayout();
-};
+import kakaoMapStart from '../../utils/kakaoMapStart';
 
 const Map = ({ coordinates }) => {
   const [modalFlag, setModalFlag] = useState(false);
 
   useEffect(() => {
-    KakaoMapStart(coordinates.latitude, coordinates.longitude);
+    kakaoMapStart(coordinates.latitude, coordinates.longitude);
   }, [coordinates]);
 
-  const MapDiv = (() => {
-    return (
-      <>
-        <MapCover
-          id="map"
-          onClick={() => {
-            setModalFlag(true);
-          }}
-        ></MapCover>
-      </>
-    );
-  })();
-
   const fullscreenMap = () => {
-    KakaoMapStart(coordinates.latitude, coordinates.longitude);
+    kakaoMapStart(coordinates.latitude, coordinates.longitude);
 
     return (
       <>

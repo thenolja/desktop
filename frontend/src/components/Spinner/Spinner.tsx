@@ -1,9 +1,20 @@
+import { FC } from 'react';
+
+import spinner from '/src/assets/spinner.gif';
 import { StlyedDiv } from './Spinner.style';
 
-const Spinner = () => {
+export interface Props {
+  style?: StyleType;
+}
+
+export interface StyleType {
+  width?: string;
+  height?: string;
+}
+const Spinner = ({ style = { width: '100%', height: '100%' } }: Props) => {
   return (
-    <StlyedDiv>
-      <img src="/src/assets/spinner.gif" alt="" />
+    <StlyedDiv style={style}>
+      <img src={spinner} alt="로딩중" />
     </StlyedDiv>
   );
 };

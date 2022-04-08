@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 
 import { getAllHotelList, getNearHotelList } from 'src/utils/requests';
 import { StyledH3, StyledDiv } from './CurrentGoods.style';
@@ -10,13 +10,13 @@ const CurrentGoods = () => {
   const [agreeInfo, setAgreeInfo] = useState<boolean>(false);
   const [resHotels, setResHotels] = useState<[]>([]);
 
-  const success = async ({ coords }) => {
+  const success = async ({ coords }): Promise<void> => {
     const res = await getNearHotelList(coords);
     setResHotels(res);
     setAgreeInfo(true);
   };
 
-  const error = async () => {
+  const error = async (): Promise<void> => {
     setResHotels(await getAllHotelList());
   };
 
@@ -33,4 +33,4 @@ const CurrentGoods = () => {
   );
 };
 
-export default CurrentGoods;
+export default memo(CurrentGoods);
