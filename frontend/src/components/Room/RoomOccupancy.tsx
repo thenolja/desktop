@@ -1,8 +1,8 @@
 import { OccupancyType } from "./Room.types"
 import { People } from "./Room.style"
 
-export const RoomOccupancy = ({maxOccupancy}:OccupancyType) => {
-  return(
+export const RoomOccupancy = ({ maxOccupancy }: OccupancyType): JSX.Element => {
+  return (
     <>
       {maxOccupancy && (
         <People>

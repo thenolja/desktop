@@ -211,11 +211,14 @@ const getAllRoomList = async (hotelId: string, checkIn: string, checkOut: string
         data: {
           data: {
             body: {
-              roomsAndRates: { rooms },
+              roomsAndRates,
             },
           },
         },
-      }) => rooms,
+      }) => {
+        if(roomsAndRates) return roomsAndRates.rooms
+        else return []
+      },
     )
     .catch(error => {
       console.error(error);
