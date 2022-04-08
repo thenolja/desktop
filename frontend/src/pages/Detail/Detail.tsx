@@ -8,15 +8,18 @@ import { useLocation, useParams } from 'react-router-dom';
 
 const Detail = ({ list }) => {
   const { pathname } = useLocation();
-  const { id }=useParams();
+  const { id } = useParams();
 
-  const [hotelId, setHotelId]=useState(id);
-  const [users, setUsers]=useState([]);
+  const [hotelId, setHotelId] = useState(id);
+  const [users, setUsers] = useState([]);
+
   useEffect(() => {
-    axios.get('/api/detail')
-    .then(res=>{
-      setUsers([...res.data])
-    }).catch(e=>console.log(e))
+    axios
+      .get('/api/detail')
+      .then(res => {
+        setUsers([...res.data]);
+      })
+      .catch(e => console.log(e));
   }, []);
 
   return (
@@ -24,20 +27,17 @@ const Detail = ({ list }) => {
       <HotelIntro></HotelIntro>
       <Nav>
         <NavUl>
-          {list.map(({id, href, content})=>(
-            pathname.includes(id) || (pathname===`/detail/${hotelId}` && id==='rooms')?
+          {list.map(({ id, href, content }) =>
+            pathname.includes(id) || (pathname === `/detail/${hotelId}` && id === 'rooms') ? (
               <ActiveNavList key={id}>
-                <NavLink to={href}>
-                  {content}
-                </NavLink>
+                <NavLink to={href}>{content}</NavLink>
               </ActiveNavList>
-              :
+            ) : (
               <NavList key={id}>
-                <NavLink to={href}>
-                  {content}
-                </NavLink>
-              </NavList>  
-          ))}
+                <NavLink to={href}>{content}</NavLink>
+              </NavList>
+            ),
+          )}
         </NavUl>
       </Nav>
       <Outlet />

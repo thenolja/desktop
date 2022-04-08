@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {len} from "./Room.types";
 
 const Selector = styled.div`
   width: 100%;
@@ -81,6 +80,7 @@ const ModalHeader = styled.div`
   font-weight: 700;
   background-color: #fff;
   box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
+  z-index: 100;
 `;
 
 const RoomAmenity = styled.div`
@@ -97,26 +97,15 @@ const RoomAmenity = styled.div`
   z-index: 100;
 `;
 
-const RoomImages = styled.div`
-  overflow-x: scroll;
-  overflow-y: hidden;
-  div {
-    width: ${ (props:len) => props.length * 410}px;
-    height: fit-content;
-  }
-`;
-
 const RoomImage = styled.img`
-  display: inline;
-  width: 400px;
-  height: 300px;
-  margin: 0 5px;
+  width: 100%;
+  height: 450px;
 `;
 
 const ModalBody = styled.div`
   padding: 30px;
   text-align: left;
-  
+  position: relative;
   .amenities{
     text-align: center;
     display: inline-block;
@@ -127,7 +116,8 @@ const ModalBody = styled.div`
   }
   
   .ratePlans{
-    margin-top: 20px;
+    margin-top: 50px;
+    
     span{
       display: block;
       margin:10px;
@@ -203,4 +193,4 @@ const DailyPrice = styled.p`
   color: #DE2E5F;
 `;
 
-export {Selector, RoomWrapper, NoImage, Image, ModalBackground, ModalHeader, ModalBody, ModalFooter, CloseBtn, RoomAmenity, RoomImages, RoomImage, SelectBtn, RoomInfoDiv, RoomName, People, PriceInfo, DailyPrice, TotalPrice};
+export {Selector, RoomWrapper, NoImage, Image, ModalBackground, ModalHeader, ModalBody, ModalFooter, CloseBtn, RoomAmenity, RoomImage, SelectBtn, RoomInfoDiv, RoomName, People, PriceInfo, DailyPrice, TotalPrice};

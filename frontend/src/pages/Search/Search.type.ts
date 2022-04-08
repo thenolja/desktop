@@ -1,8 +1,12 @@
-export interface QueryTypes {
-  destinationId: string;
-  checkIn: string;
-  checkOut: string;
-  person: string;
+declare module 'qs' {
+  interface ParsedQs {
+    [key: string]: undefined | string | string[] | ParsedQs | ParsedQs[];
+    query: string;
+    destinationId: string;
+    checkIn: string;
+    checkOut: string;
+    person: string;
+  }
 }
 
 export interface hotelTypes {

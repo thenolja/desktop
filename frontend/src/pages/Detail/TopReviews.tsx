@@ -1,6 +1,6 @@
-import Loader from "components/Review/Loader";
 import { ReviewList } from "components/Review/ReviewList";
 import ReviewTitle from "components/Review/ReviewTitle";
+import Spinner from "components/Spinner/Spinner";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getReviews } from "src/utils/requests";
@@ -31,7 +31,7 @@ const Reviews = () => {
       <ReviewTitle />
       <ReviewList reviews={reviews}/>
       
-      {isLoaded && <Loader />}
+      {isLoaded && <Spinner />}
       <ButtonWrapper>
         <Button>
           <Link to={totalReview}>더보기</Link>

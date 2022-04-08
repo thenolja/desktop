@@ -10,4 +10,16 @@ const getReservationByDate = async (id: string, from: Date, to: Date) => {
     .catch(e => console.log(e));
 };
 
-export { getReservationByDate };
+const getReservedRooms = async (hotelId:string, checkIn:string, checkOut:string)=>{
+  return await axios.get(`/api/reserved/${hotelId}?checkIn=${checkIn}&checkOut=${checkOut}`)
+  .then(({data})=>data)
+  .catch(e=>console.error(e));
+}
+
+const postReservation = async (reservation, hotelId)=>{
+  return await axios.post('/api/reservation/reservation', {reservation:reservation, hotelId:hotelId})
+  .then(({data})=>data)
+  .catch(e=>console.error(e));
+}
+
+export { getReservationByDate, getReservedRooms, postReservation};

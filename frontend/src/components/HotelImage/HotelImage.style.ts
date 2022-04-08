@@ -36,7 +36,7 @@ export const ImageBtn = styled.button`
   overflow: hidden;
   position: absolute;
   white-space: nowrap;
-  z-index: 100;
+  z-index: 1;
   cursor: pointer;
 `;
 
@@ -51,7 +51,7 @@ export const ImageModal = styled.div`
   left: 0px;
   width: 100vw;
   height: 100vh;
-  background-color: #141d38;
+  background-color: #1a1a1a;
   color: #ffffff;
 `;
 

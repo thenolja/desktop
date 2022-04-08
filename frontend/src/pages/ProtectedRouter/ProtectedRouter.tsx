@@ -1,11 +1,11 @@
 import { Navigate } from 'react-router-dom';
 
-interface userInfo {
+interface AuthorizedUser {
   isAllow: boolean;
   children: JSX.Element;
 }
 
-const ProtectedRoute = ({ isAllow, children }: userInfo): JSX.Element => {
+const ProtectedRoute = ({ isAllow, children }: AuthorizedUser): JSX.Element => {
   if (!isAllow) {
     return <Navigate to="/" replace />;
   }

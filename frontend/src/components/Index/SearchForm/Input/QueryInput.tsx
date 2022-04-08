@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, forwardRef, useEffect } from 'react';
 import reactTriggerChange from 'react-trigger-change';
 
 import location from '/src/assets/location.png';
@@ -9,7 +9,7 @@ import QueryListType from './QueryList.type';
 
 const QueryInput = ({ query, setQuery, setDestinationId }) => {
   const inputRef = useRef<HTMLInputElement>();
-  const recommendsRef = useRef<HTMLInputElement>();
+  const recommendsRef = useRef<HTMLUListElement>();
   const [showQueryList, setShowQueryList] = useState<boolean>(false);
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [queryList, setQueryList] = useState<QueryListType[]>([]);
@@ -17,7 +17,12 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
 
   let timer = null;
 
-  const handleChange = (e: React.ChangeEvent) => {
+  useEffect(() => {
+    if (!isSearching) return;
+    reactTriggerChange(inputRef.current);
+  }, [isSearching]);
+
+  const handleChange = (e: React.ChangeEvent): void => {
     if (!isSearching) return;
 
     const target = e.target as HTMLInputElement;
@@ -26,7 +31,6 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
 
     timer = setTimeout(async () => {
       const res = await getDestinationIdsByQuery(target.value);
-      console.log(res);
 
       if (!res) {
         setQueryList([
@@ -51,30 +55,24 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
     }, 200);
   };
 
-  const handleInputClick = (e: React.MouseEvent) => {
+  const handleInputClick = (e: React.MouseEvent): void => {
     const target = e.target as HTMLInputElement;
 
     if (target.value === '') return;
-
     setIsSearching(true);
-
-    setTimeout(() => {
-      reactTriggerChange(inputRef.current);
-    }, 100);
   };
 
-  const handleListClick = (e: React.MouseEvent) => {
+  const handleListClick = (e: React.MouseEvent): void => {
     const target = e.target as HTMLInputElement;
 
     if (target.tagName !== 'LI') return;
-
     inputRef.current.value = target.dataset.name;
     setQuery(target.dataset.name);
     setDestinationId(target.dataset.id);
     setQueryList([]);
   };
 
-  const settingStates = (selectState: number, clear?: boolean) => {
+  const settingStates = (selectState: number, clear?: boolean): void => {
     inputRef.current.value = queryList[selectState].name;
     setQuery(queryList[selectState].name);
     setDestinationId(queryList[selectState].destinationId);
@@ -82,7 +80,7 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
     clear ? setQueryList([]) : setSelected(selectState);
   };
 
-  const handlekeyUp = (e: React.KeyboardEvent) => {
+  const handlekeyUp = (e: React.KeyboardEvent): void => {
     let tempSelected = 0;
 
     if (e.key === 'ArrowUp') {
@@ -99,11 +97,28 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent): void => {
     if (e.key === 'Enter') {
       e.preventDefault();
     }
   };
+
+  const ForwardRefUl = forwardRef<HTMLUListElement>((_, ref) => {
+    const recommendItems = queryList.map(({ caption, destinationId, name }, index) => (
+      <li
+        key={destinationId}
+        data-id={destinationId}
+        data-name={name}
+        dangerouslySetInnerHTML={{ __html: caption }}
+        className={index === selected ? 'selected-li' : ''}
+      />
+    ));
+    return (
+      <StyledUl onClick={handleListClick} ref={ref}>
+        {recommendItems}
+      </StyledUl>
+    );
+  });
 
   document.addEventListener('click', e => {
     const target = e.target as HTMLInputElement;
@@ -126,19 +141,7 @@ const QueryInput = ({ query, setQuery, setDestinationId }) => {
         ref={inputRef}
         defaultValue={query}
       />
-      {showQueryList && queryList.length > 0 && (
-        <StyledUl onClick={handleListClick} ref={recommendsRef}>
-          {queryList.map(({ caption, destinationId, name }, index) => (
-            <li
-              key={destinationId}
-              data-id={destinationId}
-              data-name={name}
-              dangerouslySetInnerHTML={{ __html: caption }}
-              className={index === selected ? 'selected-li' : ''}
-            />
-          ))}
-        </StyledUl>
-      )}
+      {showQueryList && queryList.length > 0 && <ForwardRefUl ref={recommendsRef} />}
     </StyledDiv>
   );
 };

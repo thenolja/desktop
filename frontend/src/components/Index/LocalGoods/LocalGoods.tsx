@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, memo } from 'react';
 
 import { getLocalHotelList } from 'src/utils/requests';
 import { StyledH3, StyledDiv, StyledUl, StyledLi } from './localGoods.style';
@@ -21,7 +21,7 @@ const LocalGoods = () => {
     [],
   );
 
-  const changeLocal = async (e: React.MouseEvent<HTMLUListElement>) => {
+  const changeLocal = async (e: React.MouseEvent<HTMLUListElement>): Promise<void> => {
     const target = e.target as HTMLLIElement;
     const id = target.dataset.id;
     setIsLoading(true);
@@ -31,7 +31,7 @@ const LocalGoods = () => {
   useEffect(() => {
     const nowLocal = locals.find(localData => localData.destiId === +local);
 
-    const requestHotels = async () => {
+    const requestHotels = async (): Promise<void> => {
       nowLocal.datas = await getLocalHotelList(+local);
       setIsLoading(false);
       setResHotels(nowLocal.datas);
@@ -66,4 +66,4 @@ const LocalGoods = () => {
   );
 };
 
-export default LocalGoods;
+export default memo(LocalGoods);

@@ -1,10 +1,15 @@
-import Loader from 'components/Review/Loader';
 import { memo, useEffect, useState } from 'react';
 import { getReviews } from 'src/utils/requests';
 import ReviewTitle from '../../components/Review/ReviewTitle';
 import { useParams } from 'react-router-dom';
 import { ReviewList } from 'components/Review/ReviewList';
 import { TopBtn } from 'components/Review/TopBtn';
+import Spinner from 'components/Spinner/Spinner';
+import { deleteReview, getMockdataReviews } from 'src/utils/reviews';
+import swal from 'sweetalert';
+import { updateReview } from 'src/utils/users';
+import { authUpdate } from 'src/contexts/auth';
+import { useDispatch } from 'react-redux';
 
 const Reviews = (): JSX.Element => {
   const { id } = useParams();
@@ -13,6 +18,9 @@ const Reviews = (): JSX.Element => {
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [reviews, setReivews] = useState<object[]>([]);
+  const [mockDataReviews, setMockDataReviews] = useState<object[]>([]);
+
+  const dispatch = useDispatch();
 
   let nextUrl = '';
   let currentPage = 1;
@@ -41,6 +49,14 @@ const Reviews = (): JSX.Element => {
   };
 
   useEffect(() => {
+    const getReviews = async () => {
+      const reviews = await getMockdataReviews(hotelId);
+      setMockDataReviews(reviews);
+    };
+    getReviews();
+  }, []);
+
+  useEffect(() => {
     let observer;
     if (target) {
       observer = new IntersectionObserver(onIntersect, {
@@ -51,12 +67,32 @@ const Reviews = (): JSX.Element => {
     return () => observer && observer.disconnect();
   }, [target]);
 
+  const handleDelete = e => {
+    swal({
+      title: '삭제하시겠습니까?',
+      icon: 'info',
+      buttons: ['취소', '삭제'],
+    }).then(result => {
+      if (result) {
+        deleteReviewFunc(e.target.id, e.target.name);
+      }
+    });
+  };
+
+  const deleteReviewFunc = async (id: string, nickname: string) => {
+    const { myReviews } = await updateReview(id, nickname);
+    dispatch(authUpdate({ myReviews: myReviews ? myReviews : [] }));
+    const review = await deleteReview(id);
+    setMockDataReviews(review);
+  };
+
   return (
     <>
       <ReviewTitle />
+      <ReviewList reviews={mockDataReviews} handleDelete={handleDelete} />
       <ReviewList reviews={reviews} />
       <TopBtn />
-      <div ref={setTarget}>{isLoaded && <Loader />}</div>
+      <div ref={setTarget}>{isLoaded && <Spinner />}</div>
     </>
   );
 };
