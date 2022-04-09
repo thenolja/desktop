@@ -25,7 +25,7 @@ const getMockdataReviews = async (id: string) => {
     .catch(e => console.log(e));
 };
 
-const getMockdataReviewsTitle = async (id: string) => {
+const getMockdataReviewsTitle = async (id: string):Promise<[mockTotal:number, mockRating:number]> => {
   return await axios
     .get(`/api/reviews/title/${id}`)
     .then(({ data }) => data)
