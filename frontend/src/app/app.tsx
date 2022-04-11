@@ -3,13 +3,13 @@ import { useState, lazy, Suspense, useMemo } from 'react';
 import { useAppSelector } from 'src/contexts/state.type';
 import { selectAuth } from 'src/contexts/auth';
 import { Route, Routes } from 'react-router-dom';
-// import React.lazy from '@React.lazy/component';
 
 import Header from 'src/containers/Header/Header';
 import Main from 'src/containers/Main/Main';
 import Footer from 'src/containers/Footer/Footer';
 import Spinner from 'components/Spinner/Spinner';
 import { SEOMetaTag } from 'components/SeoMetaTag/SEOMetaTag';
+import { NotFound } from 'src/pages/NotFound/NotFound';
 
 const Index = lazy(() => import('src/pages/Index/Index'));
 const Detail = lazy(() => import('src/pages/Detail/Detail'));
@@ -78,6 +78,7 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
       </Main>

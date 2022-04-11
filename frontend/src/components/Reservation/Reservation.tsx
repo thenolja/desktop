@@ -1,17 +1,21 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useScrollPrevent } from 'src/hooks/useScroll';
-import { selectAuth } from 'src/contexts/auth';
+import { authUpdate, selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
 
 import DatePickerComponent from './DatePicker';
 import PostingReview from './PostingReview';
 
+import swal from 'sweetalert';
 import ReservationList from './Reservation.style';
 import { getReservationByDate } from 'src/utils/reservations';
 import { ReservationItem } from './Reservation.type';
+import { deleteReview } from 'src/utils/reviews';
+import { updateReview } from 'src/utils/users';
+import { useDispatch } from 'react-redux';
 
 const Reservations = () => {
-  const { id } = useAppSelector(selectAuth);
+  const { id, nickname } = useAppSelector(selectAuth);
 
   const [reservationList, setReservationList] = useState<Object[]>([]);
 
@@ -19,6 +23,8 @@ const Reservations = () => {
   const [endDate, setEndDate] = useState<Date>(new Date());
 
   const [showDialog, setDialog] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
 
   useScrollPrevent(showDialog);
 
@@ -30,11 +36,29 @@ const Reservations = () => {
     getReservationList();
   }, [startDate, endDate]);
 
-  const selectItem = (index: number): void => {
+  const isValidateReservation = (date: string): boolean => new Date(date) < new Date();
+
+  const postReview = (index: number): void => {
     sessionStorage.setItem('selectedItem', JSON.stringify(reservationList[index]));
     setDialog(true);
   };
 
+  const handleDeleteReview = (selectedItem: number) => {
+    swal({
+      title: '삭제하시겠습니까?',
+      icon: 'info',
+      buttons: ['취소', '삭제'],
+    }).then(async result => {
+      if (result) {
+        const { myReviews } = await updateReview(id, nickname);
+        dispatch(authUpdate({ myReviews: myReviews ? myReviews : [] }));
+        deleteReview(+selectedItem);
+        setReservationList(prevList =>
+          prevList.map(item => (item.id === selectedItem ? { ...item, review: null } : item)),
+        );
+      }
+    });
+  };
   const memoizedList = useMemo(
     () =>
       reservationList.length ? (
@@ -46,7 +70,7 @@ const Reservations = () => {
             ) => (
               <li key={id}>
                 <img src={photo} alt={name} />
-                <div>
+                <div className="info-container">
                   <span>{name}</span>
                   <span>
                     기준{adults + children}명 / 최대{occupancy}명
@@ -55,7 +79,12 @@ const Reservations = () => {
                   <span>
                     {checkInDate}~ {checkOutDate}
                   </span>
-                  <button onClick={() => selectItem(index)}>{!!review ? '후기 수정' : '후기 작성'}</button>
+                  {isValidateReservation(checkOutDate) && (
+                    <div className="button-group">
+                      <button onClick={() => postReview(index)}>{!!review ? '후기 수정' : '후기 작성'}</button>
+                      {!!review ? <button onClick={() => handleDeleteReview(id)}>후기 삭제</button> : ''}
+                    </div>
+                  )}
                 </div>
               </li>
             ),
@@ -64,7 +93,6 @@ const Reservations = () => {
       ) : (
         <p>예약 내역이 존재하지 않습니다.</p>
       ),
-
     [reservationList],
   );
 

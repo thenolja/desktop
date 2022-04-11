@@ -11,10 +11,10 @@ const MoveCarousel = ({ resHotels }) => {
   const [isMoving, setIsMoving] = useState<boolean>(false);
   const refDiv = useRef<HTMLDivElement>(null);
 
-  const listNum = 5;
+  const listNum: number = 5;
 
   const makeArray = useCallback(arr => {
-    let index = 0;
+    let index: number = 0;
 
     return arr.reduce((acc, cur) => {
       if (acc[index] === undefined) {
@@ -31,7 +31,6 @@ const MoveCarousel = ({ resHotels }) => {
   useEffect(() => {
     const resConstructRes = makeArray(resHotels);
     setLimit(resConstructRes.length);
-
     setHotels([resConstructRes[resConstructRes.length - 1], ...resConstructRes, resConstructRes[0]]);
   }, [resHotels]);
 
@@ -57,12 +56,12 @@ const MoveCarousel = ({ resHotels }) => {
     }, 500);
   }, [slide]);
 
-  const movePrev = () => {
+  const movePrev = (): void => {
     if (isMoving) return;
     setSlide(slide + 1);
   };
 
-  const moveNext = () => {
+  const moveNext = (): void => {
     if (isMoving) return;
     setSlide(slide - 1);
   };
