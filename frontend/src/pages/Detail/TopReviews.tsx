@@ -1,3 +1,4 @@
+import { ReviewType } from "components/Review/Content/Content.type";
 import { ReviewList } from "components/Review/ReviewList";
 import ReviewTitle from "components/Review/ReviewTitle";
 import Spinner from "components/Spinner/Spinner";
@@ -9,8 +10,8 @@ import { ButtonWrapper, Button } from './TopReviews.style';
 const Reviews = () => {
   const { id }=useParams();
 
-  const [hotelId, setHotelId]=useState<string>(id);
-  const [reviews, setReviews]=useState<object[]>([]);
+  const [hotelId]=useState<string>(id);
+  const [reviews, setReviews]=useState<ReviewType[]>([]);
   const [isLoaded, setIsLoaded]=useState<boolean>(false);
 
   const totalReview=`/reviews/${hotelId}`;
@@ -18,9 +19,9 @@ const Reviews = () => {
   useEffect(()=>{
     const getReview=async()=>{
       setIsLoaded(true);
-      const presentReivew = await getReviews(hotelId);
+      const presentReview = await getReviews(hotelId);
 
-      setReviews(presentReivew.reviews.hermes.groups[presentReivew.reviews.hermes.groups.length-1].items.splice(0,2));
+      setReviews(presentReview.reviews.hermes.groups[presentReview.reviews.hermes.groups.length-1].items.splice(0,2));
       setIsLoaded(false);
     }
     getReview();
@@ -30,7 +31,6 @@ const Reviews = () => {
     <>
       <ReviewTitle />
       <ReviewList reviews={reviews}/>
-      
       {isLoaded && <Spinner />}
       <ButtonWrapper>
         <Button>

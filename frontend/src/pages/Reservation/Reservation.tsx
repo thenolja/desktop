@@ -11,6 +11,7 @@ import { authUpdate, selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
 import { ReservationWrapper } from './Reservation.style';
 import { useDispatch } from 'react-redux';
+import { ReservationType } from 'components/Payment/Payment.type';
 
 const Reservation = () => {
 
@@ -33,7 +34,7 @@ const Reservation = () => {
 
   const { id: userId, phone } = useAppSelector(selectAuth);
 
-  const [reservation, setReservation] = useState({
+  const [reservation, setReservation] = useState<ReservationType["reservation"]>({
     userId: userId,
     hotelAPIId: +hotelId,
     isAgrees: [false, false, false],

@@ -13,10 +13,10 @@ import { useDispatch } from 'react-redux';
 
 const Reviews = (): JSX.Element => {
   const { id } = useParams();
-  const [hotelId, setHotelId] = useState<string>(id);
+  const [hotelId] = useState<string>(id);
 
-  const [target, setTarget] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [target, setTarget] = useState<Element>(null);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [reviews, setReivews] = useState<object[]>([]);
   const [mockDataReviews, setMockDataReviews] = useState<object[]>([]);
 
@@ -24,7 +24,7 @@ const Reviews = (): JSX.Element => {
 
   let nextUrl = '';
   let currentPage = 1;
-  let totalPage;
+  let totalPage = 0;
 
   const getMoreItem = async () => {
     setIsLoaded(true);
@@ -40,7 +40,7 @@ const Reviews = (): JSX.Element => {
     setIsLoaded(false);
   };
 
-  const onIntersect = async ([entry], observer) => {
+  const onIntersect = async ([entry], observer:IntersectionObserver) => {
     if (entry.isIntersecting && !isLoaded && currentPage !== totalPage) {
       observer.unobserve(entry.target);
       await getMoreItem();
@@ -57,7 +57,7 @@ const Reviews = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    let observer;
+    let observer:IntersectionObserver;
     if (target) {
       observer = new IntersectionObserver(onIntersect, {
         threshold: 0.5,
@@ -67,14 +67,14 @@ const Reviews = (): JSX.Element => {
     return () => observer && observer.disconnect();
   }, [target]);
 
-  const handleDelete = e => {
+  const handleDelete = (e:React.MouseEvent<HTMLButtonElement>) => {
     swal({
       title: '삭제하시겠습니까?',
       icon: 'info',
       buttons: ['취소', '삭제'],
     }).then(result => {
       if (result) {
-        deleteReviewFunc(e.target.id, e.target.name);
+        deleteReviewFunc(e.currentTarget.id, e.currentTarget.name);
       }
     });
   };

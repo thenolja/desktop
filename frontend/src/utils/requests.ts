@@ -225,7 +225,7 @@ const getAllRoomList = async (hotelId: string, checkIn: string, checkOut: string
     });
 };
 
-const getReviewTitleData = async (hotelId: string): Promise<[]> => {
+const getReviewTitleData = async (hotelId: string): Promise<{total:number, rating:number}> => {
   const options = {
     method: 'GET',
     url: 'https://hotels4.p.rapidapi.com/properties/get-details',
@@ -258,7 +258,7 @@ const getReviewTitleData = async (hotelId: string): Promise<[]> => {
     });
 };
 
-const getReviews = async (hotelId: string, paginationURL?: string): Promise<[]> => {
+const getReviews = async (hotelId: string, paginationURL?: string) => {
   const options = {
     method: 'GET',
     url: 'https://hotels4.p.rapidapi.com/reviews/v2/list',
