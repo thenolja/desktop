@@ -1,16 +1,17 @@
 import netlifyIdentity from 'netlify-identity-widget';
-import { useEffect, memo } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { authLogIn, authLogOut, selectAuth } from 'src/contexts/auth';
+import { authLogIn, authLogOut, selectAuth, RootState } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
 import { createUser } from 'src/utils/users';
 import { StyledHeader } from './Header.style';
 
 const Header = () => {
   const dispatch = useDispatch();
-  const { id, nickname, email } = useAppSelector(selectAuth);
+  // const { id, nickname, email } = useAppSelector(selectAuth);
+  const { id, nickname, email } = useAppSelector((state: RootState) => state.auth);
 
   const login = () => {
     netlifyIdentity.open('login');
@@ -74,4 +75,4 @@ const Header = () => {
   );
 };
 
-export default memo(Header);
+export default Header;
