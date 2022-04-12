@@ -1,19 +1,14 @@
 import styled from "styled-components";
 
-const Title = styled.section`
-margin: 0 auto;
-background: #fff;
-`;
-
 const ReviewCount = styled.span`
 font-size: 24px;
 line-height: 32px;
 color: #1a1a1a;
 font-weight: 700;
 
-span{
-  font-weight: 400;
-}
+  span{
+    font-weight: 400;
+  }
 `;
 
 const Star = styled.div`
@@ -38,4 +33,4 @@ const Average = styled.span`
   }
 `;
 
-export {Title, ReviewCount, Star, Average};
+export { ReviewCount, Star, Average };

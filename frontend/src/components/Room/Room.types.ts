@@ -8,30 +8,31 @@ export interface RoomProps {
   saledPrice?:number;
 };
 
-interface ratePlantype{
+interface RatePlanType extends PriceInfoType{
   features: [{
     title: string,
-    info: string
+    info: string,
   }]
 }
 
-export interface ModalType {
-  room: {
-    images: [{
-      fullSizeUrl: string;
-      caption: string;
-    }],
-    name: string,
-    ratePlans: ratePlantype[],
-    additionalInfo: {
-      details: {
-        amenities: string[]
-      }
+export interface ImageType{
+  images:[{
+    fullSizeUrl: string;
+    caption: string;
+  }]
+}
+
+export interface DetailRoomProps extends RoomProps,ImageType{
+  ratePlans: RatePlanType[],
+  additionalInfo: {
+    details: {
+      amenities: string[]
     }
   },
-  modal: boolean,
-  toggleModal: () => void;
-  handleClick: () => void;
+  maxOccupancy: { 
+    total: number; 
+    children: number; 
+  }
 }
 
 export interface len {

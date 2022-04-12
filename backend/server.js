@@ -67,7 +67,7 @@ app.get('/reservations/:searchId', (req, res) => {
       const review = reviews.find(
         (review) => review.reservationId === reservation.id
       );
-      return { ...reservation, review };
+      return { ...reservation, review: review ? review : null };
     }
   );
 
@@ -103,14 +103,15 @@ app.patch('/reviews', (req, res) => {
 app.get('/reviews/:id', (req, res) => {
   const { id } = req.params;
 
-  res.send(reviews.filter(review => +id === review.hotelId));
+  res.send(reviews.filter((review) => +id === review.hotelId));
 });
 
 app.get('/reviews/title/:id', (req, res) => {
   const { id } = req.params;
-  let total = 0, rating = 0;
+  let total = 0,
+    rating = 0;
 
-  reviews.forEach(review => {
+  reviews.forEach((review) => {
     if (+id === review.hotelId) {
       rating += review.star;
       total++;
@@ -124,9 +125,16 @@ app.get('/reserved/:hotelId', (req, res) => {
   const { checkIn, checkOut } = req.query;
 
   const reservedRoom = [];
-  reservations.forEach(reservation => {
-    if (reservation.hotelAPIId === +hotelId && +reservation.checkInDate.split('-').join('') >= +checkIn.split('-').join('') && +reservation.checkOutDate.split('-').join('') <= +checkOut.split('-').join('')) reservedRoom.push(reservation.spec);
-  })
+  reservations.forEach((reservation) => {
+    if (
+      reservation.hotelAPIId === +hotelId &&
+      +reservation.checkInDate.split('-').join('') >=
+        +checkIn.split('-').join('') &&
+      +reservation.checkOutDate.split('-').join('') <=
+        +checkOut.split('-').join('')
+    )
+      reservedRoom.push(reservation.spec);
+  });
 
   res.send(reservedRoom);
 });
@@ -134,54 +142,61 @@ app.get('/reserved/:hotelId', (req, res) => {
 app.post('/reservation/payment', (req, res) => {
   const id = generateId(payments);
   const { reservationId, payment, paymentDate } = req.body;
-  const data = { id: id, reservationId: reservationId, paymentDate: paymentDate, ...payment };
+  const data = {
+    id: id,
+    reservationId: reservationId,
+    paymentDate: paymentDate,
+    ...payment,
+  };
   payments = [...payments, data];
   res.send(data);
-})
+});
 
 app.post('/reservation/reservation', (req, res) => {
   const id = generateId(reservations);
   const data = { id: id, ...req.body.reservation, hotelId: req.body.hotelId };
   reservations = [...reservations, data];
   res.send(data);
-})
+});
 
 app.post('/reservation/hotel', (req, res) => {
   const id = generateId(hotels);
   const data = { id: id, ...req.body };
   hotels = [...hotels, data];
   res.send(data);
-})
+});
 
 app.patch('/reservation/user', (req, res) => {
-  users.map(user => {
+  users.map((user) => {
     if (user.id === req.body.userId) {
       user.reservations = [...user.reservations, req.body.reservationId];
       return user;
     }
-  })
+  });
   res.send(users);
-})
+});
 
 app.delete('/review/:id', (req, res) => {
   const { id } = req.params;
   let idx;
   reviews.forEach((review, index) => {
     if (+id === review.id) idx = index;
-  })
+  });
   reviews.splice(idx, 1);
   res.send(reviews);
-})
+});
 
 app.patch('/review/user', (req, res) => {
-  users.map(user => {
+  users.map((user) => {
     if (user.nickname === req.body.nickname) {
-      user.myReviews = user.myReviews.filter(review => review !== +req.body.id);
+      user.myReviews = user.myReviews.filter(
+        (review) => review !== +req.body.id
+      );
       return user;
     }
-  })
+  });
   res.send(users);
-})
+});
 
 app.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT}`);

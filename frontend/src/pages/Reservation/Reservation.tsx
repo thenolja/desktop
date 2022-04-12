@@ -7,9 +7,11 @@ import { postHotel } from 'src/utils/hotels';
 import { postReservation } from 'src/utils/reservations';
 import { updateReservation } from 'src/utils/users';
 import { postPayment } from 'src/utils/payment';
-import { selectAuth } from 'src/contexts/auth';
+import { authUpdate, selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
 import { ReservationWrapper } from './Reservation.style';
+import { useDispatch } from 'react-redux';
+import { ReservationType } from 'components/Payment/Payment.type';
 
 const Reservation = () => {
 
@@ -32,7 +34,7 @@ const Reservation = () => {
 
   const { id: userId, phone } = useAppSelector(selectAuth);
 
-  const [reservation, setReservation] = useState({
+  const [reservation, setReservation] = useState<ReservationType["reservation"]>({
     userId: userId,
     hotelAPIId: +hotelId,
     isAgrees: [false, false, false],
@@ -83,13 +85,16 @@ const Reservation = () => {
 
   }
 
+  const dispatch = useDispatch();
+
   const handleSubmit = async () => {
     const hotelData = await postHotel(hotel);
     const hotelId = hotelData.id;
     const reservationdata = await postReservation(reservation, hotelId);
     const reservationId = reservationdata.id;
     await postPayment(reservationId, payment);
-    await updateReservation(userId, reservationId);
+    const reservations = await updateReservation(userId, reservationId);
+    dispatch(authUpdate({ reservations: reservations ? reservations : [] }));
   }
 
   useEffect(() => {

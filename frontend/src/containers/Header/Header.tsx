@@ -1,7 +1,7 @@
 import netlifyIdentity from 'netlify-identity-widget';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { authLogIn, authLogOut, selectAuth, RootState } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
@@ -12,6 +12,8 @@ const Header = () => {
   const dispatch = useDispatch();
   // const { id, nickname, email } = useAppSelector(selectAuth);
   const { id, nickname, email } = useAppSelector((state: RootState) => state.auth);
+
+  const { pathname } = useLocation();
 
   const login = () => {
     netlifyIdentity.open('login');
@@ -61,16 +63,17 @@ const Header = () => {
         </h1>
       </Link>
 
-      {!nickname && !email && !id ? (
+      {!nickname && !email && !id ?
         <button onClick={login}>로그인</button>
-      ) : (
-        <>
+        :
+        pathname.includes('reservation') ?
+          null
+          :
           <div>
             <button onClick={logout}>로그아웃</button>
             <Link to="/mypage">마이페이지</Link>
           </div>
-        </>
-      )}
+      }
     </StyledHeader>
   );
 };
