@@ -3,7 +3,7 @@ import { FormEventHandler, LegacyRef, MouseEvent, MouseEventHandler } from "reac
 export interface ReservationType{
   reservation:{
     userId : string,
-    hotelId : number,
+    hotelAPIId : number,
     isAgrees : boolean[],
     checkInDate : string,
     checkOutDate : string,

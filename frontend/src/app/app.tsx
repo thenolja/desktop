@@ -3,7 +3,6 @@ import { useState, lazy, Suspense, useMemo } from 'react';
 import { useAppSelector } from 'src/contexts/state.type';
 import { selectAuth } from 'src/contexts/auth';
 import { Route, Routes } from 'react-router-dom';
-// import React.lazy from '@React.lazy/component';
 
 import Header from 'src/containers/Header/Header';
 import Main from 'src/containers/Main/Main';
