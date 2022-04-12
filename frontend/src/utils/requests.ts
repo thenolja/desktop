@@ -210,14 +210,12 @@ const getAllRoomList = async (hotelId: string, checkIn: string, checkOut: string
       ({
         data: {
           data: {
-            body: {
-              roomsAndRates,
-            },
+            body: { roomsAndRates },
           },
         },
       }) => {
-        if(roomsAndRates) return roomsAndRates.rooms
-        else return []
+        if (roomsAndRates) return roomsAndRates.rooms;
+        else return [];
       },
     )
     .catch(error => {
@@ -225,7 +223,7 @@ const getAllRoomList = async (hotelId: string, checkIn: string, checkOut: string
     });
 };
 
-const getReviewTitleData = async (hotelId: string): Promise<{total:number, rating:number}> => {
+const getReviewTitleData = async (hotelId: string): Promise<{ total: number; rating: number }> => {
   const options = {
     method: 'GET',
     url: 'https://hotels4.p.rapidapi.com/properties/get-details',
@@ -292,7 +290,7 @@ const getReviews = async (hotelId: string, paginationURL?: string) => {
     });
 };
 
-const getHotelInfo = async (hotelId: number): Promise<[]> => {
+const getHotelInfo = async (hotelId: string): Promise<[]> => {
   const options = {
     method: 'GET',
     url: 'https://hotels4.p.rapidapi.com/properties/get-details',
@@ -324,8 +322,8 @@ const getHotelInfo = async (hotelId: number): Promise<[]> => {
     });
 };
 
-const getHotelPhotos = async (hotelId: number): Promise<[]> => {
-  let options = {
+const getHotelPhotos = async (hotelId: string): Promise<[]> => {
+  const options = {
     method: 'GET',
     url: 'https://hotels4.p.rapidapi.com/properties/get-hotel-photos',
     params: { id: hotelId },
