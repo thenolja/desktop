@@ -52,9 +52,9 @@ const Reservations = () => {
       if (result) {
         const { myReviews } = await updateReview(id, nickname);
         dispatch(authUpdate({ myReviews: myReviews ? myReviews : [] }));
-        deleteReview(+selectedItem);
+        deleteReview(selectedItem);
         setReservationList(prevList =>
-          prevList.map(item => (item.id === selectedItem ? { ...item, review: null } : item)),
+          prevList.map((item: ReservationItem) => (item.id === selectedItem ? { ...item, review: null } : item)),
         );
       }
     });
