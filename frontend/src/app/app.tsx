@@ -1,7 +1,6 @@
 import { useState, lazy, Suspense, useMemo } from 'react';
 
 import { useAppSelector } from 'src/contexts/state.type';
-import { selectAuth } from 'src/contexts/auth';
 import { Route, Routes } from 'react-router-dom';
 
 import Header from 'src/containers/Header/Header';
@@ -10,6 +9,7 @@ import Footer from 'src/containers/Footer/Footer';
 import Spinner from 'components/Spinner/Spinner';
 import { SEOMetaTag } from 'components/SeoMetaTag/SEOMetaTag';
 import { NotFound } from 'src/pages/NotFound/NotFound';
+import { AuthType, selectAuth } from 'src/contexts/auth';
 
 const Index = lazy(() => import('src/pages/Index/Index'));
 const Detail = lazy(() => import('src/pages/Detail/Detail'));
@@ -24,7 +24,7 @@ const MyPage = lazy(() => import('src/pages/MyPage/MyPage'));
 const Cart = lazy(() => import('src/components/Cart/Cart'));
 
 const App = () => {
-  const { id, nickname, email } = useAppSelector(selectAuth);
+  const { id, nickname, email } = useAppSelector(selectAuth) as AuthType;
 
   const MemoizedHeader = useMemo(() => {
     return (
