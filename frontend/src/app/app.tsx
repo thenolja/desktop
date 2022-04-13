@@ -1,8 +1,7 @@
-import { useState, lazy, Suspense, useMemo } from 'react';
-
-import { useAppSelector } from 'src/contexts/state.type';
+import { lazy, Suspense, useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+import { useAppSelector } from 'src/contexts/state.type';
 import Header from 'src/containers/Header/Header';
 import Main from 'src/containers/Main/Main';
 import Footer from 'src/containers/Footer/Footer';
@@ -41,11 +40,14 @@ const App = () => {
     );
   }, []);
 
-  const [detailNavigation] = useState([
-    { id: 'rooms', href: '', content: '객실' },
-    { id: 'amenities', href: 'amenities', content: '편의시설' },
-    { id: 'topReviews', href: 'topReviews', content: '후기' },
-  ]);
+  const detailNavigation = useMemo(
+    () => [
+      { id: 'rooms', href: '', content: '객실' },
+      { id: 'amenities', href: 'amenities', content: '편의시설' },
+      { id: 'topReviews', href: 'topReviews', content: '후기' },
+    ],
+    [],
+  );
 
   return (
     <>

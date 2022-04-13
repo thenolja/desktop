@@ -1,4 +1,5 @@
-import { useEffect, useState, memo } from 'react';
+import { useState, memo } from 'react';
+import useSWR, { SWRConfig, Fetcher } from 'swr';
 
 import { getAllHotelList, getNearHotelList } from 'src/utils/requests';
 import { StyledH3, StyledDiv } from './CurrentGoods.style';
@@ -8,28 +9,50 @@ import Spinner from 'components/Spinner/Spinner';
 
 const CurrentGoods = () => {
   const [agreeInfo, setAgreeInfo] = useState<boolean>(false);
-  const [resHotels, setResHotels] = useState<[]>([]);
+  const { data } = useSWR('/api/local', fetcher, { revalidateIfStale: false });
+  // const [resHotels, setResHotels] = useState<object[]>([]);
 
-  const success = async ({ coords }): Promise<void> => {
-    const res = await getNearHotelList(coords);
-    setResHotels(res);
-    setAgreeInfo(true);
-  };
+  // const success = async ({ coords }): Promise<void> => {
+  //   setResHotels(await getNearHotelList(coords));
+  //   setAgreeInfo(true);
+  // };
 
-  const error = async (): Promise<void> => {
-    setResHotels(await getAllHotelList());
-  };
+  // const error = async (): Promise<void> => {
+  //   setResHotels(await getAllHotelList());
+  // };
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(success, error);
-  }, []);
+  // useEffect(() => {
+  //   navigator.geolocation.getCurrentPosition(success, error);
+  // }, []);
+
+  function fetcher(): Promise<[]> {
+    return new Promise((resolve, reject) => {
+      const success = ({ coords }) => {
+        setAgreeInfo(true);
+        resolve(getNearHotelList(coords));
+      };
+
+      const rejected = () => {
+        resolve(getAllHotelList());
+      };
+
+      navigator.geolocation.getCurrentPosition(success, rejected);
+    });
+  }
 
   return (
-    <StyledDiv>
-      <StyledH3>{agreeInfo ? '현재 지역에서의 추천 상품' : '전체 지역의 추천 상품'}</StyledH3>
-      {resHotels?.length === 0 && <Spinner />}
-      {resHotels?.length > 5 ? <MoveCarousel resHotels={resHotels} /> : <NoMoveCarousel resHotels={resHotels} />}
-    </StyledDiv>
+    <SWRConfig value={{ provider: cache => cache }}>
+      <StyledDiv>
+        <StyledH3>{agreeInfo ? '현재 지역에서의 추천 상품' : '전체 지역의 추천 상품'}</StyledH3>
+        {!data ? (
+          <Spinner />
+        ) : data.length > 5 ? (
+          <MoveCarousel resHotels={data} />
+        ) : (
+          <NoMoveCarousel resHotels={data} />
+        )}
+      </StyledDiv>
+    </SWRConfig>
   );
 };
 
