@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useMemo, memo } from 'react';
+import React, { useState, useMemo, memo } from 'react';
+import useSWR, { useSWRConfig } from 'swr';
 
 import { getLocalHotelList } from 'src/utils/requests';
 import { StyledH3, StyledDiv, StyledUl, StyledLi } from './localGoods.style';
@@ -7,43 +8,26 @@ import NoMoveCarousel from 'components/Carousels/NoMoveCarousel';
 import Spinner from 'components/Spinner/Spinner';
 
 const LocalGoods = () => {
+  const { mutate } = useSWRConfig();
   const [local, setLocal] = useState<number>(758104);
-  const [resHotels, setResHotels] = useState<object[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { data } = useSWR(`/api/local/${local}`, () => getLocalHotelList(local));
 
   const locals = useMemo(
     () => [
-      { localName: '경기', destiId: 758104, datas: [] },
-      { localName: '강원', destiId: 759017, datas: [] },
-      { localName: '경상', destiId: 1639042, datas: [] },
-      { localName: '제주', destiId: 1644457, datas: [] },
+      { localName: '경기', destiId: 758104 },
+      { localName: '강원', destiId: 759017 },
+      { localName: '경상', destiId: 1639042 },
+      { localName: '제주', destiId: 1644457 },
     ],
     [],
   );
 
-  const changeLocal = async (e: React.MouseEvent<HTMLUListElement>): Promise<void> => {
+  const changeLocal = (e: React.MouseEvent<HTMLUListElement>) => {
     const target = e.target as HTMLLIElement;
     const id = target.dataset.id;
-    setIsLoading(true);
     setLocal(+id);
+    mutate('/api/local', () => getLocalHotelList(+id));
   };
-
-  useEffect(() => {
-    const nowLocal = locals.find(localData => localData.destiId === +local);
-
-    const requestHotels = async (): Promise<void> => {
-      nowLocal.datas = await getLocalHotelList(+local);
-      setIsLoading(false);
-      setResHotels(nowLocal.datas);
-    };
-
-    if (nowLocal.datas.length > 0) {
-      setIsLoading(false);
-      setResHotels(nowLocal.datas);
-    } else {
-      requestHotels();
-    }
-  }, [local]);
 
   return (
     <StyledDiv>
@@ -55,13 +39,7 @@ const LocalGoods = () => {
           </StyledLi>
         ))}
       </StyledUl>
-      {isLoading ? (
-        <Spinner />
-      ) : resHotels.length > 5 ? (
-        <MoveCarousel resHotels={resHotels} />
-      ) : (
-        <NoMoveCarousel resHotels={resHotels} />
-      )}
+      {!data ? <Spinner /> : data.length > 5 ? <MoveCarousel resHotels={data} /> : <NoMoveCarousel resHotels={data} />}
     </StyledDiv>
   );
 };
