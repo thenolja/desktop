@@ -12,6 +12,7 @@ import { useAppSelector } from 'src/contexts/state.type';
 import { ReservationWrapper } from './Reservation.style';
 import { useDispatch } from 'react-redux';
 import { ReservationType } from 'components/Payment/Payment.type';
+import { AuthType } from '../../contexts/auth';
 
 const Reservation = () => {
 
@@ -32,7 +33,7 @@ const Reservation = () => {
     children: roomInfo.maxOccupancy.children,
   };
 
-  const { id: userId, phone } = useAppSelector(selectAuth);
+  const { id: userId, phone } = useAppSelector(selectAuth) as AuthType;
 
   const [reservation, setReservation] = useState<ReservationType["reservation"]>({
     userId: userId,

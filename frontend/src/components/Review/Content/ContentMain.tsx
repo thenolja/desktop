@@ -1,10 +1,10 @@
 import { Button, MainWrapper, Text } from "./Content.style";
 import { useAppSelector } from 'src/contexts/state.type';
-import { selectAuth } from 'src/contexts/auth';
+import { AuthType, selectAuth } from 'src/contexts/auth';
 import { ReviewProps } from "../Review.type";
 
 export const ContentMain = ({ review, handleDelete }: ReviewProps) => {
-  const { nickname } = useAppSelector(selectAuth);
+  const { nickname } = useAppSelector(selectAuth) as AuthType;;
 
   return (
     <MainWrapper>
