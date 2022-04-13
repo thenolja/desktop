@@ -1,5 +1,5 @@
 import { useState, memo } from 'react';
-import useSWR, { SWRConfig, Fetcher } from 'swr';
+import useSWR, { SWRConfig } from 'swr';
 
 import { getAllHotelList, getNearHotelList } from 'src/utils/requests';
 import { StyledH3, StyledDiv } from './CurrentGoods.style';
@@ -9,7 +9,7 @@ import Spinner from 'components/Spinner/Spinner';
 
 const CurrentGoods = () => {
   const [agreeInfo, setAgreeInfo] = useState<boolean>(false);
-  const { data } = useSWR('/api/local', fetcher, { revalidateIfStale: false });
+  const { data } = useSWR('/api/around', fetcher, { revalidateIfStale: false });
   // const [resHotels, setResHotels] = useState<object[]>([]);
 
   // const success = async ({ coords }): Promise<void> => {
