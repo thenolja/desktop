@@ -68,6 +68,10 @@ const Header = () => {
         <div>
           <button onClick={logout}>로그아웃</button>
           <Link to="/mypage">마이페이지</Link>
+<<<<<<< HEAD
+          <Link to="/cart">장바구니</Link>
+=======
+>>>>>>> 836874c7edc3f654b032eabd511d79fb062da440
         </div>
       )}
     </StyledHeader>
