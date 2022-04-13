@@ -10,20 +10,6 @@ import Spinner from 'components/Spinner/Spinner';
 const CurrentGoods = () => {
   const [agreeInfo, setAgreeInfo] = useState<boolean>(false);
   const { data } = useSWR('/api/around', fetcher, { revalidateIfStale: false });
-  // const [resHotels, setResHotels] = useState<object[]>([]);
-
-  // const success = async ({ coords }): Promise<void> => {
-  //   setResHotels(await getNearHotelList(coords));
-  //   setAgreeInfo(true);
-  // };
-
-  // const error = async (): Promise<void> => {
-  //   setResHotels(await getAllHotelList());
-  // };
-
-  // useEffect(() => {
-  //   navigator.geolocation.getCurrentPosition(success, error);
-  // }, []);
 
   function fetcher(): Promise<[]> {
     return new Promise((resolve, reject) => {

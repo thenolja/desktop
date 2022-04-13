@@ -10,7 +10,7 @@ import Spinner from 'components/Spinner/Spinner';
 const LocalGoods = () => {
   const { mutate } = useSWRConfig();
   const [local, setLocal] = useState<number>(758104);
-  const { data } = useSWR(`/api/${local}`, () => getLocalHotelList(local));
+  const { data } = useSWR(`/api/local/${local}`, () => getLocalHotelList(local));
 
   const locals = useMemo(
     () => [
@@ -28,23 +28,6 @@ const LocalGoods = () => {
     setLocal(+id);
     mutate('/api/local', () => getLocalHotelList(+id));
   };
-
-  // useEffect(() => {
-  //   const nowLocal = locals.find(localData => localData.destiId === +local);
-
-  //   const requestHotels = async (): Promise<void> => {
-  //     nowLocal.datas = await getLocalHotelList(+local);
-  //     setIsLoading(false);
-  //     setResHotels(nowLocal.datas);
-  //   };
-
-  //   if (nowLocal.datas.length > 0) {
-  //     setIsLoading(false);
-  //     setResHotels(nowLocal.datas);
-  //   } else {
-  //     requestHotels();
-  //   }
-  // }, [local]);
 
   return (
     <StyledDiv>
