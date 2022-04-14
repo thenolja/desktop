@@ -6,15 +6,16 @@ import UserInfo from 'components/Payment/UserInfo';
 import Visiting from 'components/Payment/Visiting';
 import { memo } from 'react';
 import { SelectedBody } from './Payment.style';
+import { FormType } from './Payment.type';
 import SelectedRoom from './SelectedRoom';
 
-const PaymentForm = ({ selectedRoom, sumbmitBtn, handleButton, handleSubmit, handleAgree, handleVisited, reservation, cost,handleUserClick, handleUserInput }) => {
+const PaymentForm = ({ selectedRoom, sumbmitBtn, handleButton, handleSubmit, handleAgree, handleVisited, reservation, cost,handleUserClick, handleUserInput }:FormType) => {
   return (
     <form>
       <fieldset>
         <legend className="srOnly">결제 정보</legend>
         <SelectedBody>
-          <UserInfo username={reservation.username} phone={reservation.phone} handleClick={handleUserClick} handleInput={handleUserInput} />
+          <UserInfo username={reservation.username} phone={reservation.phone} handleUserClick={handleUserClick} handleUserInput={handleUserInput} />
           <SelectedRoom selectedRoom={selectedRoom} />
         </SelectedBody>
         <Visiting hasCar={reservation.hasCar} handleVisited={handleVisited} />

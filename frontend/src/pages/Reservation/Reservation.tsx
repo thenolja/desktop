@@ -15,13 +15,14 @@ import swal from 'sweetalert';
 import { useAppSelector } from 'src/contexts/state.type';
 import changeDateFormatToIsoSTring from 'src/utils/dateToISOString';
 import { reducer } from './Reducer';
+import { RoomInfo } from 'components/Payment/Payment.type';
 
 const Reservation = () => {
 
   const { id: hotelId } = useParams();
   const { id: userId, phone } = useAppSelector(selectAuth) as AuthType;
 
-  const roomInfo = JSON.parse(window.sessionStorage.getItem("SELECTED_ROOM"));
+  const roomInfo = JSON.parse(window.sessionStorage.getItem("SELECTED_ROOM")) as RoomInfo;
   const hotelName = window.sessionStorage.getItem("HOTEL_NAME");
 
   const selectedRoom = {
@@ -50,7 +51,7 @@ const Reservation = () => {
       children: selectedRoom.children,
       spec: selectedRoom.name,
       username: '',
-      phone: null,
+      phone: '',
     },
 
     payment: {
@@ -67,44 +68,44 @@ const Reservation = () => {
   }
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const {reservation, payment, hotel, sameUser} = state;
+  const { reservation, payment, hotel, sameUser } = state;
 
   const sumbmitBtn = useRef<HTMLButtonElement>();
   const navigate = useNavigate();
 
-  const handleReservation=useCallback((id:string, value:string|boolean|number|object)=>{
+  const handleReservation = useCallback((id: string, value: string | boolean | number | object) => {
     dispatch({
       type: 'HANDLE_RESERVATION',
       id,
       value
     })
-  },[]);
-  
-  const handleAgree=useCallback((isAgrees:boolean)=>{
-    const id='isAgrees';
-    const value=isAgrees;
+  }, []);
+
+  const handleAgree = useCallback((isAgrees: boolean[]) => {
+    const id = 'isAgrees';
+    const value = isAgrees;
     handleReservation(id, value)
-  },[reservation]);
+  }, [reservation]);
 
   const handleUserClick = useCallback(() => {
-    const id='phone';
-    const value=!sameUser ? phone : '';
-    const isSameUser=!sameUser;
+    const id = 'phone';
+    const value = !sameUser ? phone : '';
+    const isSameUser = !sameUser;
     handleReservation(id, value);
     dispatch({
       type: 'SAME_USER',
       isSameUser
     });
-  },[reservation]);
+  }, [reservation]);
 
   const handleUserInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const {id, value}=e.target;
+    const { id, value } = e.target;
     handleReservation(id, value);
-  },[reservation]);
+  }, [reservation]);
 
   const handleVisited = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const id='hasCar';
-    const value=e.target.checked;
+    const id = 'hasCar';
+    const value = e.target.checked;
     handleReservation(id, value);
   }, [reservation]);
 
@@ -129,7 +130,7 @@ const Reservation = () => {
       }
     })
 
-  },[])
+  }, [])
 
   const authDispatch = useDispatch();
 
@@ -152,17 +153,17 @@ const Reservation = () => {
   return (
     <ReservationWrapper>
       <h2 className="srOnly">예약 페이지</h2>
-      <PaymentForm 
-        selectedRoom={selectedRoom} 
-        sumbmitBtn={sumbmitBtn} 
+      <PaymentForm
+        selectedRoom={selectedRoom}
+        sumbmitBtn={sumbmitBtn}
         reservation={reservation}
-        handleButton={handleButton} 
+        handleButton={handleButton}
         handleSubmit={handleSubmit}
         handleAgree={handleAgree}
-        handleVisited={handleVisited} 
+        handleVisited={handleVisited}
         handleUserClick={handleUserClick}
         handleUserInput={handleUserInput}
-        cost={selectedRoom.cost} 
+        cost={selectedRoom.cost}
       />
     </ReservationWrapper>
   );

@@ -1,4 +1,5 @@
-import { FormEventHandler, LegacyRef, MouseEvent, MouseEventHandler } from "react"
+import { DetailRoomProps } from "components/Room/Room.types"
+import { ChangeEventHandler, FormEventHandler, LegacyRef, MouseEvent, MouseEventHandler } from "react"
 
 export interface ReservationType{
   reservation:{
@@ -32,18 +33,30 @@ export interface SelectedRoomType{
   }
 }
 
-export interface SetReservationType extends ReservationType{
-  setReservation: (value: object) => void
-}
-
-export interface UserInfoType extends SetReservationType{
-  phone: string
-}
-
-export interface FormType extends SetReservationType, SelectedRoomType{
+export interface FormType extends AgreeType,VisitType, UserInfoType, SelectedRoomType,ReservationType{
   sumbmitBtn: LegacyRef<HTMLButtonElement>,
-  handleClick: MouseEventHandler<HTMLButtonElement>,
+  handleButton: MouseEventHandler<HTMLButtonElement>,
   handleSubmit: FormEventHandler<HTMLButtonElement>, 
-  phone:string, 
   cost:number
+}
+
+export interface UserInfoType{
+  username?: string, 
+  phone?: string, 
+  handleUserClick: MouseEventHandler<HTMLInputElement>, 
+  handleUserInput: FormEventHandler<HTMLInputElement>
+}
+
+export interface VisitType{
+  hasCar?: boolean,
+  handleVisited: ChangeEventHandler<HTMLInputElement>
+}
+
+export interface AgreeType{
+  handleAgree: (isAgrees: boolean[]) => void
+}
+
+export interface RoomInfo extends DetailRoomProps{
+  startDate: Date, 
+  endDate: Date
 }

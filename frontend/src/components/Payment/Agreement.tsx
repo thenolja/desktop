@@ -1,7 +1,8 @@
 import { memo, useCallback, useRef } from "react";
 import { FormArticle } from "./Payment.style";
+import { AgreeType } from "./Payment.type";
 
-const Agreement = ({ handleAgree }) => {
+const Agreement = ({ handleAgree }:AgreeType) => {
 
   const totalAgree = useRef<HTMLInputElement>();
   const agrees = useRef<HTMLInputElement[]>([]);

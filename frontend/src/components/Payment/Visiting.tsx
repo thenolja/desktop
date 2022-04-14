@@ -1,7 +1,8 @@
 import { memo, useEffect, useRef } from "react";
 import { FormArticle, Necessary, SectionBody, SectionTitle } from "./Payment.style";
+import { VisitType } from "./Payment.type";
 
-const Visiting = ({ hasCar, handleVisited }) => {
+const Visiting = ({ hasCar, handleVisited }: VisitType) => {
 
   const carRef = useRef<HTMLInputElement>();
 
