@@ -1,23 +1,15 @@
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 import { FormArticle, Necessary, SectionBody, SectionTitle } from "./Payment.style";
-import { SetReservationType } from "./Payment.type";
+import { VisitType } from "./Payment.type";
 
-
-const Visiting = ({ reservation, setReservation }:SetReservationType) => {
+const Visiting = ({ hasCar, handleVisited }: VisitType) => {
 
   const carRef = useRef<HTMLInputElement>();
 
   // 숙소 방문 수단을 기본적으로 차량으로 세팅
   useEffect(() => {
-    carRef.current.checked = reservation.hasCar;
+    carRef.current.checked = hasCar;
   }, []);
-
-  const handleVisited = () => {
-    setReservation({
-      ...reservation,
-      hasCar: carRef.current.checked
-    })
-  }
 
   return (
     <FormArticle>
@@ -38,4 +30,4 @@ const Visiting = ({ reservation, setReservation }:SetReservationType) => {
   )
 }
 
-export default Visiting;
+export default memo(Visiting);
