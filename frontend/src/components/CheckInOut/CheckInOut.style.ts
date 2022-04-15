@@ -1,5 +1,21 @@
 import styled from "styled-components";
 
+const DatePickerWrapper = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+  input {
+    color: transparent;
+    display: block;
+    width: 100%;
+    height: 60px;
+    cursor: pointer;
+  }
+`;
+
 const CheckInOutWrapper = styled.section`
   padding: 16px 0;
   margin: 0 2px;
@@ -47,4 +63,4 @@ const Contour = styled.div`
   background: #ccc;
 `;
 
-export {CheckInOutWrapper, Check, DatePick, SVG, Contour};
+export {DatePickerWrapper, CheckInOutWrapper, Check, DatePick, SVG, Contour};

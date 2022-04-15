@@ -1,12 +1,12 @@
-import { useState } from "react";
 import Calendar from "./Calendar";
 import {CheckInOutWrapper, Check, DatePick, SVG, Contour} from "./CheckInOut.style";
 import { DateType } from "./Date.type";
 import { addDays } from 'date-fns';
+import { memo } from "react";
 
 const KDay = ['일', '월', '화', '수', '목', '금', '토'];
 
-const CheckInOut = ({ startDate, setStartDate, endDate, setEndDate }: DateType) => {
+const CheckInOut = ({ startDate, setCheckInDate, endDate, setCheckOutDate }: DateType) => {
   
   return(
     <CheckInOutWrapper>
@@ -16,7 +16,7 @@ const CheckInOut = ({ startDate, setStartDate, endDate, setEndDate }: DateType) 
           <DatePick>
             <Calendar
               startDate={startDate}
-              setStartDate={setStartDate}
+              setDate={setCheckInDate}
               endDate={endDate}
               minDate={new Date()}
             />
@@ -32,7 +32,7 @@ const CheckInOut = ({ startDate, setStartDate, endDate, setEndDate }: DateType) 
           <DatePick>
             <Calendar
               startDate={startDate}
-              setStartDate={setEndDate}
+              setDate={setCheckOutDate}
               endDate={endDate}
               minDate={addDays(startDate,1)}
             />
@@ -47,4 +47,4 @@ const CheckInOut = ({ startDate, setStartDate, endDate, setEndDate }: DateType) 
   )
 };
 
-export default CheckInOut;
+export default memo(CheckInOut);
