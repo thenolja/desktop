@@ -1,11 +1,12 @@
 import { Buttons, SelectBtn, SelectCartBtn, Selected } from "./Selector.style"
 import { Link } from 'react-router-dom';
 import { memo } from "react";
+import { SelectorType } from "./Seletor.type";
 
-const SelectBar = ({ selectedRoom, hotelId, setSessionStorage }) => {
+const SelectBar = ({ selectedRoom, hotelId, setSessionStorage }: SelectorType) => {
   return (
     <Buttons>
-      {selectedRoom && selectedRoom.name ? (
+      {selectedRoom && selectedRoom.name ?
         <>
           <Selected>
             현재 선택된 객실 : <span>{selectedRoom.name}</span>
@@ -19,12 +20,12 @@ const SelectBar = ({ selectedRoom, hotelId, setSessionStorage }) => {
             </Link>
           </div>
         </>
-      ) : (
+        :
         <div>
           <SelectCartBtn disabled>장바구니 담기</SelectCartBtn>
           <SelectBtn disabled>예약하기</SelectBtn>
         </div>
-      )}
+      }
     </Buttons>
   )
 }
