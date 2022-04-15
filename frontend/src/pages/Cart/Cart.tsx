@@ -1,6 +1,6 @@
 import SelectHotel from '../../components/Cart/SelectedHotel';
 import { WrapperInput, SelectedPrice } from './Cart.style';
-import { Buttons, SelectBtn, SelectCartBtn } from '../Detail/Rooms.style';
+import { Buttons, SelectBtn } from '../../components/Room/Selector/Selector.style';
 
 const Cart = () => {
   return (
