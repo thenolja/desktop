@@ -1,23 +1,28 @@
-import { MouseEvent, useEffect, useRef, useState } from 'react';
+import React, { MouseEvent, useCallback, useEffect, useReducer, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import swal from 'sweetalert';
+import { useDispatch } from 'react-redux';
+import { AuthType, authUpdate, selectAuth } from 'src/contexts/auth';
+
+import { ReservationWrapper } from './Reservation.style';
 import PaymentForm from 'components/Payment/PaymentForm';
-import changeDateFormatToIsoSTring from 'src/utils/dateToISOString';
+
 import { postHotel } from 'src/utils/hotels';
 import { postReservation } from 'src/utils/reservations';
 import { updateReservation } from 'src/utils/users';
 import { postPayment } from 'src/utils/payment';
-import { authUpdate, selectAuth } from 'src/contexts/auth';
+
+import swal from 'sweetalert';
 import { useAppSelector } from 'src/contexts/state.type';
-import { ReservationWrapper } from './Reservation.style';
-import { useDispatch } from 'react-redux';
-import { ReservationType } from 'components/Payment/Payment.type';
+import changeDateFormatToIsoSTring from 'src/utils/dateToISOString';
+import { reducer } from './Reducer';
+import { RoomInfo } from 'components/Payment/Payment.type';
 
 const Reservation = () => {
 
   const { id: hotelId } = useParams();
+  const { id: userId, phone } = useAppSelector(selectAuth) as AuthType;
 
-  const roomInfo = JSON.parse(window.sessionStorage.getItem("SELECTED_ROOM"));
+  const roomInfo = JSON.parse(window.sessionStorage.getItem("SELECTED_ROOM")) as RoomInfo;
   const hotelName = window.sessionStorage.getItem("HOTEL_NAME");
 
   const selectedRoom = {
@@ -32,38 +37,80 @@ const Reservation = () => {
     children: roomInfo.maxOccupancy.children,
   };
 
-  const { id: userId, phone } = useAppSelector(selectAuth);
+  const initialState = {
+    reservation: {
+      userId: userId,
+      hotelAPIId: +hotelId,
+      isAgrees: [false, false, false],
+      checkInDate: selectedRoom.checkIn,
+      checkOutDate: selectedRoom.checkOut,
+      hasCar: true,
+      cost: selectedRoom.cost,
+      occupancy: selectedRoom.occupancy,
+      adults: selectedRoom.adults,
+      children: selectedRoom.children,
+      spec: selectedRoom.name,
+      username: '',
+      phone: '',
+    },
 
-  const [reservation, setReservation] = useState<ReservationType["reservation"]>({
-    userId: userId,
-    hotelAPIId: +hotelId,
-    isAgrees: [false, false, false],
-    checkInDate: selectedRoom.checkIn,
-    checkOutDate: selectedRoom.checkOut,
-    hasCar: true,
-    cost: selectedRoom.cost,
-    occupancy: selectedRoom.occupancy,
-    adults: selectedRoom.adults,
-    children: selectedRoom.children,
-    spec: selectedRoom.name,
-    username: '',
-    phone: null,
-  });
+    payment: {
+      userId: userId,
+      cost: selectedRoom.cost
+    },
 
-  const [payment] = useState({
-    userId: userId,
-    cost: selectedRoom.cost
-  });
+    hotel: {
+      name: selectedRoom.hotelName,
+      photo: selectedRoom.photo
+    },
 
-  const [hotel] = useState({
-    name: selectedRoom.hotelName,
-    photo: selectedRoom.photo
-  })
+    sameUser: false
+  }
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { reservation, payment, hotel, sameUser } = state;
 
   const sumbmitBtn = useRef<HTMLButtonElement>();
   const navigate = useNavigate();
 
-  const handleClick = (e: MouseEvent) => {
+  const handleReservation = useCallback((id: string, value: string | boolean | number | object) => {
+    dispatch({
+      type: 'HANDLE_RESERVATION',
+      id,
+      value
+    })
+  }, []);
+
+  const handleAgree = useCallback((isAgrees: boolean[]) => {
+    const id = 'isAgrees';
+    const value = isAgrees;
+    handleReservation(id, value)
+  }, [reservation]);
+
+  const handleUserClick = useCallback(() => {
+    const id = 'phone';
+    const value = !sameUser ? phone : '';
+    const isSameUser = !sameUser;
+    handleReservation(id, value);
+    dispatch({
+      type: 'SAME_USER',
+      isSameUser
+    });
+  }, [reservation]);
+
+  const handleUserInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    handleReservation(id, value);
+  }, [reservation]);
+
+  const handleVisited = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const id = 'hasCar';
+    const value = e.target.checked;
+    handleReservation(id, value);
+  }, [reservation]);
+
+
+  const handleButton = useCallback((e: MouseEvent) => {
     e.preventDefault();
 
     swal({
@@ -83,9 +130,9 @@ const Reservation = () => {
       }
     })
 
-  }
+  }, [])
 
-  const dispatch = useDispatch();
+  const authDispatch = useDispatch();
 
   const handleSubmit = async () => {
     const hotelData = await postHotel(hotel);
@@ -94,7 +141,7 @@ const Reservation = () => {
     const reservationId = reservationdata.id;
     await postPayment(reservationId, payment);
     const reservations = await updateReservation(userId, reservationId);
-    dispatch(authUpdate({ reservations: reservations ? reservations : [] }));
+    authDispatch(authUpdate({ reservations: reservations ? reservations : [] }));
   }
 
   useEffect(() => {
@@ -106,7 +153,18 @@ const Reservation = () => {
   return (
     <ReservationWrapper>
       <h2 className="srOnly">예약 페이지</h2>
-      <PaymentForm selectedRoom={selectedRoom} sumbmitBtn={sumbmitBtn} handleClick={handleClick} handleSubmit={handleSubmit} reservation={reservation} setReservation={setReservation} phone={phone} cost={selectedRoom.cost} />
+      <PaymentForm
+        selectedRoom={selectedRoom}
+        sumbmitBtn={sumbmitBtn}
+        reservation={reservation}
+        handleButton={handleButton}
+        handleSubmit={handleSubmit}
+        handleAgree={handleAgree}
+        handleVisited={handleVisited}
+        handleUserClick={handleUserClick}
+        handleUserInput={handleUserInput}
+        cost={selectedRoom.cost}
+      />
     </ReservationWrapper>
   );
 };
