@@ -5,11 +5,11 @@ import { DetailRoomProps, RoomProps } from './Room.types';
 import { RoomImage } from './RoomImage';
 import { RoomInfo } from './RoomInfo';
 
-const Room = ({ room, setSelectedRoom }:{ room:DetailRoomProps, setSelectedRoom: (value: RoomProps) => void}):JSX.Element => {
+const Room = ({ room, setSelector }:{ room:DetailRoomProps, setSelector: (value: RoomProps) => void}):JSX.Element => {
   const [modal, setModal] = useState(false);
 
   const handleClick = ():void => {
-    setSelectedRoom(room);
+    setSelector(room);
     toggleModal();
   };
 
