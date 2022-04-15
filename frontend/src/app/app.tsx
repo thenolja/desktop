@@ -20,7 +20,7 @@ const Search = lazy(() => import('src/pages/Search/Search'));
 const Amenity = lazy(() => import('components/Amenity/Amenity'));
 const Reservation = lazy(() => import('src/pages/Reservation/Reservation'));
 const MyPage = lazy(() => import('src/pages/MyPage/MyPage'));
-const Cart = lazy(() => import('src/components/Cart/Cart'));
+const Cart = lazy(() => import('src/pages/Cart/Cart'));
 
 const App = () => {
   const { id, nickname, email } = useAppSelector(selectAuth) as AuthType;
