@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useScrollPrevent } from 'src/hooks/useScroll';
-import { authUpdate, selectAuth } from 'src/contexts/auth';
+import { AuthType, authUpdate, selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
 
 import DatePickerComponent from './DatePicker';
@@ -15,7 +15,7 @@ import { updateReview } from 'src/utils/users';
 import { useDispatch } from 'react-redux';
 
 const Reservations = () => {
-  const { id, nickname } = useAppSelector(selectAuth);
+  const { id, nickname } = useAppSelector(selectAuth) as AuthType;
 
   const [reservationList, setReservationList] = useState<Object[]>([]);
 
@@ -101,9 +101,9 @@ const Reservations = () => {
       <h2>예약내역</h2>
       <DatePickerComponent
         startDate={startDate}
-        setStartDate={setStartDate}
+        setCheckInDate={setStartDate}
         endDate={endDate}
-        setEndDate={setEndDate}
+        setCheckOutDate={setEndDate}
       />
 
       {showDialog && <PostingReview setDialog={setDialog} setReservationList={setReservationList} />}
