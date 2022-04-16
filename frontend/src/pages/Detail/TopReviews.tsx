@@ -1,5 +1,5 @@
 import { ReviewType } from "components/Review/Content/Content.type";
-import { ReviewList } from "components/Review/ReviewList";
+import ReviewList from "components/Review/ReviewList";
 import ReviewTitle from "components/Review/ReviewTitle";
 import Spinner from "components/Spinner/Spinner";
 import { useEffect, useState } from "react";

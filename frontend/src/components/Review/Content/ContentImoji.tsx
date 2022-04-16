@@ -1,7 +1,8 @@
+import { memo } from "react"
 import { Imoji } from "./Content.style"
 import { ImojiType } from "./Content.type"
 
-export const ContentImoji = ({ rating, star }: ImojiType) => {
+const ContentImoji = ({ rating, star }: ImojiType) => {
   return (
     <Imoji>
       {
@@ -13,3 +14,5 @@ export const ContentImoji = ({ rating, star }: ImojiType) => {
     </Imoji>
   )
 }
+
+export default memo(ContentImoji);

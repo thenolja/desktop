@@ -1,8 +1,9 @@
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { memo } from 'react';
 import { Average, Star } from './Title.style';
 
-export const AverageScore = ({ rate }: { rate: string }) => {
+const AverageScore = ({ rate }: { rate: string }) => {
   return (
     <article>
       <div>
@@ -15,3 +16,5 @@ export const AverageScore = ({ rate }: { rate: string }) => {
     </article>
   )
 }
+
+export default memo(AverageScore);
