@@ -2,9 +2,10 @@ import { Button, MainWrapper, Text } from "./Content.style";
 import { useAppSelector } from 'src/contexts/state.type';
 import { AuthType, selectAuth } from 'src/contexts/auth';
 import { ReviewProps } from "../Review.type";
+import { memo } from "react";
 
-export const ContentMain = ({ review, handleDelete }: ReviewProps) => {
-  const { nickname } = useAppSelector(selectAuth) as AuthType;;
+const ContentMain = ({ review, handleDelete }: ReviewProps) => {
+  const { nickname } = useAppSelector(selectAuth) as AuthType;
 
   return (
     <MainWrapper>
@@ -15,3 +16,5 @@ export const ContentMain = ({ review, handleDelete }: ReviewProps) => {
     </MainWrapper>
   )
 }
+
+export default memo(ContentMain)

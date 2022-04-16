@@ -1,15 +1,17 @@
 import { memo, useEffect, useState } from 'react';
-import { getReviews } from 'src/utils/requests';
-import ReviewTitle from '../../components/Review/ReviewTitle';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { ReviewList } from 'components/Review/ReviewList';
-import { TopBtn } from 'components/Review/TopBtn';
-import Spinner from 'components/Spinner/Spinner';
+
+import { getReviews } from 'src/utils/requests';
 import { deleteReview, getMockdataReviews } from 'src/utils/reviews';
-import swal from 'sweetalert';
 import { updateReview } from 'src/utils/users';
 import { authUpdate } from 'src/contexts/auth';
-import { useDispatch } from 'react-redux';
+import swal from 'sweetalert';
+
+import ReviewTitle from 'components/Review/ReviewTitle';
+import ReviewList from 'components/Review/ReviewList';
+import TopBtn from 'components/Review/TopBtn';
+import Spinner from 'components/Spinner/Spinner';
 
 const Reviews = (): JSX.Element => {
   const { id } = useParams();
@@ -67,14 +69,15 @@ const Reviews = (): JSX.Element => {
     return () => observer && observer.disconnect();
   }, [target]);
 
-  const handleDelete = (e:React.MouseEvent<HTMLButtonElement>) => {
+  const handleDelete = (e:React.MouseEvent) => {
+    const target = e.target as HTMLButtonElement;
     swal({
       title: '삭제하시겠습니까?',
       icon: 'info',
       buttons: ['취소', '삭제'],
     }).then(result => {
       if (result) {
-        deleteReviewFunc(e.currentTarget.id, e.currentTarget.name);
+        deleteReviewFunc(target.id, target.name);
       }
     });
   };
