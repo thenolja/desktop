@@ -1,4 +1,4 @@
-export interface RoomProps {
+export interface RoomProps extends ImageType{
   id?: number;
   name?: string;
   standardPeople?:number;
@@ -16,7 +16,7 @@ interface RatePlanType extends PriceInfoType{
 }
 
 export interface ImageType{
-  images:[{
+  images?:[{
     fullSizeUrl: string;
     caption: string;
   }]
@@ -53,8 +53,9 @@ export interface PriceInfoType {
         heading: string,
         value: string,
       }
-    },
-    current: string
+    };
+    current: string;
+    unformattedCurrent:number;
   }
 }
 

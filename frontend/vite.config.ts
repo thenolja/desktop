@@ -1,7 +1,7 @@
 import { defineConfig, loadEnv } from 'vite';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import { resolve } from 'path';
-import compress from 'vite-plugin-compression';
+// import compress from 'vite-plugin-compression';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig(configEnv => {
@@ -10,7 +10,6 @@ export default defineConfig(configEnv => {
 
   return {
     plugins: [
-      compress(),
       react(),
       createHtmlPlugin({
         inject: { data: { kakaoKey: env.VITE_APP_API_KAKAO_KEY } },
@@ -28,7 +27,6 @@ export default defineConfig(configEnv => {
       outDir: resolve(__dirname, 'dist'),
       chunkSizeWarningLimit: 1500,
       sourcemap: false,
-      minify: 'esbuild',
       watch: {
         include: 'src/**',
         exclude: 'node_modules/**',

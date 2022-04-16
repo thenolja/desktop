@@ -8,20 +8,32 @@ import { getHotelInfo, getHotelPhotos } from 'src/utils/requests';
 import Spinner from 'components/Spinner/Spinner';
 import { MetaTag, SEOMetaTag, MetaTagDefaults } from 'components/SeoMetaTag/SEOMetaTag';
 
-const findHotelIntro = (body: Object[]) => {
-  interface HotelIntro {
-    name?: string;
-    tagline?: string;
-    formattedScale?: string;
-    formattedRating?: string;
-    totalcnt?: number;
-    starRating: number;
-    badgeText: string;
-    hotelSize: string[];
-    arriving: string;
-    leaving: string;
-  }
+interface HotelIntro {
+  name?: string;
+  tagline?: string;
+  formattedScale?: string;
+  formattedRating?: string;
+  totalcnt?: number;
+  starRating: number;
+  badgeText: string;
+  hotelSize: string[];
+  arriving: string;
+  leaving: string;
+}
 
+interface MapInfo {
+  name?: string;
+  fullAddress?: string;
+  latitude?: number;
+  longitude?: number;
+}
+
+// type key 와 type 값을 허용하는 인터페이스
+interface KeyValue {
+  [propertyDescription: string]: any;
+}
+
+const findHotelIntro = (body: KeyValue) => {
   let editTag = body.propertyDescription.tagline.toString().replace(/[<b></b>]/g, '');
   let formattedScale = (body.guestReviews.brands.formattedScale / 2).toFixed(1);
   const formattedRating = (body.guestReviews.brands.formattedRating / 2).toFixed(1);
@@ -42,14 +54,7 @@ const findHotelIntro = (body: Object[]) => {
   return hotelIntro;
 };
 
-const findHotelMap = (body: Object[]) => {
-  interface MapInfo {
-    name?: string;
-    fullAddress?: string;
-    latitude?: number;
-    longitude?: number;
-  }
-
+const findHotelMap = (body: KeyValue) => {
   const hotelMapinfo: MapInfo = {
     name: body.propertyDescription.name,
     fullAddress: body.propertyDescription.localisedAddress.fullAddress,
@@ -60,13 +65,13 @@ const findHotelMap = (body: Object[]) => {
   return hotelMapinfo;
 };
 
-const settingHotelImgage = (imgsArray: object[]): string[] => {
+const settingHotelImgage = (imgsArray: KeyValue[]): string[] => {
   let sizeUrl = '?impolicy=fcrop&w=1000&h=666&q=medium';
 
   return imgsArray.map(img => img.baseUrl.replace('{size}', 'z').concat(sizeUrl));
 };
 
-const settingSEOTags = (body: Object[]): MetaTag => {
+const settingSEOTags = (body: KeyValue): MetaTag => {
   return {
     title: body.propertyDescription.name,
     description: body.propertyDescription.tagline.toString().replace(/[<b></b>]/g, ''),
@@ -76,8 +81,7 @@ const settingSEOTags = (body: Object[]): MetaTag => {
 
 const HotelIntro = () => {
   const { id } = useParams();
-
-  const [hotelId, setHotelId] = useState<number | string>(id);
+  const [hotelId, setHotelId] = useState<string>(id);
   const [hotelInfo, setHotelInfo] = useState<object>({});
   const [coordinates, setCoordinates] = useState<object>({});
   const [photos, setPhotos] = useState<string[]>([]);
