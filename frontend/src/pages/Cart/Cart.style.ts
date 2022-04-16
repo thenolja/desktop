@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Selected } from '../Detail/Rooms.style';
+import { Selected } from '../../components/Room/Selector/Selector.style';
 
 export const InputStyled = styled.div`
   input[type='checkbox'] {

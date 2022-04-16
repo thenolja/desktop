@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { TopButton } from './Review.style';
 import { throttle } from 'lodash';
 
-export const TopBtn=()=>{
+const TopBtn=()=>{
   const refDiv = useRef<HTMLDivElement>(null);
 
   useEffect(()=>{
@@ -24,3 +24,5 @@ export const TopBtn=()=>{
     <TopButton ref={refDiv}>TOP</TopButton>
   )
 }
+
+export default memo(TopBtn);

@@ -1,7 +1,7 @@
 import { ReviewProps } from './Review.type';
 import { memo } from 'react';
-import { ContentHeader } from './Content/ContentHeader';
-import { ContentMain } from './Content/ContentMain';
+import ContentHeader from './Content/ContentHeader';
+import ContentMain from './Content/ContentMain';
 
 const Review = ({review, handleDelete}: ReviewProps) => {
 

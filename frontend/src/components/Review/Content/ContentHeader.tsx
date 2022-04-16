@@ -1,9 +1,10 @@
+import { memo } from "react"
 import { FlexBox } from "./Content.style"
 import { ReviewType } from "./Content.type"
-import { ContentImoji } from "./ContentImoji"
-import { ContentInfo } from "./ContentInfo"
+import ContentImoji from "./ContentImoji"
+import ContentInfo from "./ContentInfo"
 
-export const ContentHeader = ({ review }: ReviewType) => {
+const ContentHeader = ({ review }: ReviewType) => {
   return (
     <FlexBox>
       <ContentImoji rating={review.rating} star={review.star} />
@@ -11,3 +12,5 @@ export const ContentHeader = ({ review }: ReviewType) => {
     </FlexBox>
   )
 }
+
+export default memo(ContentHeader);

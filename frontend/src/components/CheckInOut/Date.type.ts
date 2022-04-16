@@ -1,7 +1,8 @@
 export interface DateType{
   startDate?: Date;
-  setStartDate?: (value: Date) => void;
+  setCheckInDate?: (value: Date) => void;
   endDate?: Date;
-  setEndDate?: (value: Date) => void;
+  setCheckOutDate?: (value: Date) => void;
   minDate?: Date;
+  setDate?: (value: Date) => void;
 }

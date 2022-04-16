@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import { getReviewTitleData } from 'src/utils/requests';
 import { getMockdataReviewsTitle } from 'src/utils/reviews';
 import { Title } from './Review.style';
-import { AverageScore } from './Title/AverageScore';
-import { NumberOfTitle } from './Title/NumberOfTitle';
+import AverageScore from './Title/AverageScore';
+import NumberOfTitle from './Title/NumberOfTitle';
 
 const ReviewTitle = () => {
   const { id } = useParams();
