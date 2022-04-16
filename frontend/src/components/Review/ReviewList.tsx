@@ -1,8 +1,9 @@
+import { memo } from 'react';
 import Review from './Review';
 import { ReviewLi } from './Review.style';
 import { ReviewsType } from './Review.type';
 
-export const ReviewList = ({ reviews, handleDelete }: ReviewsType ): JSX.Element => {
+const ReviewList = ({ reviews, handleDelete }: ReviewsType ): JSX.Element => {
   return (
     <ReviewLi>
       {reviews.map((review, index) => (
@@ -13,3 +14,5 @@ export const ReviewList = ({ reviews, handleDelete }: ReviewsType ): JSX.Element
     </ReviewLi>
   );
 };
+
+export default memo(ReviewList);

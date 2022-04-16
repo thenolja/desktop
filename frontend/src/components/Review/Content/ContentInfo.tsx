@@ -2,8 +2,9 @@ import { Info, Star, Time } from "./Content.style";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ReviewType } from "./Content.type"
+import { memo } from "react";
 
-export const ContentInfo = ({ review }: ReviewType) => {
+const ContentInfo = ({ review }: ReviewType) => {
   const StarScore = (star: number) => {
     const stars = [];
     for (let i = 0; i < star; i++) stars.push(<Star key={i}><FontAwesomeIcon icon={faStar} /></Star>);
@@ -30,3 +31,5 @@ export const ContentInfo = ({ review }: ReviewType) => {
     </div>
   )
 }
+
+export default memo(ContentInfo);
