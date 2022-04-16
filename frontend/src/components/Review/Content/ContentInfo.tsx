@@ -6,7 +6,7 @@ import { ReviewType } from "./Content.type"
 export const ContentInfo = ({ review }: ReviewType) => {
   const StarScore = (star: number) => {
     const stars = [];
-    for (let i = 0; i < star; i++) stars.push(<Star><FontAwesomeIcon icon={faStar} /></Star>);
+    for (let i = 0; i < star; i++) stars.push(<Star key={i}><FontAwesomeIcon icon={faStar} /></Star>);
     return stars;
   }
 
