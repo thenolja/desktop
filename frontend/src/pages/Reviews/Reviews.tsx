@@ -67,14 +67,15 @@ const Reviews = (): JSX.Element => {
     return () => observer && observer.disconnect();
   }, [target]);
 
-  const handleDelete = (e:React.MouseEvent<HTMLButtonElement>) => {
+  const handleDelete = (e:React.MouseEvent) => {
+    const target = e.target as HTMLButtonElement;
     swal({
       title: '삭제하시겠습니까?',
       icon: 'info',
       buttons: ['취소', '삭제'],
     }).then(result => {
       if (result) {
-        deleteReviewFunc(e.currentTarget.id, e.currentTarget.name);
+        deleteReviewFunc(target.id, target.name);
       }
     });
   };
