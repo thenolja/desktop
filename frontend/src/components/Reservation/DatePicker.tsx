@@ -5,7 +5,7 @@ import { DateType } from '../CheckInOut/Date.type';
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePickerContainer from './DataPicker.style';
 
-const DatePickerComponent = ({ startDate, setStartDate, endDate, setEndDate }: DateType) => {
+const DatePickerComponent = ({ startDate, setCheckInDate, endDate, setCheckOutDate }: DateType) => {
   return (
     <DatePickerContainer>
       <label className="srOnly" htmlFor="selectStart">
@@ -17,7 +17,7 @@ const DatePickerComponent = ({ startDate, setStartDate, endDate, setEndDate }: D
         selected={startDate}
         dateFormat="yyyy-MM-dd"
         onChangeRaw={e => e.preventDefault()}
-        onChange={(date: Date) => setStartDate(date)}
+        onChange={(date: Date) => setCheckInDate(date)}
       />
 
       <label className="srOnly" htmlFor="selectEnd">
@@ -30,7 +30,7 @@ const DatePickerComponent = ({ startDate, setStartDate, endDate, setEndDate }: D
         dateFormat="yyyy-MM-dd"
         minDate={addDays(startDate, 1)}
         onChangeRaw={e => e.preventDefault()}
-        onChange={(date: Date) => setEndDate(date)}
+        onChange={(date: Date) => setCheckOutDate(date)}
       />
     </DatePickerContainer>
   );

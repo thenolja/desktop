@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { UserInfoFormContainer } from './Profile.style';
-import { authUpdate, selectAuth } from 'src/contexts/auth';
+import { AuthType, authUpdate, selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
 import { useDispatch } from 'react-redux';
 import { updateUser } from 'src/utils/users';
 import { ProfileEditor } from './User.type';
 
 const UserInfoForm = ({ isEditing, setEditingMode }: ProfileEditor) => {
-  const { id, nickname, email, phone } = useAppSelector(selectAuth);
+  const { id, nickname, email, phone } = useAppSelector(selectAuth) as AuthType;
 
   const [tempNickname, setNickname] = useState<string>(nickname);
   const [tempPhone, setPhone] = useState<string>(phone);

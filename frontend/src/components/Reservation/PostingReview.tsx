@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { createPortal } from 'react-dom';
 import { useEffect, useRef, useState } from 'react';
 import { patchReview } from 'src/utils/reviews';
-import { authUpdate, selectAuth } from 'src/contexts/auth';
+import { AuthType, authUpdate, selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
 import { PostingReviewProps } from './Reservation.type';
 import { useDispatch } from 'react-redux';
@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 const PostingReview = ({ setDialog, setReservationList }: PostingReviewProps) => {
   const selectedItem = sessionStorage.getItem('selectedItem');
   const { id: itemId, hotelAPIId, photo, name, spec, checkInDate, checkOutDate, review } = JSON.parse(selectedItem);
-  const { id: userId, nickname, myReviews } = useAppSelector(selectAuth);
+  const { id: userId, nickname, myReviews } = useAppSelector(selectAuth) as AuthType;
   const [reviewText, setReviewText] = useState<string>(review ? review.reviewText : '');
 
   const dispatch = useDispatch();

@@ -32,10 +32,11 @@ const getMockdataReviewsTitle = async (id: string):Promise<[mockTotal:number, mo
     .catch(e => console.log(e));
 };
 
-const deleteReview =async (id:string) => {
-  return await axios.delete(`/api/review/${id}`)
-    .then(({data})=>data)
-    .catch(e=>console.log(e));
-}
+const deleteReview = async (id: string | number) => {
+  return await axios
+    .delete(`/api/review/${id}`)
+    .then(({ data }) => data)
+    .catch(e => console.log(e));
+};
 
 export { patchReview, getMockdataReviews, getMockdataReviewsTitle, deleteReview };
