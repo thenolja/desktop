@@ -1,5 +1,7 @@
 import { memo, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import useSWR, { SWRConfig } from 'swr';
+
 import { getReviewTitleData } from 'src/utils/requests';
 import { getMockdataReviewsTitle } from 'src/utils/reviews';
 import { Title } from './Review.style';
@@ -7,34 +9,31 @@ import AverageScore from './Title/AverageScore';
 import NumberOfTitle from './Title/NumberOfTitle';
 
 const ReviewTitle = () => {
-  const { id } = useParams();
-  const [hotelId] = useState<string>(id);
+  const { id:hotelId } = useParams();
 
-  const [total, setTotal] = useState<{ len: number, rate: string }>({
-    len: 0,
-    rate: ''
-  })
+  const getReivewTitle = async () => {
+    const title = await getReviewTitleData(hotelId);
+    const [mockTotal, mockRating] = await getMockdataReviewsTitle(hotelId);
 
-  const { len, rate } = total;
-
-  useEffect(() => {
-    const getReivewTitle = async () => {
-      const title = await getReviewTitleData(hotelId);
-      const [mockTotal, mockRating] = await getMockdataReviewsTitle(hotelId);
-
-      setTotal({
-        len: title.total + mockTotal,
-        rate: ((title.rating * title.total / 2 + mockRating) / (title.total + mockTotal)).toFixed(1)
-      })
-    }
-    getReivewTitle();
-  }, []);
+    const len = title.total + mockTotal;
+    const rate = ((title.rating * title.total / 2 + mockRating) / (title.total + mockTotal)).toFixed(1)
+    return [len, rate];
+  }
+  
+  function fetcher() {
+    return new Promise(resolve => {
+      resolve(getReivewTitle());
+    });
+  }
+  const {data:total, error}=useSWR('api/topReview/title',fetcher);
 
   return (
-    <Title>
-      <NumberOfTitle len={len} />
-      <AverageScore rate={rate} />
-    </Title>
+    <SWRConfig value={{ provider: cache => cache }}>
+      <Title>
+        {total && <NumberOfTitle len={total[0]} />}
+        {total && <AverageScore rate={total[1]} />}
+      </Title>
+    </SWRConfig>
   )
 }
 
