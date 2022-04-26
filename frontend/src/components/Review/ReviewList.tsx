@@ -3,7 +3,7 @@ import Review from './Review';
 import { ReviewLi } from './Review.style';
 import { ReviewsType } from './Review.type';
 
-const ReviewList = ({ reviews, handleDelete }: ReviewsType ): JSX.Element => {
+const ReviewList = ({ reviews, handleDelete=null } ): JSX.Element => {
   return (
     <ReviewLi>
       {reviews.map((review, index) => (
