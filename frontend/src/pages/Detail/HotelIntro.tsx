@@ -1,44 +1,22 @@
+import { useCallback, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import useSWR, { SWRConfig } from 'swr';
+
 import HotelDescription from 'components/Detail/HotelDescription';
 import Map from 'components/Map/Map';
 import HotelImage from 'components/HotelImage/HotelImage';
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { IntroDiv } from './HotelIntro.style';
 import { getHotelInfo, getHotelPhotos } from 'src/utils/requests';
 import Spinner from 'components/Spinner/Spinner';
-import { MetaTag, SEOMetaTag, MetaTagDefaults } from 'components/SeoMetaTag/SEOMetaTag';
+import { MetaTag, SEOMetaTag } from 'components/SeoMetaTag/SEOMetaTag';
+import { KeyValue, HotelIntroType, MapInfo, InfoFetch } from './HotelIntro.type';
 
-interface HotelIntro {
-  name?: string;
-  tagline?: string;
-  formattedScale?: string;
-  formattedRating?: string;
-  totalcnt?: number;
-  starRating: number;
-  badgeText: string;
-  hotelSize: string[];
-  arriving: string;
-  leaving: string;
-}
-
-interface MapInfo {
-  name?: string;
-  fullAddress?: string;
-  latitude?: number;
-  longitude?: number;
-}
-
-// type key 와 type 값을 허용하는 인터페이스
-interface KeyValue {
-  [propertyDescription: string]: any;
-}
-
-const findHotelIntro = (body: KeyValue) => {
+const findHotelIntro = (body: KeyValue): HotelIntroType => {
   let editTag = body.propertyDescription.tagline.toString().replace(/[<b></b>]/g, '');
   let formattedScale = (body.guestReviews.brands.formattedScale / 2).toFixed(1);
   const formattedRating = (body.guestReviews.brands.formattedRating / 2).toFixed(1);
 
-  const hotelIntro: HotelIntro = {
+  return {
     name: body.propertyDescription.name,
     tagline: editTag,
     formattedScale: formattedScale,
@@ -50,19 +28,15 @@ const findHotelIntro = (body: KeyValue) => {
     arriving: body.atAGlance.keyFacts.arrivingLeaving[0],
     leaving: body.atAGlance.keyFacts.arrivingLeaving[1],
   };
-
-  return hotelIntro;
 };
 
-const findHotelMap = (body: KeyValue) => {
-  const hotelMapinfo: MapInfo = {
+const findHotelMap = (body: KeyValue): MapInfo => {
+  return {
     name: body.propertyDescription.name,
     fullAddress: body.propertyDescription.localisedAddress.fullAddress,
     latitude: body.pdpHeader.hotelLocation.coordinates.latitude,
     longitude: body.pdpHeader.hotelLocation.coordinates.longitude,
   };
-
-  return hotelMapinfo;
 };
 
 const settingHotelImgage = (imgsArray: KeyValue[]): string[] => {
@@ -80,49 +54,52 @@ const settingSEOTags = (body: KeyValue): MetaTag => {
 };
 
 const HotelIntro = () => {
-  const { id } = useParams();
-  const [hotelId, setHotelId] = useState<string>(id);
-  const [hotelInfo, setHotelInfo] = useState<object>({});
-  const [coordinates, setCoordinates] = useState<object>({});
-  const [photos, setPhotos] = useState<string[]>([]);
-  const [seoTag, setSeoTag] = useState<MetaTag>(MetaTagDefaults);
-  const [isInfoLoading, setInfoLoading] = useState<boolean>(false);
-  const [isImageLoading, setImageLoading] = useState<boolean>(false);
+  const { id: hotelId } = useParams();
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
-  useEffect(() => {
-    const requestbody = async () => {
-      const resoponseInfo = await getHotelInfo(hotelId);
-      setHotelInfo(findHotelIntro(resoponseInfo));
-      setCoordinates(findHotelMap(resoponseInfo));
-      setSeoTag(settingSEOTags(resoponseInfo));
-      setInfoLoading(false);
-      const resoponsePhotos = await getHotelPhotos(hotelId);
-      setPhotos(settingHotelImgage(resoponsePhotos));
-      setImageLoading(false);
+  const setInfos = async (): Promise<InfoFetch> => {
+    const responseInfo = await getHotelInfo(hotelId);
+    return {
+      hotelInfos: findHotelIntro(responseInfo),
+      hotelMaps: findHotelMap(responseInfo),
+      detailSEO: settingSEOTags(responseInfo),
     };
-    setInfoLoading(true);
-    setImageLoading(true);
-    requestbody();
-  }, []);
+  };
+  const setPhotos = async () => {
+    const responsePhoto = await getHotelPhotos(hotelId);
+
+    return settingHotelImgage(responsePhoto);
+  };
+
+  const getPhotosFetcher = () => {
+    return new Promise(resolve => {
+      resolve(setPhotos());
+    });
+  };
+
+  const getInfosFetcher = () => {
+    return new Promise(resolve => {
+      resolve(setInfos());
+    });
+  };
+
+  const { data: infos, error: infoError } = useSWR('/api/hotelinfo', getInfosFetcher);
+  const { data: photosData, error: photoError } = useSWR('/api/hotelimg', getPhotosFetcher);
 
   return (
-    <>
-      {isImageLoading ? <Spinner /> : photos ? <HotelImage photos={photos} /> : ''}
-
+    <SWRConfig value={{ provider: cache => cache }}>
+      {photosData && <HotelImage photos={photosData} />}
       <IntroDiv>
-        {isInfoLoading ? (
-          <Spinner />
-        ) : hotelInfo ? (
+        {infos && (
           <>
-            <SEOMetaTag metas={seoTag} />
-            <HotelDescription hotelInfo={hotelInfo} />
-            <Map coordinates={coordinates} />
+            <SEOMetaTag metas={infos.detailSEO} />
+            <HotelDescription hotelInfo={infos.hotelInfos} />
+            <Map coordinates={infos.hotelMaps} />
           </>
-        ) : (
-          ''
         )}
+        {!infos && !infoError && <Spinner />}
       </IntroDiv>
-    </>
+    </SWRConfig>
   );
 };
 
