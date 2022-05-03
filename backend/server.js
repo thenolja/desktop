@@ -129,9 +129,9 @@ app.get('/reserved/:hotelId', (req, res) => {
     if (
       reservation.hotelAPIId === +hotelId &&
       +reservation.checkInDate.split('-').join('') >=
-        +checkIn.split('-').join('') &&
+      +checkIn.split('-').join('') &&
       +reservation.checkOutDate.split('-').join('') <=
-        +checkOut.split('-').join('')
+      +checkOut.split('-').join('')
     )
       reservedRoom.push(reservation.spec);
   });
@@ -197,6 +197,11 @@ app.patch('/review/user', (req, res) => {
   });
   res.send(users);
 });
+
+app.post('/user/phone', (req, res) => {
+  const data = users.filter(user => user.id === req.body.id);
+  res.send(data);
+})
 
 app.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT}`);

@@ -43,4 +43,11 @@ const updateReview =async (id:string, nickname:string) => {
   }).then(({data})=>data)
   .catch(e=>console.error(e));
 }
-export { createUser, updateUser, updateReservation, updateReview };
+
+const getPhoneNumber = async (id:string) => {
+  return await axios.post('/api/user/phone', {
+    id:id
+  }).then(({data})=>data)
+  .catch(e=>console.error(e));
+}
+export { createUser, updateUser, updateReservation, updateReview, getPhoneNumber };
