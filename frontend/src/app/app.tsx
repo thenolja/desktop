@@ -25,14 +25,6 @@ const Cart = lazy(() => import('src/pages/Cart/Cart'));
 const App = () => {
   const { id, nickname, email } = useAppSelector(selectAuth) as AuthType;
 
-  const MemoizedHeader = useMemo(() => {
-    return (
-      <>
-        <Header />
-      </>
-    );
-  }, [id]);
-
   const MemoizedFooter = useMemo(() => {
     return (
       <>
@@ -52,7 +44,7 @@ const App = () => {
 
   return (
     <>
-      {MemoizedHeader}
+      <Header />
       <Main>
         <SEOMetaTag />
         <Suspense fallback={<Spinner />}>
