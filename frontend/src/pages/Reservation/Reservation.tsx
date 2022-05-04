@@ -8,7 +8,7 @@ import PaymentForm from 'components/Payment/PaymentForm';
 
 import { postHotel } from 'src/utils/hotels';
 import { postReservation } from 'src/utils/reservations';
-import { updateReservation } from 'src/utils/users';
+import { getPhoneNumber, updateReservation } from 'src/utils/users';
 import { postPayment } from 'src/utils/payment';
 
 import swal from 'sweetalert';
@@ -20,7 +20,18 @@ import { RoomInfo } from 'components/Payment/Payment.type';
 const Reservation = () => {
 
   const { id: hotelId } = useParams();
-  const { id: userId, phone } = useAppSelector(selectAuth) as AuthType;
+  const { id: userId } = useAppSelector(selectAuth) as AuthType;
+
+  let phone='';
+  useEffect(()=>{
+    const getPhone=async()=>{
+      if(userId){
+        const data=await getPhoneNumber(userId);
+        phone=data.phone;
+      } 
+    }
+    getPhone();
+  },[]);
 
   const roomInfo = JSON.parse(window.sessionStorage.getItem("SELECTED_ROOM")) as RoomInfo;
   const hotelName = window.sessionStorage.getItem("HOTEL_NAME");
