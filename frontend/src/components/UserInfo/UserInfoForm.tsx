@@ -1,19 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UserInfoFormContainer } from './Profile.style';
 import { AuthType, authUpdate, selectAuth } from 'src/contexts/auth';
 import { useAppSelector } from 'src/contexts/state.type';
 import { useDispatch } from 'react-redux';
-import { updateUser } from 'src/utils/users';
+import { getPhoneNumber, isValidProfile, updateUser } from 'src/utils/users';
 import { ProfileEditor } from './User.type';
 
-const UserInfoForm = ({ isEditing, setEditingMode }: ProfileEditor) => {
-  const { id, nickname, email, phone } = useAppSelector(selectAuth) as AuthType;
+const UserInfoForm = ({ isEditingMode, setEditingMode }: ProfileEditor) => {
+  const { id, nickname, email } = useAppSelector(selectAuth) as AuthType;
 
   const [tempNickname, setNickname] = useState<string>(nickname);
-  const [tempPhone, setPhone] = useState<string>(phone);
 
-  const handlerChange = ({ target }) => {
-    target.id === 'nickname' ? setNickname(target.value) : setPhone(target.value);
+  const [tempPhone, setPhone] = useState<string>('');
+
+  let initialPhone = '';
+  useEffect(() => {
+    const getPhone = async () => {
+      if (id) {
+        const {
+          0: { phone },
+        } = await getPhoneNumber(id);
+        initialPhone = phone;
+        setPhone(initialPhone);
+      }
+    };
+    getPhone();
+  }, []);
+
+  const handlerChange = ({ target: { id, value } }) => {
+    id === 'nickname' ? setNickname(value) : setPhone(value);
   };
 
   const dispatch = useDispatch();
@@ -21,16 +36,15 @@ const UserInfoForm = ({ isEditing, setEditingMode }: ProfileEditor) => {
   const updateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!isEditing) {
+    if (!isEditingMode) {
       setEditingMode(true);
       return;
     }
 
-    if (/^[ㄱ-힣a-zA-Z0-9._]{2,6}$/.test(tempNickname) && /^[0-9]{11}$/.test(tempPhone)) {
-      if (!(nickname === tempNickname && phone === tempPhone)) {
-        const updatedProfile = await updateUser(id, tempNickname, tempPhone);
-        dispatch(authUpdate({ ...updatedProfile }));
-      }
+    if (isValidProfile(tempNickname, tempPhone)) {
+      if (tempNickname === nickname && tempPhone === initialPhone) return;
+      const updatedProfile = await updateUser(id, tempNickname, tempPhone);
+      dispatch(authUpdate({ ...updatedProfile }));
       setEditingMode(false);
     }
   };
@@ -45,7 +59,7 @@ const UserInfoForm = ({ isEditing, setEditingMode }: ProfileEditor) => {
           <span>이메일</span>
           <span>{email}</span>
         </div>
-        {isEditing ? (
+        {isEditingMode ? (
           <>
             <div>
               <label htmlFor="nickname">닉네임</label>
@@ -86,7 +100,7 @@ const UserInfoForm = ({ isEditing, setEditingMode }: ProfileEditor) => {
             </div>
           </>
         )}
-        <button className="submit">{isEditing ? '확인' : '수정'}</button>
+        <button className="submit">{isEditingMode ? '확인' : '수정'}</button>
       </fieldset>
     </UserInfoFormContainer>
   );

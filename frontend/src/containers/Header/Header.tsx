@@ -24,7 +24,7 @@ const Header = () => {
 
   netlifyIdentity.on('login', async ({ id, email, user_metadata: { full_name: nickname } }) => {
     let authorizedUser = {};
-    let storedUser = { id: null, nickname: null, email: null, phone: null, reservation: null, myReviews: null };
+    let storedUser = { id: null, nickname: null, email: null, reservation: null, myReviews: null };
     if (sessionStorage.getItem('persist:root')) {
       const { auth } = JSON.parse(sessionStorage.getItem('persist:root'));
       storedUser = JSON.parse(auth);
@@ -36,7 +36,6 @@ const Header = () => {
       id: storedUser.id ? storedUser.id : user.id,
       nickname: storedUser.nickname ? storedUser.nickname : user.nickname,
       email: storedUser.email ? storedUser.email : user.email,
-      phone: storedUser.phone ? storedUser.phone : user.phone,
       reservations: storedUser.reservation ? storedUser.reservation : user.reservation,
       myReviews: storedUser.myReviews ? storedUser.myReviews : user.myReviews,
     };
