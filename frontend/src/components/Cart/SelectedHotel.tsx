@@ -4,13 +4,13 @@ import { FormArticle, Wrapper, SelectedTitle, SelectedImg, SelectedInfo } from '
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
-const SelectHotel = () => {
+const SelectHotel = ({ infos }) => {
   return (
     <FormArticle>
       <Wrapper>
         <SelectedTitle>
-          <SectionTitle>{'역삼 Hotel The Artist'}</SectionTitle>
-          <div>{'서울 강남구 테헤란로29길 11 (역삼동)'}</div>
+          <SectionTitle>{infos.hotelName}</SectionTitle>
+          <div>{infos.hotelAddress}</div>
         </SelectedTitle>
         <SelectedImg>
           <div>
@@ -18,19 +18,14 @@ const SelectHotel = () => {
             <label htmlFor="selecthotel"></label>
           </div>
           <div style={{ width: '100px', height: '100px' }}>
-            <img
-              src="https://yaimg.yanolja.com/v5/2022/04/12/11/62556077cb45d8.31685668.png"
-              alt={'역삼 Hotel The Artist'}
-            />
+            <img src={infos.imageUrl} alt={`${infos.hotelName}이미지`} />
           </div>
           <SelectedInfo>
-            <p>역삼 Hotel The Artist</p>
+            <p>{infos.hotelName}</p>
             <p>
-              {'2022-04-12'} - {'2022-04-13'}
+              {infos.checkInDate} - {infos.checkOutDate}
             </p>
-            <p>
-              {'체크인 15:00'} - {'체크아웃 13:00'}
-            </p>
+            <p>{infos.chekInTimeInfo}</p>
           </SelectedInfo>
           <button>
             <FontAwesomeIcon icon={faX} size="lg" />
