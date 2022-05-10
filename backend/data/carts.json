@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "userId": "cee8d65a-ee85-48e3-aee9-b9e39d0c1b40",
+    "hotelId": "171138",
+    "hotelName": "역삼 Hotel The Artist",
+    "hotelAddress": "서울 강남구 테헤란로29길 11 (역삼동)",
+    "imageUrl": "https://yaimg.yanolja.com/v5/2022/04/12/11/62556077cb45d8.31685668.png",
+    "cost": 22000,
+    "checkInDate": "2022-03-01",
+    "checkOutDate": "2022-03-02",
+    "chekInTimeInfo:": "체크인 15:00 - 체크아웃 13:00"
+  }
+]
