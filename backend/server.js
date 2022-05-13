@@ -198,6 +198,11 @@ app.delete('/cart/:id', (req, res) => {
   res.send(carts.filter((cart) => id !== cart.id));
 });
 
+app.post('/user/phone', (req, res) => {
+  const data = users.filter((user) => user.id === req.body.id);
+  res.send(data);
+});
+
 app.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT}`);
 });

@@ -4,7 +4,7 @@ import { ProfileEditor } from './User.type';
 import UserInfoForm from './UserInfoForm';
 import user from '/src/assets/user.svg';
 
-const Profile = ({ isEditing, setEditingMode }: ProfileEditor) => {
+const Profile = ({ isEditingMode, setEditingMode }: ProfileEditor) => {
   const memoizedTitle = useMemo(
     () => (
       <>
@@ -17,7 +17,7 @@ const Profile = ({ isEditing, setEditingMode }: ProfileEditor) => {
   return (
     <ProfileContainer>
       {memoizedTitle}
-      <UserInfoForm isEditing={isEditing} setEditingMode={setEditingMode} />
+      <UserInfoForm isEditingMode={isEditingMode} setEditingMode={setEditingMode} />
     </ProfileContainer>
   );
 };
