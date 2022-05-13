@@ -1,8 +1,5 @@
-import { useState } from 'react';
 import { SectionTitle } from '../Payment/Payment.style';
 import { FormArticle, Wrapper, SelectedTitle, SelectedImg, SelectedInfo } from './SelectedHotel.style';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faX } from '@fortawesome/free-solid-svg-icons';
 
 const SelectHotel = ({ infos }) => {
   return (
@@ -27,9 +24,6 @@ const SelectHotel = ({ infos }) => {
             </p>
             <p>{infos.chekInTimeInfo}</p>
           </SelectedInfo>
-          <button>
-            <FontAwesomeIcon icon={faX} size="lg" />
-          </button>
         </SelectedImg>
       </Wrapper>
     </FormArticle>

@@ -37,3 +37,13 @@ export const SelectedPrice = styled(Selected)`
   justify-content: space-between;
   margin: 0 auto;
 `;
+
+export const SelectedItem = styled.div`
+  position: relative;
+
+  button {
+    position: absolute;
+    right: 3%;
+    top: 50%;
+  }
+`;
