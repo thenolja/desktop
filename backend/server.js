@@ -189,8 +189,13 @@ app.patch('/review/user', (req, res) => {
 
 app.get('/cart/:id', (req, res) => {
   const { id } = req.params;
-  console.log(carts);
   res.send(carts.filter((cart) => id === cart.userId));
+});
+
+app.delete('/cart/:id', (req, res) => {
+  const { id } = req.params;
+  console.log(carts.filter((cart) => id !== cart.id));
+  res.send(carts.filter((cart) => id !== cart.id));
 });
 
 app.listen(PORT, () => {
