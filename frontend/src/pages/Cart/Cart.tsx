@@ -30,7 +30,7 @@ const Cart = () => {
       setIsLoading(false);
     };
     responseCart();
-    // setTotalCost(carts.map(cart => cart.cost).reduce((acc, cur) => acc + cur));
+    setTotalCost(carts.map(cart => cart.cost.replace('₩', '')).reduce((acc, cur) => acc + cur));
     setIsLoading(true);
   }, []);
 
@@ -77,7 +77,7 @@ const Cart = () => {
             <div>
               <SelectedPrice>
                 <p>총 {carts.length}건</p>
-                {/* <p>{totalCost}원</p> */}
+                <p>{totalCost}원</p>
               </SelectedPrice>
               <SelectBtn style={{ width: '60%' }}>예약하기</SelectBtn>
             </div>
