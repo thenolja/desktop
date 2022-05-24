@@ -3,6 +3,7 @@ import { MetaTag } from 'components/SeoMetaTag/SEOMetaTag';
 export interface HotelIntroType {
   name?: string;
   tagline?: string;
+  fullAddress?: string;
   formattedScale?: string;
   formattedRating?: string;
   totalcnt?: number;
