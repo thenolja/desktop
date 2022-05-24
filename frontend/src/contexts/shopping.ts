@@ -1,25 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import auth from './auth';
 import { RootState } from './rootReducer';
-import { selectAuth } from 'src/contexts/auth';
-import { useAppSelector } from './state.type';
 
 export interface CartType {
   id?: string;
   userId?: string;
   hotelId?: string;
   hotelName?: string;
+  roomName?: string;
   hotelAddress?: string;
   imageUrl?: string;
   cost?: number;
   checkInDate?: string;
   checkOutDate?: string;
-  checkInTimeInfo?: string;
-}
-
-interface MyKnownError {
-  errorMessage: '알수없는 에러발견';
+  chekInTimeInfo?: string;
 }
 
 interface CartState {
@@ -28,6 +22,13 @@ interface CartState {
   carts: CartType[];
 }
 
+export const allCarts = async () => {
+  return await axios
+    .get('/carts')
+    .then(({ data }) => data)
+    .catch(e => console.error(e));
+};
+
 export const fetchCarts = createAsyncThunk('cart/getUserID', async userId => {
   const response = await axios.get(`/api/cart/${userId}`);
   return response.data;
@@ -35,6 +36,12 @@ export const fetchCarts = createAsyncThunk('cart/getUserID', async userId => {
 
 export const deleteUserCart = createAsyncThunk('cart/deleteUserID', async userId => {
   const response = await axios.delete(`/api/cart/${userId}`);
+  return response.data;
+});
+
+export const registerUserCart = createAsyncThunk('cart/registerCart', async (useCartInfo: CartType) => {
+  console.log(useCartInfo);
+  const response = await axios.post('/api/cart/register', useCartInfo);
   return response.data;
 });
 
@@ -59,8 +66,8 @@ export const shoppingCart = createSlice({
         state.loading = false;
         state.carts = payload;
       })
-      .addCase(fetchCarts.rejected, (state, { payload }) => {
-        state.error = '알수없는 에러 발견';
+      .addCase(fetchCarts.rejected, state => {
+        state.error = 'Error loading shopping cart information';
         state.loading = false;
       })
       .addCase(deleteUserCart.pending, state => {
@@ -71,10 +78,22 @@ export const shoppingCart = createSlice({
         state.error = null;
         state.loading = false;
         state.carts = payload;
+        console.log('deleteUser', state.carts);
+      })
+      .addCase(deleteUserCart.rejected, state => {
+        state.error = 'Shopping cart deletion error';
+        state.loading = false;
+      })
+      .addCase(registerUserCart.pending, state => {
+        state.error = null;
+        state.loading = true;
+      })
+      .addCase(registerUserCart.fulfilled, (state, { payload }) => {
+        state.carts = payload;
         console.log(state.carts);
       })
-      .addCase(deleteUserCart.rejected, (state, { payload }) => {
-        state.error = '알수없는 에러 발견';
+      .addCase(registerUserCart.rejected, state => {
+        state.error = 'Add to cart error';
         state.loading = false;
       });
   },
