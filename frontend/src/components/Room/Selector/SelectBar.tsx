@@ -21,7 +21,7 @@ const SelectBar = ({ startDate, endDate, selectedRoom, hotelId, setSessionStorag
       roomName: selectedRoom.name,
       hotelAddress: window.sessionStorage.getItem('HOTEL_ADDRESS'),
       imageUrl: selectedRoom.images[1].thumbnailUrl,
-      cost: selectedRoom.ratePlans[0].price.current,
+      cost: selectedRoom.ratePlans[0].price.unformattedCurrent,
       checkInDate: startDate,
       checkOutDate: endDate,
       chekInTimeInfo: window.sessionStorage.getItem('HOTEL_CHECKINFO'),

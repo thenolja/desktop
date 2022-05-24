@@ -18,19 +18,16 @@ const Cart = () => {
   const { id } = useAppSelector(selectAuth) as AuthType;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [carts, setCarts] = useState<CartType[]>([]);
-  const [totalCost, setTotalCost] = useState<number>();
   const dispatch = useDispatch();
 
   useEffect(() => {
     const responseCart = async () => {
       const response = await dispatch(fetchCarts(id));
       const resultcarts = unwrapResult(response);
-      console.log(resultcarts);
       setCarts(resultcarts);
       setIsLoading(false);
     };
     responseCart();
-    setTotalCost(carts.map(cart => cart.cost.replace('₩', '')).reduce((acc, cur) => acc + cur));
     setIsLoading(true);
   }, []);
 
@@ -77,7 +74,15 @@ const Cart = () => {
             <div>
               <SelectedPrice>
                 <p>총 {carts.length}건</p>
-                <p>{totalCost}원</p>
+                <p>
+                  {carts.length
+                    ? carts
+                        .map(cart => cart.cost)
+                        .reduce((acc, cur) => acc + cur)
+                        .toLocaleString('ko-KR')
+                    : 0}
+                  원
+                </p>
               </SelectedPrice>
               <SelectBtn style={{ width: '60%' }}>예약하기</SelectBtn>
             </div>
