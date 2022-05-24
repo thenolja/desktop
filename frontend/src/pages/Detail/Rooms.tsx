@@ -46,7 +46,6 @@ const Rooms = () => {
 
     const rooms = await getAllRoomList(hotelId, checkIn, checkOut);
     const reservedRooms = await getReservedRooms(hotelId, checkIn, checkOut);
-    console.log(rooms);
     const nonReservedRooms =
       reservedRooms.length && rooms && rooms.length
         ? rooms.filter((room: RoomProps) => reservedRooms.indexOf(room.name) === -1)
@@ -80,7 +79,6 @@ const Rooms = () => {
               <Room key={index} room={room} setSelector={setSelector} />
             ))}
           </ul>
-          {console.log()}
           <SelectBar
             startDate={changeDateFormatToIsoSTring(startDate) + ''}
             endDate={changeDateFormatToIsoSTring(endDate) + ''}
