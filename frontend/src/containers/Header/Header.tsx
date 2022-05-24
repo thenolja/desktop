@@ -4,13 +4,15 @@ import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 
 import { authLogIn, authLogOut, AuthType, selectAuth } from 'src/contexts/auth';
+import { selectCart, CartType } from 'src/contexts/shopping';
 import { useAppSelector } from 'src/contexts/state.type';
 import { createUser } from 'src/utils/users';
-import { StyledHeader } from './Header.style';
+import { StyledHeader, CountDiv } from './Header.style';
 
 const Header = () => {
   const dispatch = useDispatch();
   const { id, nickname, email } = useAppSelector(selectAuth) as AuthType;
+  const total = useAppSelector(selectCart) as CartType;
 
   const { pathname } = useLocation();
 
@@ -64,10 +66,12 @@ const Header = () => {
       {!nickname && !email && !id ? (
         <button onClick={login}>로그인</button>
       ) : pathname.includes('reservation') ? null : (
-        <div>
+        <div className="textWrapper">
           <button onClick={logout}>로그아웃</button>
           <Link to="/mypage">마이페이지</Link>
-          <Link to="/cart">장바구니</Link>
+          <Link to="/cart">
+            장바구니<CountDiv>{total.length}</CountDiv>
+          </Link>
         </div>
       )}
     </StyledHeader>
