@@ -38,12 +38,38 @@ export const SelectedPrice = styled(Selected)`
   margin: 0 auto;
 `;
 
-export const SelectedItem = styled.div`
+export const SelectedItem = styled(InputStyled)`
   position: relative;
 
   button {
     position: absolute;
     right: 3%;
-    top: 50%;
+    top: 60%;
+  }
+
+  .chcekForm {
+    position: absolute;
+    left: 3%;
+    top: 49%;
+    z-index: 1;
+  }
+`;
+
+export const EmptyWapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 12% auto;
+
+  div {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  p {
+    padding: 10px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
   }
 `;

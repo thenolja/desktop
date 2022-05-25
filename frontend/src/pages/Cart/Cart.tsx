@@ -1,7 +1,7 @@
 import SelectHotel from '../../components/Cart/SelectedHotel';
 import swal from 'sweetalert';
 
-import { WrapperInput, SelectedPrice, SelectedItem } from './Cart.style';
+import { WrapperInput, SelectedPrice, SelectedItem, EmptyWapper } from './Cart.style';
 import { Buttons, SelectBtn } from '../../components/Room/Selector/Selector.style';
 import Spinner from 'components/Spinner/Spinner';
 import { CartType } from 'src/contexts/shopping';
@@ -12,10 +12,12 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import { deleteUserCart, selectCart } from 'src/contexts/shopping';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
+import { Div404 } from 'src/pages/NotFound/NotFound.style';
 
 const Cart = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [carts, setCarts] = useState<CartType[]>([]);
+  const [checkItem, setCheckItem] = useState<string[]>([]);
   const total = useAppSelector(selectCart) as CartType;
   const dispatch = useDispatch();
 
@@ -42,20 +44,48 @@ const Cart = () => {
     });
   };
 
+  const checkAllHandler = (checked: Boolean) => {
+    if (checked) {
+      const idxs = [];
+      carts.forEach(cart => {
+        idxs.push(cart.id);
+        setCheckItem(idxs);
+      });
+    } else {
+      setCheckItem([]);
+    }
+  };
+
+  const checkHandler = (checked: Boolean, cartId: string) => {
+    if (checked) {
+      setCheckItem([...checkItem, ...cartId]);
+    } else {
+      setCheckItem(checkItem.filter(checkedId => checkedId !== cartId));
+    }
+  };
   return (
     <>
       {isLoading ? (
         <Spinner />
-      ) : carts ? (
+      ) : carts.length > 0 ? (
         <>
           <div>
             <WrapperInput>
-              <input type="checkbox" id="total" />
+              <input type="checkbox" id="total" onChange={e => checkAllHandler(e.target.checked)} />
               <label htmlFor="total">전체 선택</label>
-              <button>선택 삭제</button>
+              <button onClick={() => handleDeleteCart(checkItem.join(','))}>선택 삭제</button>
             </WrapperInput>
             {carts.map(cart => (
               <SelectedItem>
+                <div className="chcekForm">
+                  <input
+                    type="checkbox"
+                    id={`selectCart${cart.id}`}
+                    checked={checkItem.indexOf(cart.id) === -1 ? false : true}
+                    onChange={e => checkHandler(e.target.checked, cart.id)}
+                  />
+                  <label htmlFor={`selectCart${cart.id}`}></label>
+                </div>
                 <SelectHotel infos={cart} key={cart.id} />
                 <button
                   onClick={() => {
@@ -86,7 +116,21 @@ const Cart = () => {
           </Buttons>
         </>
       ) : (
-        <div>'장바구니가 비어있어요!'</div>
+        <EmptyWapper>
+          <div>
+            <Div404>
+              <div>
+                <img
+                  src="https://item.kakaocdn.net/do/58119590d6204ebd70e97763ca933baf8f324a0b9c48f77dbce3a43bd11ce785"
+                  alt="루피귀여워"
+                />
+              </div>
+            </Div404>
+          </div>
+          <div>
+            <p>장바구니가 비어있어요!!</p>
+          </div>
+        </EmptyWapper>
       )}
     </>
   );
