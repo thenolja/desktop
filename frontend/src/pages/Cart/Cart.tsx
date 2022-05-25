@@ -9,26 +9,23 @@ import { useAppSelector } from 'src/contexts/state.type';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
-import { fetchCarts, deleteUserCart } from 'src/contexts/shopping';
-import { selectAuth, AuthType } from 'src/contexts/auth';
+import { deleteUserCart, selectCart } from 'src/contexts/shopping';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 
 const Cart = () => {
-  const { id } = useAppSelector(selectAuth) as AuthType;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [carts, setCarts] = useState<CartType[]>([]);
+  const total = useAppSelector(selectCart) as CartType;
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const responseCart = async () => {
-      const response = await dispatch(fetchCarts(id));
-      const resultcarts = unwrapResult(response);
-      setCarts(resultcarts);
-      setIsLoading(false);
+    const responseCart = () => {
+      setCarts(total);
+      setIsLoading(true);
     };
     responseCart();
-    setIsLoading(true);
+    setIsLoading(false);
   }, []);
 
   const handleDeleteCart = (selectedItem: string) => {

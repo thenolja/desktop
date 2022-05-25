@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from './rootReducer';
+import { AuthType, selectAuth } from 'src/contexts/auth';
+import { useAppSelector } from 'src/contexts/state.type';
 
 export interface CartType {
   id?: string;
@@ -21,7 +23,6 @@ interface CartState {
   error: null | string;
   carts: CartType[];
 }
-
 export const allCarts = async () => {
   return await axios
     .get('/carts')
@@ -54,7 +55,11 @@ const initialState: CartState = {
 export const shoppingCart = createSlice({
   name: 'shoppingCart',
   initialState,
-  reducers: {},
+  reducers: {
+    setUserCart(state, action) {
+      state.carts = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(fetchCarts.pending, state => {
@@ -78,7 +83,6 @@ export const shoppingCart = createSlice({
         state.error = null;
         state.loading = false;
         state.carts = payload;
-        console.log('deleteUser', state.carts);
       })
       .addCase(deleteUserCart.rejected, state => {
         state.error = 'Shopping cart deletion error';
@@ -99,6 +103,7 @@ export const shoppingCart = createSlice({
   },
 });
 
-export const selectCart = (state: RootState) => state.shoppingCart;
+export const selectCart = (state: RootState) => state.shoppingCart.carts;
 
+export const { setUserCart } = shoppingCart.actions;
 export default shoppingCart.reducer;
