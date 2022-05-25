@@ -196,8 +196,8 @@ app.get('/cart/:id', (req, res) => {
 });
 
 app.delete('/cart/:id', (req, res) => {
-  const { id } = req.params;
-  const newArr = carts.filter((cart) => id !== cart.id);
+  const idArr = req.params.id.split(',');
+  const newArr = carts.filter((cart) => idArr.indexOf(cart.id) === -1);
   carts = [...newArr];
   res.send(carts);
 });
