@@ -21,6 +21,7 @@ const findHotelIntro = (body: KeyValue): HotelIntroType => {
     tagline: editTag,
     formattedScale: formattedScale,
     formattedRating: formattedRating,
+    fullAddress: body.propertyDescription.localisedAddress.fullAddress,
     totalcnt: body.guestReviews.brands.total,
     starRating: body.propertyDescription.starRating,
     badgeText: body.guestReviews.brands.badgeText,

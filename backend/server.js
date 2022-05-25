@@ -95,7 +95,6 @@ app.patch('/reviews', (req, res) => {
 
 app.get('/reviews/:id', (req, res) => {
   const { id } = req.params;
-
   res.send(reviews.filter((review) => +id === review.hotelId));
 });
 
@@ -187,15 +186,27 @@ app.patch('/review/user', (req, res) => {
   res.send(users);
 });
 
+app.get('/carts', (req, res) => {
+  res.send(carts);
+});
+
 app.get('/cart/:id', (req, res) => {
   const { id } = req.params;
   res.send(carts.filter((cart) => id === cart.userId));
 });
 
 app.delete('/cart/:id', (req, res) => {
-  const { id } = req.params;
-  console.log(carts.filter((cart) => id !== cart.id));
-  res.send(carts.filter((cart) => id !== cart.id));
+  const idArr = req.params.id.split(',');
+  const newArr = carts.filter((cart) => idArr.indexOf(cart.id) === -1);
+  carts = [...newArr];
+  res.send(carts);
+});
+
+app.post('/cart/register', (req, res) => {
+  const id = generateId(carts) + '';
+  const data = { id: id, ...req.body };
+  carts = [...carts, data];
+  res.send(carts);
 });
 
 app.post('/user/phone', (req, res) => {

@@ -27,6 +27,7 @@ export const SelectedImg = styled.div`
   position: relative;
   border-top: solid 1px #e6e6e6;
   padding-top: 20px;
+  padding-left: 40px;
   display: flex;
   flex-direction: row;
   margin-left: 15px;

@@ -10,15 +10,11 @@ const SelectHotel = ({ infos }) => {
           <div>{infos.hotelAddress}</div>
         </SelectedTitle>
         <SelectedImg>
-          <div>
-            <input type="checkbox" id="selecthotel" />
-            <label htmlFor="selecthotel"></label>
-          </div>
           <div style={{ width: '100px', height: '100px' }}>
             <img src={infos.imageUrl} alt={`${infos.hotelName}이미지`} />
           </div>
           <SelectedInfo>
-            <p>{infos.hotelName}</p>
+            <p>{infos.roomName}</p>
             <p>
               {infos.checkInDate} - {infos.checkOutDate}
             </p>

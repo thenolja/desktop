@@ -1,17 +1,19 @@
 import netlifyIdentity from 'netlify-identity-widget';
+import axios from 'axios';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 
 import { authLogIn, authLogOut, AuthType, selectAuth } from 'src/contexts/auth';
+import { setUserCart, CartType, selectCart } from 'src/contexts/shopping';
 import { useAppSelector } from 'src/contexts/state.type';
 import { createUser } from 'src/utils/users';
-import { StyledHeader } from './Header.style';
+import { StyledHeader, CountDiv } from './Header.style';
 
 const Header = () => {
   const dispatch = useDispatch();
   const { id, nickname, email } = useAppSelector(selectAuth) as AuthType;
-
+  const totalCart = useAppSelector(selectCart) as CartType;
   const { pathname } = useLocation();
 
   const login = () => {
@@ -53,6 +55,17 @@ const Header = () => {
     netlifyIdentity.init();
   }, []);
 
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const result = await axios.get(`/api/cart/${id}`);
+      dispatch(setUserCart(result.data));
+    };
+
+    if (id) {
+      fetchUserInfo();
+    }
+  }, [id]);
+
   return (
     <StyledHeader>
       <Link to="/">
@@ -64,10 +77,12 @@ const Header = () => {
       {!nickname && !email && !id ? (
         <button onClick={login}>로그인</button>
       ) : pathname.includes('reservation') ? null : (
-        <div>
+        <div className="textWrapper">
           <button onClick={logout}>로그아웃</button>
           <Link to="/mypage">마이페이지</Link>
-          <Link to="/cart">장바구니</Link>
+          <Link to="/cart">
+            장바구니<CountDiv>{totalCart.length > 0 ? totalCart.length : 0}</CountDiv>
+          </Link>
         </div>
       )}
     </StyledHeader>
