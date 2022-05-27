@@ -34,6 +34,13 @@ const SelectBar = ({ startDate, endDate, selectedRoom, hotelId, setSessionStorag
     }).then(async result => {
       if (result) {
         dispatch(registerUserCart(newCart));
+        swal({
+          title: '장바구니에 상품이 담겼습니다.',
+          icon: 'success',
+          buttons: ['닫기', '장바구니 보기'],
+        }).then(async result => {
+          if (result) window.location.href = '/cart';
+        });
       }
     });
   };
