@@ -1,4 +1,4 @@
-import React, { MouseEvent, useCallback, useEffect, useReducer, useRef } from 'react';
+import React, { MouseEvent, useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AuthType, authUpdate, selectAuth } from 'src/contexts/auth';
@@ -84,6 +84,13 @@ const Reservation = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { reservation, payment, hotel, sameUser } = state;
 
+  const data=[];
+  data.push(selectedRoom);
+  data.push(selectedRoom);
+  data.push(selectedRoom);
+
+  const totalPrice = useMemo(() => data.reduce((total, {cost}) => total + +cost, 0), [data]);
+
   const sumbmitBtn = useRef<HTMLButtonElement>();
   const navigate = useNavigate();
 
@@ -165,25 +172,20 @@ const Reservation = () => {
 
   }, [reservation]);
 
-
-  const data=[];
-  data.push(selectedRoom);
-  data.push(selectedRoom);
-
   return (
     <ReservationWrapper>
-      <h2 className="srOnly">예약 페이지</h2>
+      <h2 className = "srOnly">예약 페이지</h2>
       <PaymentForm
-        data={data}
-        sumbmitBtn={sumbmitBtn}
-        reservation={reservation}
-        handleButton={handleButton}
-        handleSubmit={handleSubmit}
-        handleAgree={handleAgree}
-        handleVisited={handleVisited}
-        handleUserClick={handleUserClick}
-        handleUserInput={handleUserInput}
-        cost={selectedRoom.cost}  // 총 금액으로 변경
+        data = { data }
+        sumbmitBtn = { sumbmitBtn }
+        reservation = { reservation }
+        handleButton = { handleButton }
+        handleSubmit = { handleSubmit }
+        handleAgree = { handleAgree }
+        handleVisited = { handleVisited }
+        handleUserClick = { handleUserClick }
+        handleUserInput = { handleUserInput }
+        cost = { totalPrice }
       />
     </ReservationWrapper>
   );
