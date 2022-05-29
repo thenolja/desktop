@@ -7,7 +7,7 @@ const SelectedRoom=({data})=>{
   return(
     <FormArticle>
       <SectionTitle>상품 정보 {data.length}건</SectionTitle>
-      {data.map(selectedRoom =><SelectedRoomItem key={selectedRoom.name} selectedRoom={selectedRoom} /> )}
+      {data.map((selectedRoom, idx) => <SelectedRoomItem key={selectedRoom.name + idx} selectedRoom={selectedRoom} /> )}
     </FormArticle>
   )
 }
