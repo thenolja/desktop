@@ -93,6 +93,7 @@ export const SelectedInfo = styled.div`
 
   .hotelName{
     font-weight: 700;
+    font-size: 18px;
     margin-bottom: 5px;
   }
 
@@ -107,7 +108,11 @@ export const SelectedBody = styled.div`
   flex-flow: row nowrap;
   align-items: center;
   gap: 1rem;
-  padding-bottom: 2rem;
+  padding: 2rem 0;
+  
+  &+&{
+    border-top: 1px solid #eee;
+  }
 
   img{
       width: 200px;
