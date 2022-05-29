@@ -6,7 +6,7 @@ import SelectedRoomItem from "./SelectedRoomItem";
 const SelectedRoom=({data})=>{
   return(
     <FormArticle>
-      <SectionTitle>선택한 객실 정보</SectionTitle>
+      <SectionTitle>상품 정보 {data.length}건</SectionTitle>
       {data.map(selectedRoom =><SelectedRoomItem key={selectedRoom.name} selectedRoom={selectedRoom} /> )}
     </FormArticle>
   )
