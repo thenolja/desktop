@@ -76,44 +76,46 @@ export const SelectedWrapper = styled.div`
   margin: 0 5%;
 `;
 
+export const SelectedInfos = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 export const SelectedInfo = styled.div`
   p{
     font-size: 16px;
     line-height: 24px;
     margin-top: 3px;
   }
+
   .hotelName{
     font-weight: 700;
+    font-size: 18px;
     margin-bottom: 5px;
   }
-`;
 
-export const Wrapper = styled.div`
-  margin:0 auto;
+  .eachCost{
+    font-weight: 700;
+    font-size: 18px;
+  }
 `;
 
 export const SelectedBody = styled.div`
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
   align-items: center;
-  width: 100%;
-  height: 100%;
-
-  article:first-child{
-    width: 100%;
-    margin-right: 30px;
-    height: 100%;
+  gap: 1rem;
+  padding: 2rem 0;
+  
+  &+&{
+    border-top: 1px solid #eee;
   }
 
-  article:last-child{
-    max-width: 400px;
-    width: 35%;
-    min-width: 250px;
-    height: 335px;
-
-    img{
-      width: 260px;
+  img{
+      width: 200px;
+      display: inline;
     }
-  }
 `;

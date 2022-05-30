@@ -9,15 +9,13 @@ import { SelectedBody } from './Payment.style';
 import { FormType } from './Payment.type';
 import SelectedRoom from './SelectedRoom';
 
-const PaymentForm = ({ selectedRoom, sumbmitBtn, handleButton, handleSubmit, handleAgree, handleVisited, reservation, cost,handleUserClick, handleUserInput }:FormType) => {
+const PaymentForm = ({ data, sumbmitBtn, handleButton, handleSubmit, handleAgree, handleVisited, reservation, cost,handleUserClick, handleUserInput }) => {
   return (
     <form>
       <fieldset>
         <legend className="srOnly">결제 정보</legend>
-        <SelectedBody>
-          <UserInfo username={reservation.username} phone={reservation.phone} handleUserClick={handleUserClick} handleUserInput={handleUserInput} />
-          <SelectedRoom selectedRoom={selectedRoom} />
-        </SelectedBody>
+        <SelectedRoom data={data} />
+        <UserInfo username={reservation.username} phone={reservation.phone} handleUserClick={handleUserClick} handleUserInput={handleUserInput} />
         <Visiting hasCar={reservation.hasCar} handleVisited={handleVisited} />
         <PriceInfo cost={cost} />
         <Notice />

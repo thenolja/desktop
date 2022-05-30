@@ -1,4 +1,4 @@
-import React, { MouseEvent, useCallback, useEffect, useReducer, useRef } from 'react';
+import React, { MouseEvent, useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AuthType, authUpdate, selectAuth } from 'src/contexts/auth';
@@ -53,33 +53,32 @@ const Reservation = () => {
       userId: userId,
       hotelAPIId: +hotelId,
       isAgrees: [false, false, false],
-      checkInDate: selectedRoom.checkIn,
-      checkOutDate: selectedRoom.checkOut,
       hasCar: true,
-      cost: selectedRoom.cost,
-      occupancy: selectedRoom.occupancy,
-      adults: selectedRoom.adults,
-      children: selectedRoom.children,
-      spec: selectedRoom.name,
       username: '',
       phone: '',
     },
 
     payment: {
       userId: userId,
-      cost: selectedRoom.cost
-    },
-
-    hotel: {
-      name: selectedRoom.hotelName,
-      photo: selectedRoom.photo
     },
 
     sameUser: false
   }
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { reservation, payment, hotel, sameUser } = state;
+  const { reservation, payment, sameUser } = state;
+
+  const data = [];
+  
+  if(hotelId) {
+    data.push(selectedRoom);
+    data.push(selectedRoom);
+  }
+  else{
+    // 장바구니에서 데이터 받아와 data 배열에 넣어주세요
+  }
+
+  const totalPrice = useMemo(() => data.reduce((total, {cost}) => total + +cost, 0), [data]);
 
   const sumbmitBtn = useRef<HTMLButtonElement>();
   const navigate = useNavigate();
@@ -116,12 +115,11 @@ const Reservation = () => {
 
   const handleVisited = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const id = 'hasCar';
-    const value = e.target.checked;
+    const value = e.target.id === 'car';
     handleReservation(id, value);
   }, [reservation]);
 
-
-  const handleButton = useCallback((e: MouseEvent) => {
+  const handleButton = (e: MouseEvent) => {
     e.preventDefault();
 
     swal({
@@ -140,19 +138,38 @@ const Reservation = () => {
         navigate('/mypage');
       }
     })
-
-  }, [])
+  }
 
   const authDispatch = useDispatch();
 
   const handleSubmit = async () => {
-    const hotelData = await postHotel(hotel);
-    const hotelId = hotelData.id;
-    const reservationdata = await postReservation(reservation, hotelId);
-    const reservationId = reservationdata.id;
-    await postPayment(reservationId, payment);
-    const reservations = await updateReservation(userId, reservationId);
-    authDispatch(authUpdate({ reservations: reservations ? reservations : [] }));
+    data.forEach(async selectedRoom => {
+      const totalHotel = {
+        name: selectedRoom.hotelName, 
+        photo: selectedRoom.photo
+      }
+      const hotelData = await postHotel(totalHotel);
+      const hotelId = hotelData.id;
+      const totalReservation = {
+        ...reservation,
+        checkInDate: selectedRoom.checkIn,
+        checkOutDate: selectedRoom.checkOut,
+        cost: selectedRoom.cost,
+        occupancy: selectedRoom.occupancy,
+        adults: selectedRoom.adults,
+        children: selectedRoom.children,
+        spec: selectedRoom.name
+      }
+      const reservationdata = await postReservation(totalReservation, hotelId);
+      const reservationId = reservationdata.id;
+      const totalPayment = {
+        ...payment,
+        cost: selectedRoom.cost
+      }
+      await postPayment(reservationId, totalPayment);
+      const reservations = await updateReservation(userId, reservationId);
+      authDispatch(authUpdate({ reservations: reservations ? reservations : [] }));
+    })
   }
 
   useEffect(() => {
@@ -163,18 +180,18 @@ const Reservation = () => {
 
   return (
     <ReservationWrapper>
-      <h2 className="srOnly">예약 페이지</h2>
+      <h2 className = "srOnly">예약 페이지</h2>
       <PaymentForm
-        selectedRoom={selectedRoom}
-        sumbmitBtn={sumbmitBtn}
-        reservation={reservation}
-        handleButton={handleButton}
-        handleSubmit={handleSubmit}
-        handleAgree={handleAgree}
-        handleVisited={handleVisited}
-        handleUserClick={handleUserClick}
-        handleUserInput={handleUserInput}
-        cost={selectedRoom.cost}
+        data = { data }
+        sumbmitBtn = { sumbmitBtn }
+        reservation = { reservation }
+        handleButton = { handleButton }
+        handleSubmit = { handleSubmit }
+        handleAgree = { handleAgree }
+        handleVisited = { handleVisited }
+        handleUserClick = { handleUserClick }
+        handleUserInput = { handleUserInput }
+        cost = { totalPrice }
       />
     </ReservationWrapper>
   );

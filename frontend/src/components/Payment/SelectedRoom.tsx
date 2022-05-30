@@ -1,22 +1,13 @@
 import { memo } from "react";
-import { FormArticle, Wrapper, SectionTitle, SelectedInfo } from "./Payment.style";
-import { SelectedRoomType } from "./Payment.type";
+import { FormArticle, SectionTitle } from "./Payment.style";
+import SelectedRoomItem from "./SelectedRoomItem";
 
 
-const SelectedRoom=({selectedRoom}:SelectedRoomType)=>{
+const SelectedRoom=({data})=>{
   return(
     <FormArticle>
-      <Wrapper>
-        <SectionTitle>선택한 객실 정보</SectionTitle>
-        <div>
-          <img src={selectedRoom.photo} alt={selectedRoom.name} />
-        </div>
-        <SelectedInfo>
-          <p className="hotelName">{selectedRoom.hotelName}</p>
-          <p>[ {selectedRoom.name} ]</p>
-          <p>{selectedRoom.checkIn} - {selectedRoom.checkOut}</p>
-        </SelectedInfo>
-      </Wrapper>
+      <SectionTitle>상품 정보 {data.length}건</SectionTitle>
+      {data.map((selectedRoom, idx) => <SelectedRoomItem key={selectedRoom.name + idx} selectedRoom={selectedRoom} /> )}
     </FormArticle>
   )
 }
