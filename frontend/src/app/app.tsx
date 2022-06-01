@@ -67,6 +67,14 @@ const App = () => {
             </Route>
             <Route path="/reviews/:id" element={<Reviews />} />
             <Route
+              path="/reservation"
+              element={
+                <ProtectedRoute isAllow={!!(id && nickname && email)}>
+                  <Reservation />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/reservation/:id"
               element={
                 <ProtectedRoute isAllow={!!(id && nickname && email)}>

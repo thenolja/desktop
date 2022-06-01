@@ -16,6 +16,9 @@ export interface CartType {
   checkInDate?: string;
   checkOutDate?: string;
   chekInTimeInfo?: string;
+  occupancy?: number;
+  adults?: number;
+  children?: number;
 }
 
 interface CartState {

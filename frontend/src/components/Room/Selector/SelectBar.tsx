@@ -13,7 +13,6 @@ const SelectBar = ({ startDate, endDate, selectedRoom, hotelId, setSessionStorag
   const { id: userId } = useAppSelector(selectAuth) as AuthType;
 
   const handleAddCart = () => {
-    console.log(selectedRoom);
     let newCart: CartType = {
       userId: userId,
       hotelId: hotelId,
@@ -25,8 +24,12 @@ const SelectBar = ({ startDate, endDate, selectedRoom, hotelId, setSessionStorag
       checkInDate: startDate,
       checkOutDate: endDate,
       chekInTimeInfo: window.sessionStorage.getItem('HOTEL_CHECKINFO'),
+      occupancy: selectedRoom.maxOccupancy.total + selectedRoom.maxOccupancy.children,
+      adults: selectedRoom.maxOccupancy.total,
+      children: selectedRoom.maxOccupancy.children,
     };
 
+    console.log(newCart);
     swal({
       title: '장바구니에 해당 객실을 추가하시겠습니까?',
       icon: 'info',
