@@ -63,6 +63,20 @@ const Cart = () => {
       setCheckItem(checkItem.filter(checkedId => checkedId !== cartId));
     }
   };
+
+  const checkLinkTo = () => {
+    let toLinkStr = carts
+      .filter(cart => (checkItem.indexOf(cart.id) === -1 ? false : true))
+      .map(
+        ({ id, hotelName, roomName, imageUrl, checkInDate, checkOutDate, cost, occupancy, adults, children }, index) =>
+          `&${index}cartId=${id}&${index}hotelName=${hotelName}&${index}name=${roomName}&${index}photo=${imageUrl}&${index}checkIn=${checkInDate}
+      &${index}checkOut=${checkOutDate}&${index}cost=${cost}&${index}occupancy=${occupancy}&${index}adults=${adults}&${index}children=${children}`,
+      );
+
+    if (toLinkStr.length) {
+      window.location.href = `/reservation/?${toLinkStr.join('')}`;
+    }
+  };
   return (
     <>
       {isLoading ? (
@@ -100,10 +114,11 @@ const Cart = () => {
           <Buttons>
             <div>
               <SelectedPrice>
-                <p>총 {carts.length}건</p>
+                <p>총 {checkItem.length}건</p>
                 <p>
-                  {carts.length
+                  {checkItem.length
                     ? carts
+                        .filter(cart => (checkItem.indexOf(cart.id) === -1 ? false : true))
                         .map(cart => cart.cost)
                         .reduce((acc, cur) => acc + cur)
                         .toLocaleString('ko-KR')
@@ -111,7 +126,9 @@ const Cart = () => {
                   원
                 </p>
               </SelectedPrice>
-              <SelectBtn style={{ width: '60%' }}>예약하기</SelectBtn>
+              <SelectBtn style={{ width: '60%' }} onClick={checkLinkTo}>
+                예약하기
+              </SelectBtn>
             </div>
           </Buttons>
         </>
